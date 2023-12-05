@@ -221,7 +221,7 @@ class product {
 }
 
 function viewButtonClicked(instance) {
-  console.log("view button clicked: ", instance.Title);
+  console.log("view button clicked: ", instance.id);
   document.querySelector("#produkt_tilpasning").innerHTML = "";
 
   // NB: Vi skal lave et fetch som tjekker om en side er løbet tør for noget bestemt...
@@ -230,12 +230,12 @@ function viewButtonClicked(instance) {
     `
 <article>
     <article>
-    <h3>Produkt Navn: ${instance.Title}</h3>
-    <img href= "${instance.ImageLink}" alt="foto"/>
-    <p>Kategori: ${instance.Category}</p>
-    <p>Produkt Beskrivelse: ${instance.ItemDescription}</p>
-    <p>Standard Størrelse: ${instance.StandardSize} cm</p>
-    <p>Standard vægt: ${instance.StandardWeight}</p>
+    <h3>Produkt Navn: ${instance.title}</h3>
+    <img src="${instance.imageLink}" alt="foto"/>
+    <p>Kategori: ${instance.category}</p>
+    <p>Produkt Beskrivelse: ${instance.itemDescription}</p>
+    <p>Standard Størrelse: ${instance.standardSize} cm</p>
+    <p>Standard vægt: ${instance.standardWeight}</p>
         
 
     <h3 id="productPrice"> Samlet Pris: XXX.XX DKK</h3>
@@ -276,9 +276,9 @@ function viewButtonClicked(instance) {
     <p id="produktMaterialName"> Produktet bliver printet i: PLA</p>
     
     </form>
-
-    <button class="btn-add-basket" >Læg i kruv</button>
-    <button class="btn-return-" >Forstæt shopping</button>
+    
+        <button class="btn-add-basket" >Læg i kruv</button>
+        <button class="btn-return-" >Forstæt shopping</button>
 
     
     </article>
@@ -288,5 +288,5 @@ function viewButtonClicked(instance) {
 
   document
     .querySelector("#produkt_tilpasning")
-    .addEventListener("beforeend", productInfromationHTML);
+    .insertAdjacentHTML("beforeend", productInfromationHTML);
 }
