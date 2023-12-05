@@ -169,6 +169,12 @@ Product has a catalog-item (og is an Item) og has a material.
 Er det her hovedpinen værd?
  */
 
+
+
+
+
+
+
 // Produkt klassen skal (ned)arve fra catalogItem (og StockMaterial) klassen - derfor skal der skrives "extends"
 class product {
   constructor(productObjekt, stockObject) {
@@ -177,11 +183,11 @@ class product {
 
     // Kalder constructor af den anden parrent-class (StockMaterial)... her bruger vi "compositions" da JS ikke KAN arve fra 2 klasser
     // StockMaterial.call(this, stockObject);
-    new StockMaterial(stockObject);
-    new catalogueItem(productObjekt);
+    this.stock = new StockMaterial(stockObject);
+    this.catalogue = new catalogueItem(productObjekt);
 
     // Attributterne fra det catalog-varen
-    this.Catalogue_Id = productObjekt.Id;
+    // this.catalogueId = productObjekt.Id;
     // Attributterne fra stock-materialet burde være her
     this.Stock_Id = productObjekt.Stock_Id;
     // Attributterne unikke for produktet:
@@ -193,6 +199,11 @@ class product {
       this.StandardWeight,
       this.ProductSize
     );
+  }
+
+  get Catalogue_Id(){
+    return this.catalogue.Id;
+
   }
 
   render() {
@@ -214,35 +225,45 @@ class product {
     return productHTML;
   }
 
+
+
+
+
   // Her er en metode som giver en attirbut, så en setter?
   prizeCalculator(weight, height) {
     return weight + height * 20;
   }
 }
 
-const productInfromationHTML =
-  /*html*/
-  `
-<article>
-    <article>
-    <h3>Produkt Navn: ${this.Title}</h3>
-    <img href= "${this.ImageLink}" alt="foto"/>
-    <p>Kategori: ${this.Category}</p>
-    <p>Standard Størrelse: ${this.StandardSize} cm</p>
-    <p>Standard Vægt: ${this.StandardWeight} gram</p>
-    <p>Produkt Beskrivelse: ${this.ItemDescription} </p>
-    <p> - ANTAL + </p>
-    <form>
-    <label for="chosenMaterial">Materiale</label>
-                <select name="material" id="chosenMaterial">
-                <option value= "PLA" >PLA</option>
-                <option value="ABS">ABS</option>
-                <option value="CARBON">Carbon</option>
-                <option value="NYLON-CARBOM">ABS</option>
-    </form>
+//  const productInfromationHTML =
+//   /*html*/
+//   `
+// <article>
+//     <article>
+//     <h3>Produkt Navn: ${this.Title}</h3>
+//     <img href= "${this.ImageLink}" alt="foto"/>
+//     <p>Kategori: ${this.Category}</p>
+//     <p>Standard Størrelse: ${this.StandardSize} cm</p>
+//     <p>Standard Vægt: ${this.StandardWeight} gram</p>
+//     <p>Produkt Beskrivelse: ${this.ItemDescription} </p>
+//     <p> - ANTAL + </p>
+//     <form>
+//     <label for="chosenMaterial">Materiale</label>
+//                 <select name="material" id="chosenMaterial">
+//                 <option value="A">MaterialeA</option>
+//                 <option value="B">MaterialeB</option>
+//                 <option value="C">MaterialeC</option>
+//                 <option value="D">MaterialeD</option>
+//         <label for="chosenMaterial">Materiale</label>
+//                 <select name="material" id="chosenMaterial">
+//                 <option value="A">MaterialeA</option>
+//                 <option value="B">MaterialeB</option>
+//                 <option value="C">MaterialeC</option>
+//                 <option value="D">MaterialeD</option>
+//     </form>
 
-    <button class="btn-view-product" >Se Produkt</button>
-    </article>
+//     <button class="btn-view-product" >Se Produkt</button>
+//     </article>
 
-</article>
-`;
+// </article>
+// `;
