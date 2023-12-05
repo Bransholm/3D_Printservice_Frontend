@@ -37,19 +37,11 @@ function callRenderMethod(listOfInstances) {
 
     document
       .querySelector("#produkt_overblik article:last-child .btn-view-product")
-      .addEventListener(
-        "click",
-        ()=> viewButtonClicked(instance));
+      .addEventListener("click", () => viewButtonClicked(instance));
 
     console.log(classHTML);
-
   }
 }
-
-function viewButtonClicked(instance) {
-  console.log("view button clicked: ", instance.Title);
-}
-
 
 // PT.lokal-global variabel.
 const stockMaterialObject = {
@@ -71,12 +63,12 @@ function createInstanceOfStock() {
 
 class StockMaterial {
   constructor(stockObject) {
-    this.Name = stockObject.Name;
-    this.Material = stockObject.Material;
-    this.Colour = stockObject.Colour;
-    this.GramInStock = stockObject.GramInStock;
-    this.MinAmountReached = stockObject.MinAmountReached;
-    this.SalesPrize = stockObject.SalesPrize;
+    this.name = stockObject.Name;
+    this.material = stockObject.Material;
+    this.colour = stockObject.Colour;
+    this.gramInStock = stockObject.GramInStock;
+    this.minAmountReached = stockObject.MinAmountReached;
+    this.salesPrize = stockObject.SalesPrize;
   }
 
   render() {
@@ -84,12 +76,12 @@ class StockMaterial {
       /*html*/
       `
     <article>
-    <h3>Produkt Navn: ${this.Name}</h3>
-    <p>Materiale: ${this.Material}</p>
-    <p>Farve: ${this.Colour} cm</p>
-    <:> Mængde på lager: ${this.GramInStock} gram</p>
-    <p>Minimum nået: ${this.MinAmountReached} </p>
-    <p>Salgspris: ${this.SalesPrize} dkk/gram</p>
+    <h3>Produkt Navn: ${this.name}</h3>
+    <p>Materiale: ${this.material}</p>
+    <p>Farve: ${this.colour} cm</p>
+    <:> Mængde på lager: ${this.gramInStock} gram</p>
+    <p>Minimum nået: ${this.minAmountReached} </p>
+    <p>Salgspris: ${this.salesPrize} dkk/gram</p>
     </article>
     `;
     return stockHTML;
@@ -102,13 +94,13 @@ class StockMaterial {
 class catalogueItem {
   // Klassens constructor tager vores fetchede-data-objekt som argument og sætter Klassens Atrributter lig Objektets properties.
   constructor(catalogueObject) {
-    this.Id = catalogueObject.Id;
-    this.Title = catalogueObject.Title;
-    this.StandardSize = catalogueObject.StandardWeight;
-    this.StandardWeight = catalogueObject.StandardSize;
-    this.ItemDescription = catalogueObject.ItemDescription;
-    this.ImageLink = catalogueObject.ImageLink;
-    this.Category = catalogueObject.Category;
+    this.id = catalogueObject.Id;
+    this.title = catalogueObject.Title;
+    this.standardSize = catalogueObject.StandardWeight;
+    this.standardWeight = catalogueObject.StandardSize;
+    this.itemDescription = catalogueObject.ItemDescription;
+    this.imageLink = catalogueObject.ImageLink;
+    this.category = catalogueObject.Category;
   }
 
   // I klassens render-metode bliver HTML'en til vores DOM lavet.
@@ -117,12 +109,12 @@ class catalogueItem {
       /*html*/
       `
     <article>
-    <h3>Produkt Navn: ${this.Title}</h3>
-    <img src="${this.ImageLink}" alt="foto"/>
-    <p>Kategori: ${this.Category}</p>
-    <p>Standard Størrelse: ${this.StandardSize} cm</p>
-    <p>Standard Vægt: ${this.StandardWeight} gram</p>
-    <p>Produkt Beskrivelse: ${this.ItemDescription} </p>
+    <h3>Produkt Navn: ${this.title}</h3>
+    <img src="${this.imageLink}" alt="foto"/>
+    <p>Kategori: ${this.category}</p>
+    <p>Standard Størrelse: ${this.standardSize} cm</p>
+    <p>Standard Vægt: ${this.standardWeight} gram</p>
+    <p>Produkt Beskrivelse: ${this.itemDescription} </p>
     <button class="btn-view-product" >Se Produkt</button>
     </article>
     `;
@@ -181,22 +173,26 @@ class product {
 
     // Kalder constructor af den anden parrent-class (StockMaterial)... her bruger vi "compositions" da JS ikke KAN arve fra 2 klasser
     // StockMaterial.call(this, stockObject);
-    new StockMaterial(stockObject);
-    new catalogueItem(productObjekt);
+    this.stock = new StockMaterial(stockObject);
+    this.catalogue = new catalogueItem(productObjekt);
 
     // Attributterne fra det catalog-varen
-    this.Catalogue_Id = productObjekt.Id;
+    // this.catalogueId = productObjekt.Id;
     // Attributterne fra stock-materialet burde være her
-    this.Stock_Id = productObjekt.Stock_Id;
+    this.stock_Id = productObjekt.Stock_Id;
     // Attributterne unikke for produktet:
-    this.ProductSize = productObjekt.ProductSize;
-    this.StandardWeight;
+    this.productSize = productObjekt.ProductSize;
+    this.standardWeight;
 
     // Denne her bør være private og skal have en metode der udregner den - Lukas.
-    this.CalculatedPrize = this.prizeCalculator(
+    this.calculatedPrize = this.prizeCalculator(
       this.StandardWeight,
       this.ProductSize
     );
+  }
+
+  get catalogue_Id() {
+    return this.catalogue.Id;
   }
 
   render() {
@@ -204,15 +200,15 @@ class product {
       /*html*/
       `
     <article>
-    <img href=${this.ImageLink}>
-    <h3>Produkt Navn: ${this.Title}</h3>
-    <p>Kategori: ${this.Category}</p>
-    <p>Produkt Beskrivelse: ${this.ItemDescription} </p>
-    <p>skal printes i : ${this.Name}</p>
-    <p>Materiale: ${this.Material}</p>
-    <p>Farve: ${this.Colour}</p>
-    <p>Produktets ønskede størrelse: ${this.ProductSize} cm</p>
-    <p>Produktets beregnede pris: ${this.CalculatedPrize} dkk</p>
+    <img href=${this.imageLink}>
+    <h3>Produkt Navn: ${this.title}</h3>
+    <p>Kategori: ${this.category}</p>
+    <p>Produkt Beskrivelse: ${this.itemDescription} </p>
+    <p>skal printes i : ${this.name}</p>
+    <p>Materiale: ${this.minAmountReachedaterial}</p>
+    <p>Farve: ${this.colour}</p>
+    <p>Produktets ønskede størrelse: ${this.productSize} cm</p>
+    <p>Produktets beregnede pris: ${this.calculatedPrize} dkk</p>
     </article>
     `;
     return productHTML;
@@ -222,4 +218,75 @@ class product {
   prizeCalculator(weight, height) {
     return weight + height * 20;
   }
+}
+
+function viewButtonClicked(instance) {
+  console.log("view button clicked: ", instance.id);
+  document.querySelector("#produkt_tilpasning").innerHTML = "";
+
+  // NB: Vi skal lave et fetch som tjekker om en side er løbet tør for noget bestemt...
+  const productInfromationHTML =
+    /*html*/
+    `
+<article>
+    <article>
+    <h3>Produkt Navn: ${instance.title}</h3>
+    <img src="${instance.imageLink}" alt="foto"/>
+    <p>Kategori: ${instance.category}</p>
+    <p>Produkt Beskrivelse: ${instance.itemDescription}</p>
+    <p>Standard Størrelse: ${instance.standardSize} cm</p>
+    <p>Standard vægt: ${instance.standardWeight}</p>
+        
+
+    <h3 id="productPrice"> Samlet Pris: XXX.XX DKK</h3>
+    <form>
+
+    <div>
+    <p>Antal valgte 1</p>
+    <button class="add-extra-product"> - </button>
+    <button class="remove-another-product"> + </button>
+    </div>
+
+    <div id="selectMaterial">
+    
+    <label for="chosenMaterial">Materiale</label>
+                <select name="material" id="chosenMaterial">
+                <option value="A">MaterialeA</option>
+                <option value="B">MaterialeB</option>
+                <option value="C">MaterialeC</option>
+                <option value="D">MaterialeD</option>
+
+      <label for="chosenMaterial">Farve</label>
+                <select name="material" id="chosenMaterial">
+                <option value="A">FarveA</option>
+                <option value="B">FarveB</option>
+                <option value="C">FarveC</option>
+                <option value="D">FarveD</option>
+    </div>
+    <div id="selectProductSize">
+       <label for="chosenSize">Størrelse</label>
+                <select name="material" id="chosenMaterial">
+                <option value="A">5cm</option>
+                <option value="B">15cm</option>
+                <option value="C">22cm</option>
+                <option value="D">30cm</option>
+    </div>
+
+    <p id="productPrice"> Udrgenede vægt pr. produkt: XXXX gram </p>
+    <p id="produktMaterialName"> Produktet bliver printet i: PLA</p>
+    
+    </form>
+    
+        <button class="btn-add-basket" >Læg i kruv</button>
+        <button class="btn-return-" >Forstæt shopping</button>
+
+    
+    </article>
+
+</article>
+`;
+
+  document
+    .querySelector("#produkt_tilpasning")
+    .insertAdjacentHTML("beforeend", productInfromationHTML);
 }

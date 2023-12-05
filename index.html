@@ -1,26 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="#" type="image/x-icon" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <title>3D Printservice</title>
-</head>
-<body>
-
+  </head>
+  <body>
     <!-- Header -->
     <header id="header">3D Printservice</header>
-    
+
     <!-- Nav bar -->
     <nav>
-        <a href="#produkter" class="view-link">PRODUKTER</a>
-        <a href="#specialprodukter" class="view-link">SPECIALPRODUKTER</a>
-        <a href="#se_ordre" class="view-link">SE ORDRE</a>
-        <a href="#om_os" class="view-link">OM OS</a>
+      <a href="#produkter" class="view-link">PRODUKTER</a>
+      <a href="#specialprodukter" class="view-link">SPECIALPRODUKTER</a>
+      <a href="#se_ordre" class="view-link">SE ORDRE</a>
+      <a href="#om_os" class="view-link">OM OS</a>
     </nav>
-    
+
     <!-- Main - The screen -->
+    <main id="main">
+      <section id="produkter" class="view-content">
+        Produkter
+        <container id="produkt_tilpasning"> Det enkelte prodult </container>
+        <container id="produkt_overblik"> Hele Kataloget </container>
+      </section>
+
+      <section id="specialprodukter" class="view-content">
+        Specialprodukter
+      </section>
+      <section id="se_ordre" class="view-content">Se ordre</section>
+      <section id="om_os" class="view-content">Om os</section>
+    </main>
+
     <Main id="main">
 
         <!-- Section produkter -->
@@ -55,37 +68,36 @@
     
     <!-- Footer -->
     <footer>
-        <span id="faq-link">FAQ</span>
-        <span id="handelsbetingelser-link">Handelsbetingelser</span>
-        <span id="datapolitik-link">Datapolitik</span>
-        
-        <!-- Dialog windows from Footer -->
-        <dialog id="dialog-faq">
-            <p>FAQ</p>
-            <p>(Tekst afventer PO)</p>
-            <form method="dialog">
-                <button>Luk vindue</button>
-            </form>
-        </dialog>
+      <span id="faq-link">FAQ</span>
+      <span id="handelsbetingelser-link">Handelsbetingelser</span>
+      <span id="datapolitik-link">Datapolitik</span>
 
-        <dialog id="dialog-handelsbetingelser">
-            <p>Handelsbetingelser</p>
-            <p>(Tekst afventer PO)</p>
-            <form method="dialog">
-                <button>Luk vindue</button>
-            </form>
-        </dialog>
+      <!-- Dialog windows from Footer -->
+      <dialog id="dialog-faq">
+        <p>FAQ</p>
+        <p>(Tekst afventer PO)</p>
+        <form method="dialog">
+          <button>Luk vindue</button>
+        </form>
+      </dialog>
 
-        <dialog id="dialog-datapolitik">
-            <p>Datapolitik</p>
-            <p>(Tekst afventer PO)</p>
-            <form method="dialog">
-                <button>Luk vindue</button>
-            </form>
-        </dialog>
+      <dialog id="dialog-handelsbetingelser">
+        <p>Handelsbetingelser</p>
+        <p>(Tekst afventer PO)</p>
+        <form method="dialog">
+          <button>Luk vindue</button>
+        </form>
+      </dialog>
 
+      <dialog id="dialog-datapolitik">
+        <p>Datapolitik</p>
+        <p>(Tekst afventer PO)</p>
+        <form method="dialog">
+          <button>Luk vindue</button>
+        </form>
+      </dialog>
     </footer>
-    
+
     <script src="main.js" type="module"></script>
-</body>
+  </body>
 </html>
