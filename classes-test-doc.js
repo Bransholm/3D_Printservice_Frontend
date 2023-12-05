@@ -30,21 +30,26 @@ function callRenderMethod(listOfInstances) {
   for (const instance of listOfInstances) {
     const classHTML = instance.render();
     //Hvorfor er vores HMTL på danks?!
-   
+
     document
       .querySelector("#produkt_overblik")
       .insertAdjacentHTML("beforeend", classHTML);
+
     document
       .querySelector("#produkt_overblik article:last-child .btn-view-product")
-      .addEventListener("click", viewButtonClicked);
+      .addEventListener(
+        "click",
+        ()=> viewButtonClicked(instance));
 
     console.log(classHTML);
+
   }
 }
 
-function viewButtonClicked(event) {
-  console.log("view button clicked: ", event);
+function viewButtonClicked(instance) {
+  console.log("view button clicked: ", instance.Title);
 }
+
 
 // PT.lokal-global variabel.
 const stockMaterialObject = {
@@ -118,7 +123,7 @@ class catalogueItem {
     <p>Standard Størrelse: ${this.StandardSize} cm</p>
     <p>Standard Vægt: ${this.StandardWeight} gram</p>
     <p>Produkt Beskrivelse: ${this.ItemDescription} </p>
-    <button class="produkt_overblik" >Se Produkt</button>
+    <button class="btn-view-product" >Se Produkt</button>
     </article>
     `;
 
