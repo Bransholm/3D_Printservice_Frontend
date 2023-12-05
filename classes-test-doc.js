@@ -241,9 +241,9 @@ function viewButtonClicked(instance) {
     <h3 id="productPrice"> Samlet Pris: XXX.XX DKK</h3>
     <form>
 
-    <div>
-    <p>Antal valgte 1</p>
+    <div id="selectAmount">
     <button class="add-extra-product"> - </button>
+    <p>Antal valgte 1</p>
     <button class="remove-another-product"> + </button>
     </div>
 
@@ -270,6 +270,7 @@ function viewButtonClicked(instance) {
                 <option value="B">15cm</option>
                 <option value="C">22cm</option>
                 <option value="D">30cm</option>
+                </select>
     </div>
 
     <p id="productPrice"> Udrgenede vægt pr. produkt: XXXX gram </p>
