@@ -114,7 +114,7 @@ class catalogueItem {
       `
     <article>
     <h3>Produkt Navn: ${this.Title}</h3>
-    <img href= "${this.ImageLink}" alt="foto"/>
+    <img src="${this.ImageLink}" alt="foto"/>
     <p>Kategori: ${this.Category}</p>
     <p>Standard Størrelse: ${this.StandardSize} cm</p>
     <p>Standard Vægt: ${this.StandardWeight} gram</p>
