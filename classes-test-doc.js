@@ -37,19 +37,15 @@ function callRenderMethod(listOfInstances) {
 
     document
       .querySelector("#produkt_overblik article:last-child .btn-view-product")
-      .addEventListener(
-        "click",
-        ()=> viewButtonClicked(instance));
+      .addEventListener("click", () => viewButtonClicked(instance));
 
     console.log(classHTML);
-
   }
 }
 
 function viewButtonClicked(instance) {
   console.log("view button clicked: ", instance.Title);
 }
-
 
 // PT.lokal-global variabel.
 const stockMaterialObject = {
@@ -118,7 +114,7 @@ class catalogueItem {
       `
     <article>
     <h3>Produkt Navn: ${this.Title}</h3>
-    <img href='${this.ImageLink}' alt= "foto"/>
+    <img href= "${this.ImageLink}" alt="foto"/>
     <p>Kategori: ${this.Category}</p>
     <p>Standard Størrelse: ${this.StandardSize} cm</p>
     <p>Standard Vægt: ${this.StandardWeight} gram</p>
@@ -223,3 +219,30 @@ class product {
     return weight + height * 20;
   }
 }
+
+const productInfromationHTML =
+  /*html*/
+  `
+<article>
+    <article>
+    <h3>Produkt Navn: ${this.Title}</h3>
+    <img href= "${this.ImageLink}" alt="foto"/>
+    <p>Kategori: ${this.Category}</p>
+    <p>Standard Størrelse: ${this.StandardSize} cm</p>
+    <p>Standard Vægt: ${this.StandardWeight} gram</p>
+    <p>Produkt Beskrivelse: ${this.ItemDescription} </p>
+    <p> - ANTAL + </p>
+    <form>
+    <label for="chosenMaterial">Materiale</label>
+                <select name="material" id="chosenMaterial">
+                <option value= "PLA" >PLA</option>
+                <option value="ABS">ABS</option>
+                <option value="CARBON">Carbon</option>
+                <option value="NYLON-CARBOM">ABS</option>
+    </form>
+
+    <button class="btn-view-product" >Se Produkt</button>
+    </article>
+
+</article>
+`;
