@@ -4,7 +4,7 @@ import {
 } from "./create-update-forms.js";
 
 import { createNewMaterial } from "./create-new-stock-item.js";
-import { createNewCatelogueItem } from "./create-new-catalogue-item.js";
+import { createNewCatalogueItem } from "./create-new-catalogue-item.js";
 
 function launchAdminFunctions() {
   console.log("Admin site is working");
@@ -14,7 +14,7 @@ function launchAdminFunctions() {
 function activateEventListeners() {
   
   //document.querySelector("#addNewMaterialForm").addEventListener("submit", () => createNewMaterial(event));
- document.querySelector("#addToCatalogueForm").addEventListener("submit", createNewCatelogueItem);
+ document.querySelector("#addToCatalogueForm").addEventListener("submit", createNewCatalogueItem);
   }
 
 
