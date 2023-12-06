@@ -12,13 +12,21 @@ function launchAdminFunctions() {
 }
 
 function activateEventListeners() {
-  
-  //document.querySelector("#addNewMaterialForm").addEventListener("submit", () => createNewMaterial(event));
- document.querySelector("#addToCatalogueForm").addEventListener("submit", createNewCatalogueItem);
-  }
+  document.querySelector("#test_submit_button").addEventListener("click", test);
+}
 
 
-  
+
+function test(event) {
+  event.preventDefault();
+  const form = document.querySelector("#test_form");
+
+  const testValue = form.someText.value;
+
+  console.log(testValue);
+}
+
+
 
 
 export { launchAdminFunctions };
