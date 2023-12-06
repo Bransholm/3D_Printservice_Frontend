@@ -12,73 +12,7 @@
         <main>Admin indhold</main>
     </div>
 
-    <section id="adminStockOverview">
-        <h2>Lager Status</h2>
-        <th>
-            <td>Materiale</td>
-            <td>Farve</td>
-            <td>Mængde på Lager</td>
-            <td>Udsolgts Status</td>
-        </th>
-        <tb>
-            Lager Materialerne
-        </tb>
 
-        <form id="addNewMaterialForm">
-
-            <label for="StockName">Produktnavn</label>
-            <input type="text" id="catalogueName" name="name" placeholder="Produktnavn" required/>
-
-            <label for="stockMaterial">Materiale</label>
-                <select name="minAmount" id="minAmountStock">
-                <option value= "PLA" >PLA</option>
-                <option value="ABS">ABS</option>
-                <option value="CARBON">Carbon</option>
-                <option value="NYLON-CARBOM">ABS</option>
-                </select>
-
-            <label for="stockColour">Farve</label>
-                <input type="text" id="stockColour" name="colour"
-                  placeholder="Rød"
-                  required
-                />                
-                
-            <label for="amountInStock">Lagerbeholdning</label>
-                <input
-                  type="text"
-                  id="amountInStock"
-                  name="inStock"
-                  placeholder="..."
-                  required
-                />
-
-            <label for="salesPrice">salgspris</label>
-                <input
-                  type="text"
-                  id="salesPrice"
-                  name="price"
-                  placeholder="..."
-                  required
-                />
-
-            <label for="minAmountStock">Salgs Status</label>
-                <select name="minAmount" id="minAmountStock">
-                <option value= "true" > Udsolgt </option>
-                <option value="false"> På Lager </option>
-                </select>
-
-            <button>Opret</button>
-        </form>
-        <div id="updateMaterialForm"></div>
-    </section>
-
-    <section id="catalougeOveriew">
-        <h2>Katalog Oversigt</h2>
-        <container id="adminCatalogueOverview">
-        </container>
-        <div id="addToCatalogueForm"></div>
-        <div id="updateCatalougeForm"></div>
-    </section>
 
 </body>
 </html>
