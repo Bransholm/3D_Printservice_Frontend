@@ -1,5 +1,5 @@
 function extractStockDataForUpdate(catalogueItem) {
-  const updateForm = document.querySelector("#INSERT-ID");
+  const updateForm = document.querySelector("#updateMaterialForm");
   // const x = event.target
 
   // Doublecheck if attirbute needs to be with capital sarting letter...
@@ -14,7 +14,7 @@ function extractStockDataForUpdate(catalogueItem) {
 
 function updateStockData(event) {
   event.preventDefault();
-  const form = document.querySelector("#INSERT-ID").element;
+  const form = document.querySelector("#updateMaterialForm").element;
 
   const name = form.name.value;
   const standardSize = form.material.value;
@@ -30,3 +30,5 @@ function updateStockData(event) {
     salesPrize,
   };
 }
+
+export { extractStockDataForUpdate, updateStockData };
