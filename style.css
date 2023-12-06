@@ -23,15 +23,25 @@ header {
 
 /* Nav bar */
 nav {
+    display: flex;
+    gap: 30px;
     background-color: black;
-    height: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 /* Main */
 main {
     background-color: white;
     color: black;
-    min-height: 83%;
+    min-height: 76%;
+    padding: 20px;
+}
+
+#om_os_h2 {
+    margin-top: 0px;
 }
 
 /* Fotter */
@@ -58,6 +68,6 @@ footer {
 }
 
 .view-link:hover {
-    color: white;
-    text-decoration: underline;
+    color: orange;
+    text-decoration: none;
 }
