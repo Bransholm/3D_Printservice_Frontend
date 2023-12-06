@@ -1,18 +1,18 @@
-import {
-  extractStockDataForUpdate,
-  updateStockData,
-} from "./create-update-forms.js";
+// import {
+//   extractStockDataForUpdate,
+//   updateStockData,
+// } from "./create-update-forms.js";
 
-import { createNewMaterial } from "./create-new-stock-item.js";
+// import { createNewMaterial } from "./create-new-stock-item.js";
 
-function launchAdminFunctions() {
-  activateEventListeners();
-}
+// function launchAdminFunctions() {
+//   activateEventListeners();
+// }
 
-function activateEventListeners() {
-  document
-    .querySelector("#addNewMaterialForm")
-    .addEventListener("submit", () => createNewMaterial(event));
-}
+// function activateEventListeners() {
+//   document
+//     .querySelector("#addNewMaterialForm")
+//     .addEventListener("submit", () => createNewMaterial(event));
+// }
 
-export { launchAdminFunctions };
+// export { launchAdminFunctions };
