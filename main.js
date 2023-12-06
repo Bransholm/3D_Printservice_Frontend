@@ -6,7 +6,7 @@ import { catalogueData, stockData } from "./tempoary-data-doc.js";
 
 // Modules for testing af klasse opbygning...
 import { createCatalogClasses } from "./classes-test-doc.js";
-// import { launchAdminFunctions } from "./admin-main.js";
+import { launchAdminFunctions } from "./admin-main.js";
 
 window.addEventListener("load", start);
 
@@ -16,17 +16,17 @@ function start() {
   console.log("Hello Team10");
   // Tester om man kan hente data - Lukas
   getAllData();
-  // launchAdminFunctions();
+  launchAdminFunctions();
 }
 
 // Dette er en test funktion der skal se om vi kan hente data:
 async function getAllData() {
   const CatalougeItems = await getCatalogueData();
   // const stockData = await getStockData();
-  console.log(stockData);
-  console.log(CatalougeItems);
+  // console.log(stockData);
+  // console.log(CatalougeItems);
 
-  console.log(catalogueData);
+  // console.log(catalogueData);
   createCatalogClasses(CatalougeItems);
 }
 
