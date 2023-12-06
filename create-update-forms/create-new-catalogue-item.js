@@ -1,5 +1,5 @@
 // This function creates a new catalogue item - is only accessible for the admin.
-function createNewCatelogueItem(event) {
+function createNewCatalogueItem(event) {
   
   console.log("Item created");
   // Er det nu .target.value?
@@ -22,7 +22,7 @@ function createNewCatelogueItem(event) {
     imageLink,
     category
   );
-
+  event.preventDefault();
   console.log(catalogueItem);
 }
 
@@ -44,4 +44,4 @@ function createCatelogueItemProduct(
   };
 }
 
-export { createNewCatelogueItem };
+export { createNewCatalogueItem };
