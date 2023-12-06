@@ -1,7 +1,5 @@
 // This function creates a new catalogue item - is only accessible for the admin.
 function createNewCatalogue(event) {
-  event.preventDefault();
-
   // Er det nu .target.value?
   const catalogueForm = event.target;
 
@@ -20,6 +18,8 @@ function createNewCatalogue(event) {
     imageLink,
     catagory
   );
+
+  console.log(catalogueItem);
 }
 
 function createCatalogueItemProduct(
