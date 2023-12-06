@@ -39,7 +39,6 @@ function callRenderMethod(listOfInstances) {
       .querySelector("#produkt_overblik article:last-child .btn-view-product")
       .addEventListener("click", () => viewButtonClicked(instance));
 
-    console.log(classHTML);
   }
 }
 
@@ -96,8 +95,8 @@ class catalogueItem {
   constructor(catalogueObject) {
     this.id = catalogueObject.Id;
     this.title = catalogueObject.Title;
-    this.standardSize = catalogueObject.StandardWeight;
-    this.standardWeight = catalogueObject.StandardSize;
+    this.standardSize = catalogueObject.StandardSize;
+    this.standardWeight = catalogueObject.StandardWeight;
     this.itemDescription = catalogueObject.ItemDescription;
     this.imageLink = catalogueObject.ImageLink;
     this.category = catalogueObject.Category;
@@ -222,7 +221,8 @@ class product {
 
 function viewButtonClicked(instance) {
   console.log("view button clicked: ", instance.id);
-  document.querySelector("#produkt_tilpasning").innerHTML = "";
+  document.querySelector("#produkt_overblik").innerHTML = "";
+  // document.querySelector("#produkt_tilpasning").innerHTML = "";
 
   // NB: Vi skal lave et fetch som tjekker om en side er løbet tør for noget bestemt...
   const productInfromationHTML =

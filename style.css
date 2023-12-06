@@ -70,3 +70,33 @@ footer {
     color: orange;
     text-decoration: none;
 }
+
+
+/* grid */
+.grid-container {
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+  gap: 1em;
+  padding: 1em;
+}
+
+@media (min-width: 550px) {
+  .grid-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1000px) {
+  .grid-container {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media (min-width: 1550px) {
+  .grid-container {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+} 
+
+
+
