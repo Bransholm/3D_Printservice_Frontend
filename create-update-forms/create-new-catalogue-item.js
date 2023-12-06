@@ -3,14 +3,14 @@ function createNewCatelogueItem(event) {
   
   console.log("Item created");
   // Er det nu .target.value?
-  const catalogueForm = event.target;
+  const catelogueForm = event.target;
   
-  const title = catalogueForm.title.value;
-  const standardSize = catalogueForm.size.value;
-  const standardWeight = catalogueForm.weight.value;
-  const itemDescription = catalogueForm.description.value;
-  const imageLink = catalogueForm.image.value;
-  const category = catalogueForm.category.value;
+  const title = catelogueForm.title.value;
+  const standardSize = catelogueForm.size.value;
+  const standardWeight = catelogueForm.weight.value;
+  const itemDescription = catelogueForm.description.value;
+  const imageLink = catelogueForm.image.value;
+  const category = catelogueForm.category.value;
  
   event.preventDefault();
   
@@ -40,7 +40,7 @@ function createCatelogueItemProduct(
     standardWeight,
     itemDescription,
     imageLink,
-    catagory: category,
+    category,
   };
 }
 

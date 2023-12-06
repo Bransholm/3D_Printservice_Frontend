@@ -3,8 +3,8 @@ import {
   updateStockData,
 } from "./create-update-forms.js";
 
-import { createNewMaterial } from "./create-new-stock-item.js";
-import { createNewCatelogueItem } from "./create-new-catalogue-item.js";
+// import { createNewMaterial } from "./create-new-stock-item.js";
+// import { createNewCatelogueItem } from "./create-new-catalogue-item.js";
 
 function launchAdminFunctions() {
   console.log("Admin site is working");
@@ -12,13 +12,21 @@ function launchAdminFunctions() {
 }
 
 function activateEventListeners() {
-  
-  //document.querySelector("#addNewMaterialForm").addEventListener("submit", () => createNewMaterial(event));
- document.querySelector("#addToCatalogueForm").addEventListener("submit", createNewCatelogueItem);
-  }
+  document.querySelector("#test_submit_button").addEventListener("click", test);
+}
 
 
-  
+
+function test(event) {
+  event.preventDefault();
+  const form = document.querySelector("#test_form");
+
+  const testValue = form.someText.value;
+
+  console.log(testValue);
+}
+
+
 
 
 export { launchAdminFunctions };
