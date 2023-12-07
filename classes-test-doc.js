@@ -231,7 +231,7 @@ function viewButtonClicked(instance) {
 <article>
     <article>
     <h3>Produkt Navn: ${instance.title}</h3>
-    <img src="${instance.imageLink}" alt="foto"/>
+    <img src="./images${instance.imageLink}" alt="Produktbillede ${instance.title}"/>
     <p>Kategori: ${instance.category}</p>
     <p>Produkt Beskrivelse: ${instance.itemDescription}</p>
     <p>Standard Størrelse: ${instance.standardSize} cm</p>
