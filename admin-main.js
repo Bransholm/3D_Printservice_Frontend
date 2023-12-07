@@ -1,3 +1,4 @@
+"use strict"
 import {
   extractStockDataForUpdate,
   updateStockData,
@@ -6,7 +7,11 @@ import {
 import { createNewMaterial } from "./create-new-stock-item.js";
 import { createNewCatalogueItem } from "./create-new-catalogue-item.js";
 
-function launchAdminFunctions() {
+
+window.addEventListener("load", startAdmin)
+
+
+function startAdmin() {
   console.log("Admin site is working");
   activateEventListeners();
 }
@@ -29,4 +34,4 @@ function test(event) {
 
 
 
-export { launchAdminFunctions };
+export { startAdmin as launchAdminFunctions };
