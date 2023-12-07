@@ -7,7 +7,7 @@ window.addEventListener("load", startAdmin);
 // } from "./create-update-forms.js";
 
 // import { createNewMaterial } from "./create-new-stock-item.js";
-// import { createNewCatalogueItem } from "./create-new-catalogue-item.js";
+import { createNewCatalogueItem } from "./create-update-forms/create-new-catelogue-item.js";
 
 
 function startAdmin() {
@@ -16,9 +16,9 @@ function startAdmin() {
 }
 
 function activateEventListeners() {
-  // document
-  //   .querySelector("#test_submit_button")
-  //   .addEventListener("submit", test);
+  document
+    .querySelector("#addToCatalogueForm")
+    .addEventListener("submit", createNewCatalogueItem);
 
   document.querySelector("#test_form").addEventListener("submit", test);
 }
