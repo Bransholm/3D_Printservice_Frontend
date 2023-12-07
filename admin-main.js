@@ -1,14 +1,13 @@
-"use strict"
-import {
-  extractStockDataForUpdate,
-  updateStockData,
-} from "./create-update-forms.js";
+"use strict";
+window.addEventListener("load", startAdmin);
 
-import { createNewMaterial } from "./create-new-stock-item.js";
-import { createNewCatalogueItem } from "./create-new-catalogue-item.js";
+// import {
+//   extractStockDataForUpdate,
+//   updateStockData,
+// } from "./create-update-forms.js";
 
-
-window.addEventListener("load", startAdmin)
+// import { createNewMaterial } from "./create-new-stock-item.js";
+// import { createNewCatalogueItem } from "./create-new-catalogue-item.js";
 
 
 function startAdmin() {
@@ -17,21 +16,20 @@ function startAdmin() {
 }
 
 function activateEventListeners() {
-  document.querySelector("#test_submit_button").addEventListener("click", test);
+  // document
+  //   .querySelector("#test_submit_button")
+  //   .addEventListener("submit", test);
+
+  document.querySelector("#test_form").addEventListener("submit", test);
 }
 
-
-
 function test(event) {
+  console.log(event);
   event.preventDefault();
-  const form = document.querySelector("#test_form");
 
-  const testValue = form.someText.value;
+  const testValue = event.target.someText.value;
 
   console.log(testValue);
 }
-
-
-
 
 export { startAdmin as launchAdminFunctions };
