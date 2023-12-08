@@ -181,9 +181,9 @@ function viewButtonClicked(instance) {
     <form>
 
     <div id="selectAmount">
-    <button class="add-extra-product"> - </button>
-    <p>Antal valgte 1</p>
-    <button class="remove-another-product"> + </button>
+    <button class="btn_increment_amount"> + </button>
+    <p id="selectProductAmount">Antal 1 stk.</p>
+    <button class="btn_decrement_amount"> - </button>
     </div>
 
     <div id="selectMaterial">
@@ -194,6 +194,8 @@ function viewButtonClicked(instance) {
                 <option value="B">MaterialeB</option>
                 <option value="C">MaterialeC</option>
                 <option value="D">MaterialeD</option>
+                </select>
+
 
       <label for="chosenMaterial">Farve</label>
                 <select name="material" id="chosenMaterial">
@@ -201,15 +203,14 @@ function viewButtonClicked(instance) {
                 <option value="B">FarveB</option>
                 <option value="C">FarveC</option>
                 <option value="D">FarveD</option>
+                </select>
+
     </div>
     <div id="selectProductSize">
+    <p id="showSliderSize">Valgte højde 15 cm</p>
        <label for="chosenSize">Størrelse</label>
-                <select name="material" id="chosenMaterial">
-                <option value="A">5cm</option>
-                <option value="B">15cm</option>
-                <option value="C">22cm</option>
-                <option value="D">30cm</option>
-                </select>
+                <input type="range" min="1" max="30" value="15" name="size" id="chosenSize">
+               
     </div>
 
     <p id="productPrice"> Udrgenede vægt pr. produkt: XXXX gram </p>
@@ -225,8 +226,63 @@ function viewButtonClicked(instance) {
 
 </article>
 `;
-
   document
     .querySelector("#produkt_tilpasning")
     .insertAdjacentHTML("beforeend", productInfromationHTML);
+
+  document
+    .querySelector("#selectProductSize")
+    .addEventListener("change", setProductSize);
+
+  document
+    .querySelector(".btn_increment_amount")
+    .addEventListener("click", incrementProductAmount);
+  document
+    .querySelector(".btn_decrement_amount")
+    .addEventListener("click", decrementProductAmount);
+}
+
+function setProductSize(event) {
+  size = event.target.value;
+  document.querySelector("#showSliderSize").innerHTML = "";
+  console.log("The size is ", event.target.value, " CM");
+  document.querySelector(
+    "#showSliderSize"
+  ).innerHTML = `Valgte højde ${size} cm`;
+
+  setProductPrice(size);
+}
+
+function setProductPrice() {
+  document.querySelector("#productPrice").innerHTML = "";
+  const price = size * 1.8 * amount;
+  document.querySelector(
+    "#productPrice"
+  ).innerHTML = `Samlet Pris: ${price} DKK`;
+}
+
+let size;
+let amount = 1;
+
+function incrementProductAmount(event) {
+  event.preventDefault();
+  amount += 1;
+  showSelectedAmount();
+}
+
+function decrementProductAmount(event) {
+  event.preventDefault();
+  if (amount > 1) {
+    amount -= 1;
+    showSelectedAmount();
+  }
+}
+
+function showSelectedAmount() {
+  document.querySelector("#selectProductAmount").innerHTML = "";
+  document.querySelector(
+    "#selectProductAmount"
+  ).innerHTML = `Antal ${amount} stk`;
+
+  setProductPrice();
 }
