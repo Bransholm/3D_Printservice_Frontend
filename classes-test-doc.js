@@ -1,3 +1,6 @@
+import { catalogueItem } from "./view-render-classes/catalogue-class.js";
+import { stockMaterial } from "./view-render-classes/stock-class.js";
+
 // Denne funktion laver klasserne for vores katalog-vare
 export function createCatalogClasses(dataList) {
   console.log("No.1 createCatalogClasses");
@@ -38,7 +41,6 @@ function callRenderMethod(listOfInstances) {
     document
       .querySelector("#produkt_overblik article:last-child .btn-view-product")
       .addEventListener("click", () => viewButtonClicked(instance));
-
   }
 }
 
@@ -56,71 +58,8 @@ let stockMaterialInstance;
 
 function createInstanceOfStock() {
   console.log("no2. createInsanceOfStock");
-  stockMaterialInstance = new StockMaterial(stockMaterialObject);
+  stockMaterialInstance = new stockMaterial(stockMaterialObject);
   console.log("Render material: ", stockMaterialInstance.render());
-}
-
-class StockMaterial {
-  constructor(stockObject) {
-    this.name = stockObject.Name;
-    this.material = stockObject.Material;
-    this.colour = stockObject.Colour;
-    this.gramInStock = stockObject.GramInStock;
-    this.minAmountReached = stockObject.MinAmountReached;
-    this.salesPrize = stockObject.SalesPrize;
-  }
-
-  render() {
-    const stockHTML =
-      /*html*/
-      `
-    <article>
-    <h3>Produkt Navn: ${this.name}</h3>
-    <p>Materiale: ${this.material}</p>
-    <p>Farve: ${this.colour} cm</p>
-    <:> Mængde på lager: ${this.gramInStock} gram</p>
-    <p>Minimum nået: ${this.minAmountReached} </p>
-    <p>Salgspris: ${this.salesPrize} dkk/gram</p>
-    </article>
-    `;
-    return stockHTML;
-  }
-}
-
-// Note til os selv. Denne klasse skal vel kun rigtigt ses af Admin, som skal kunne opdatere dem... - Lukas
-
-// Eksempel på en klasse.
-class catalogueItem {
-  // Klassens constructor tager vores fetchede-data-objekt som argument og sætter Klassens Atrributter lig Objektets properties.
-  constructor(catalogueObject) {
-    this.id = catalogueObject.Id;
-    this.title = catalogueObject.Title;
-    this.standardSize = catalogueObject.StandardSize;
-    this.standardWeight = catalogueObject.StandardWeight;
-    this.itemDescription = catalogueObject.ItemDescription;
-    this.imageLink = catalogueObject.ImageLink;
-    this.category = catalogueObject.Category;
-  }
-
-  // I klassens render-metode bliver HTML'en til vores DOM lavet.
-  render() {
-    const catalogueHTML =
-      /*html*/
-      `
-    <article>
-    <h3>Produkt Navn: ${this.title}</h3>
-    <img src="./images/${this.imageLink}" alt="Produktbillede ${this.title}"/>
-    <p>Kategori: ${this.category}</p>
-    <p>Standard Størrelse: ${this.standardSize} cm</p>
-    <p>Standard Vægt: ${this.standardWeight} gram</p>
-    <p>Produkt Beskrivelse: ${this.itemDescription} </p>
-    <button class="btn-view-product" >Se Produkt</button>
-    </article>
-    `;
-
-    return catalogueHTML;
-  }
-  // Vi skal have en metode til at kunne ændre i samtlige Attirbutter og opdatere databasen der efter - Lukas.
 }
 
 function createInstanceOfProdut() {
@@ -172,7 +111,7 @@ class product {
 
     // Kalder constructor af den anden parrent-class (StockMaterial)... her bruger vi "compositions" da JS ikke KAN arve fra 2 klasser
     // StockMaterial.call(this, stockObject);
-    this.stock = new StockMaterial(stockObject);
+    this.stock = new stockMaterial(stockObject);
     this.catalogue = new catalogueItem(productObjekt);
 
     // Attributterne fra det catalog-varen
@@ -221,8 +160,8 @@ class product {
 
 function viewButtonClicked(instance) {
   console.log("view button clicked: ", instance.id);
-  document.querySelector("#produkt_overblik").innerHTML = "";
-  // document.querySelector("#produkt_tilpasning").innerHTML = "";
+  // document.querySelector("#produkt_overblik").innerHTML = "";
+  document.querySelector("#produkt_tilpasning").innerHTML = "";
 
   // NB: Vi skal lave et fetch som tjekker om en side er løbet tør for noget bestemt...
   const productInfromationHTML =
@@ -231,7 +170,7 @@ function viewButtonClicked(instance) {
 <article>
     <article>
     <h3>Produkt Navn: ${instance.title}</h3>
-    <img src="${instance.imageLink}" alt="foto"/>
+    <img src="../images/${instance.imageLink}" alt="Produktbillede ${instance.title}"/>
     <p>Kategori: ${instance.category}</p>
     <p>Produkt Beskrivelse: ${instance.itemDescription}</p>
     <p>Standard Størrelse: ${instance.standardSize} cm</p>

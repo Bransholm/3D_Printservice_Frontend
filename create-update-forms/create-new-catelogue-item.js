@@ -66,10 +66,12 @@ async function postCatelogueItem(data) {
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
+    } else {
+      result = response.ok;
+      console.log(result);
     }
 
-    const result = await response.json();
-    console.log(result);
+    // const result = await response.json();
   } catch (error) {
     // Handle errors here
     console.error("Error:", error);
