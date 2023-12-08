@@ -1,5 +1,5 @@
 // import { stringify } from "querystring";
-const endpoint = "https://3dprintservice.azurewebsites.net/";
+const endpoint = "http://localhost:4811/";
 
 // This function creates a new catalogue item - is only accessible for the admin.
 function createNewCatalogueItem(event) {
@@ -64,14 +64,15 @@ async function postCatelogueItem(data) {
       body: JSON.stringify(data),
     });
 
+    console.log(response);
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     } else {
-      result = response.ok;
+      const result = await response.json();
       console.log(result);
     }
 
-    // const result = await response.json();
+    return;
   } catch (error) {
     // Handle errors here
     console.error("Error:", error);
