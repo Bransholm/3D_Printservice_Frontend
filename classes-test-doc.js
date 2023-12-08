@@ -1,8 +1,8 @@
-import { catalogueItem } from "./view-render-classes/catalogue-class.js";
+// import { catalogueItem } from "./view-render-classes/catalogue-class.js";
 import { stockMaterial } from "./view-render-classes/stock-class.js";
 
 // Denne funktion laver klasserne for vores katalog-vare
-export function createCatalogClasses(dataList) {
+export function createCatalogClasses(dataList, classType, htmlId) {
   console.log("No.1 createCatalogClasses");
   // Opret en tom liste så hvert objekt vi fetcher kan komme ind som en instans af en klasse
   const classList = [];
@@ -10,56 +10,36 @@ export function createCatalogClasses(dataList) {
   // Loop på listen af vores fetchede data:
   for (const object of dataList) {
     // Hvert objekt i listen bliver nu lavet til en ny instans.
-    const newInstance = new catalogueItem(object);
+    const newInstance = new classType (object);
 
     // Enstansen bliver puttet i vores nye liste.
     classList.push(newInstance);
   }
-
-  // Her laver jeg et instance - af stock.
-  createInstanceOfStock();
+  console.log("classlist: ", classList);
 
   //Her køres render metoden for alle vores instances af catalogue klassen.
   console.log(classList);
-  callRenderMethod(classList);
+  callRenderMethod(classList, htmlId);
 
   // Her laver jeg en instance af Product...
-  createInstanceOfProdut();
+  // createInstanceOfProdut();
 }
 
-function callRenderMethod(listOfInstances) {
+function callRenderMethod(listOfInstances, htmlId) {
   console.log("No3. CallRenderMethod");
-  document.querySelector("#produkt_overblik").innerHTML = "";
+  document.querySelector(`#${htmlId}`).innerHTML = "";
   for (const instance of listOfInstances) {
     const classHTML = instance.render();
     //Hvorfor er vores HMTL på danks?!
 
     document
-      .querySelector("#produkt_overblik")
+      .querySelector(`#${htmlId}`)
       .insertAdjacentHTML("beforeend", classHTML);
 
     document
-      .querySelector("#produkt_overblik article:last-child .btn-view-product")
+      .querySelector(`#${htmlId} article:last-child .btn-view-product`)
       .addEventListener("click", () => viewButtonClicked(instance));
   }
-}
-
-// PT.lokal-global variabel.
-const stockMaterialObject = {
-  Name: "Sort Hård",
-  Material: "PLA",
-  Colour: "black",
-  GramInStock: "1000",
-  MinAmountReached: 0,
-  SalesPrize: "200",
-};
-
-let stockMaterialInstance;
-
-function createInstanceOfStock() {
-  console.log("no2. createInsanceOfStock");
-  stockMaterialInstance = new stockMaterial(stockMaterialObject);
-  console.log("Render material: ", stockMaterialInstance.render());
 }
 
 function createInstanceOfProdut() {
@@ -88,10 +68,10 @@ function createInstanceOfProdut() {
   //   SalesPrize: "200"
 
   // Her laves instansen...
-  const productInstance = new product(productObject, stockMaterialObject);
+  // const productInstance = new product(productObject, stockMaterialObject);
   // Her kalder jeg render-metoden for produkt klassen for at se HTML'en som metoden returnere.
 
-  console.log(productInstance.render());
+  // console.log(productInstance.render());
 }
 
 /* MIN TANKE er at arve fra 2 klasser - fordi det er sådan mit ERD ser ud - det giver mening at genbruge... 
@@ -111,8 +91,9 @@ class product {
 
     // Kalder constructor af den anden parrent-class (StockMaterial)... her bruger vi "compositions" da JS ikke KAN arve fra 2 klasser
     // StockMaterial.call(this, stockObject);
-    this.stock = new stockMaterial(stockObject);
-    this.catalogue = new catalogueItem(productObjekt);
+
+    // this.stock = new stockMaterial(stockObject);
+    // this.catalogue = new catalogueItem(productObjekt);
 
     // Attributterne fra det catalog-varen
     // this.catalogueId = productObjekt.Id;
@@ -254,8 +235,10 @@ function setProductSize(event) {
 }
 
 function setProductPrice() {
+  const tax = 1.25;
+  const shipping = 39;
   document.querySelector("#productPrice").innerHTML = "";
-  const price = size * 1.8 * amount;
+  const price = size * 1.8 * amount * tax + shipping;
   document.querySelector(
     "#productPrice"
   ).innerHTML = `Samlet Pris: ${price} DKK`;

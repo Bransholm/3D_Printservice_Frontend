@@ -2,6 +2,8 @@
 
 import { startViews } from "./spa-router.js";
 import { getCatalogueData, getStockData } from "./fetch-data.js";
+import { catalogueItem } from "./view-render-classes/catalogue-class.js";
+
 import { catalogueData, stockData } from "./tempoary-data-doc.js";
 
 // Modules for testing af klasse opbygning...
@@ -25,7 +27,7 @@ async function getAllData() {
   // console.log(CatalougeItems);
 
   // console.log(catalogueData);
-  createCatalogClasses(CatalougeItems);
+  createCatalogClasses(CatalougeItems, catalogueItem, "produkt_overblik");
 }
 
 function activateEventListeners() {
