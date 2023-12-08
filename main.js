@@ -1,7 +1,11 @@
 "use strict";
 
 import { startViews } from "./spa-router.js";
-import { getCatalogueData, getStockData } from "./fetch-data.js";
+import {
+  getCatalogueData,
+  getStockData,
+  getAvailableStockData,
+} from "./fetch-data.js";
 import { catalogueItem } from "./view-render-classes/catalogue-class.js";
 
 import { catalogueData, stockData } from "./tempoary-data-doc.js";
@@ -22,8 +26,8 @@ function start() {
 // Dette er en test funktion der skal se om vi kan hente data:
 async function getAllData() {
   const CatalougeItems = await getCatalogueData();
-  // const stockData = await getStockData();
-  // console.log(stockData);
+  const stockInStorage = await getAvailableStockData();
+  console.log(stockInStorage);
   // console.log(CatalougeItems);
 
   // console.log(catalogueData);

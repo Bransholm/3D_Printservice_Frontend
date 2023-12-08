@@ -12,4 +12,11 @@ async function getStockData() {
   return stockData;
 }
 
-export { getCatalogueData, getStockData };
+async function getAvailableStockData(){
+  const response = await fetch(`${endpoint}/avialableStock`);
+  const availableStockData = await response.json();
+  return availableStockData;
+}
+
+
+export { getCatalogueData, getStockData, getAvailableStockData };
