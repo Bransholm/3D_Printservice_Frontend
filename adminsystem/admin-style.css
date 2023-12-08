@@ -26,7 +26,7 @@ header {
     grid-row: 1; /* First row */
     border: 1px solid black;
     padding: 10px;
-    min-height: 1%;
+    text-align: center;
 }
 
 nav {
@@ -44,5 +44,4 @@ main {
     border-right: 1px solid black;
     border-bottom: 1px solid black;
     padding: 10px;
-
 }
