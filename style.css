@@ -77,6 +77,11 @@ footer {
     gap: 50px;
 }
 
+/* Change cursor to a pointer class */
+.change_cursor_to_a_pointer_on_hover:hover {
+    cursor: pointer;
+}
+
 /* grid */
 /* .grid-container {
   display: grid;
