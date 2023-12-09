@@ -209,6 +209,8 @@ function activateColour(colour, id) {
   document.querySelector("#chosenColour").add(newColourOption);
 }
 
+
+
 // function showSelectableMaterials(stockInStorage) {
 //   // Alle farver skal skjules...
 
