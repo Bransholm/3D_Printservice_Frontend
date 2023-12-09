@@ -15,7 +15,10 @@ import { catalogueData, stockData } from "./tempoary-data-doc.js";
 import { createCatalogClasses } from "./instance-creator.js";
 import { callRenderMethod } from "./render-controller.js";
 
+
 window.addEventListener("load", start);
+
+
 
 function start() {
   startViews();
