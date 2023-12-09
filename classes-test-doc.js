@@ -87,7 +87,7 @@ Er det her hovedpinen værd?
 export function viewButtonClicked(instance) {
   console.log("view button clicked: ", instance.id);
   // document.querySelector("#produkt_overblik").innerHTML = "";
-  document.querySelector("#produkt_tilpasning").innerHTML = "";
+  document.querySelector("#product_id").innerHTML = "";
 
   // NB: Vi skal lave et fetch som tjekker om en side er løbet tør for noget bestemt...
   const productInfromationHTML =
@@ -159,7 +159,7 @@ export function viewButtonClicked(instance) {
 </article>
 `;
   document
-    .querySelector("#produkt_tilpasning")
+    .querySelector("#product_id")
     .insertAdjacentHTML("beforeend", productInfromationHTML);
 
   document
