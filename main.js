@@ -32,10 +32,7 @@ function start() {
 async function getAllData() {
   const catalougeItemObjects = await getCatalogueData();
  
- 
 
-  
-  
   // showSelectableMaterials(stockInStorage);
 
   showCatalougeToCustomers(catalougeItemObjects);
