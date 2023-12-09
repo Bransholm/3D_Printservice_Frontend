@@ -14,8 +14,8 @@ async function getStockData() {
 
 async function getAvailableStockData(){
   const response = await fetch(`${endpoint}/availableStock`);
-  const availableStockData = await response.json();
-  return availableStockData;
+  const stockData = await response.json();
+  return stockData;
 }
 
 

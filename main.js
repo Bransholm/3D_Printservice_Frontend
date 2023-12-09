@@ -28,10 +28,24 @@ function start() {
 // Dette er en test funktion der skal se om vi kan hente data:
 async function getAllData() {
   const catalougeItemObjects = await getCatalogueData();
-  // const stockInStorage = await getAvailableStockData();
-  // console.log(stockInStorage);
-showCatalougeToCustomers(catalougeItemObjects);
+ 
+ 
+
+  
+  
+  // showSelectableMaterials(stockInStorage);
+
+  showCatalougeToCustomers(catalougeItemObjects);
 }
+
+
+
+
+
+
+
+
+
 
 function showCatalougeToCustomers(catalougeItemObjects) {
   const classList = createCatalogClasses(catalougeItemObjects, catalogueItem);
