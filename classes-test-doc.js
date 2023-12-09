@@ -176,16 +176,22 @@ export async function viewButtonClicked(instance) {
   document
     .querySelector("#chosenColour")
     .addEventListener("change", setProductColour);
-}
+    
+    
+// Set product colour - for the drop down 
+activateColour()
+
 
 function setProductMaterial(event) {
   const selectedMaterial = event.target.value;
   console.log("selected material ", selectedMaterial);
 
+  document.querySelector("#chosenColour").innerHTML = "";
+  
   for (const material of stockInStorage) {
     console.log("get name: ", material.Name);
     if (selectedMaterial === material.Name.toLowerCase()) {
-      activateColour(material.Colour);
+      activateColour(material.Colour, material.Id);
     }
   }
 }
@@ -195,9 +201,9 @@ function setProductMaterial(event) {
 //     .insertAdjacentElement("beforeend", html);
 // }
 
-function activateColour(colour) {
+function activateColour(colour, id) {
   const newColourOption = document.createElement("option");
-  newColourOption.value = colour;
+  newColourOption.value = id;
   newColourOption.text = colour;
 
   console.log(colour);
