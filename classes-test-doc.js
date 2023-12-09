@@ -1,3 +1,4 @@
+import { getAvailableStockData } from "./fetch-data.js";
 
 // // Denne funktion laver klasserne for vores katalog-vare
 // export function createCatalogClasses(dataList, classType, htmlId) {
@@ -83,11 +84,15 @@ Er det her hovedpinen værd?
 
 // Produkt klassen skal (ned)arve fra catalogItem (og StockMaterial) klassen - derfor skal der skrives "extends"
 
+let stockInStorage;
 
-export function viewButtonClicked(instance) {
+export async function viewButtonClicked(instance) {
   console.log("view button clicked: ", instance.id);
   // document.querySelector("#produkt_overblik").innerHTML = "";
   document.querySelector("#product_id").innerHTML = "";
+
+  stockInStorage = await getAvailableStockData();
+  console.log("The available stock", stockInStorage);
 
   // NB: Vi skal lave et fetch som tjekker om en side er løbet tør for noget bestemt...
   const productInfromationHTML =
@@ -122,16 +127,8 @@ export function viewButtonClicked(instance) {
                 </select>
 
 
-      <label for="chosenMaterial">Farve</label>
-                <select name="material" id="chosenMaterial">
-                <option value="rød">rød</option>
-                <option value="grøn">grøn</option>
-                <option value="blå">blå</option>
-                <option value="violet">violet</option>
-                <option value="gul">gul</option>
-                <option value="orange">orange</option>
-                <option value="sort">sort</option>
-                <option value="hvid">hvid</option>
+      <label for="chosenColour">Farve</label>
+                <select name="colour" id="chosenColour">
                 </select>
 
 
@@ -172,6 +169,72 @@ export function viewButtonClicked(instance) {
   document
     .querySelector(".btn_decrement_amount")
     .addEventListener("click", decrementProductAmount);
+
+  document
+    .querySelector("#chosenMaterial")
+    .addEventListener("change", setProductMaterial);
+  document
+    .querySelector("#chosenColour")
+    .addEventListener("change", setProductColour);
+}
+
+function setProductMaterial(event) {
+  const selectedMaterial = event.target.value;
+  console.log("selected material ", selectedMaterial);
+
+  for (const material of stockInStorage) {
+    console.log("get name: ", material.Name);
+    if (selectedMaterial === material.Name.toLowerCase()) {
+      activateColour(material.Colour);
+    }
+  }
+}
+
+//   document
+//     .querySelector("#chosenColour")
+//     .insertAdjacentElement("beforeend", html);
+// }
+
+function activateColour(colour) {
+  const newColourOption = document.createElement("option");
+  newColourOption.value = colour;
+  newColourOption.text = colour;
+
+  console.log(colour);
+  console.log(newColourOption);
+  document.querySelector("#chosenColour").add(newColourOption);
+}
+
+// function showSelectableMaterials(stockInStorage) {
+//   // Alle farver skal skjules...
+
+//   const allColours = [
+//     "rød",
+//     "grøn",
+//     "blå",
+//     "violet",
+//     "gul",
+//     "orange",
+//     "sort",
+//     "hvid",
+//   ];
+//   const stockType = ["blød", "elastisk", "hård"];
+
+//   for (const stock of stockInStorage) {
+//     console.log(stock.Name.toLowerCase(), "_", stock.Colour.toLowerCase());
+//     const stockName = stock.Name.toLowerCase();
+//     const stockColour = stock.Colour.toLowerCase();
+//     for (const colour of allColours){
+//       if (colour === stockColour) {
+//         //fjern den class der skjuler alt
+//       }
+//   }
+// }
+
+// }
+
+function setProductColour(event) {
+  console.log("product colour ", event.target.colour.value);
 }
 
 function setProductSize(event) {
