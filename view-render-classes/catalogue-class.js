@@ -12,6 +12,7 @@ export class catalogueItem {
   }
 
   // I klassens render-metode bliver HTML'en til vores DOM lavet.
+  // Catalog DOM
   render() {
     const catalogueHTML =
       /*html*/

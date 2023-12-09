@@ -8,7 +8,7 @@ function startViews() {
 
 function showChange() {
   // default view
-  let hashLink = "#produkter";
+  let hashLink = "#products";
 
   if (location.hash) {
     // Use hash value as link

@@ -35,7 +35,7 @@ showCatalougeToCustomers(catalougeItemObjects);
 
 function showCatalougeToCustomers(catalougeItemObjects) {
   const classList = createCatalogClasses(catalougeItemObjects, catalogueItem);
-  callRenderMethod(classList, "produkt_overblik");
+  callRenderMethod(classList, "product_catalog");
 }
 
 
@@ -55,9 +55,9 @@ function showDialogFaq() {
 }
 
 function showDialogHandelsbetingelser() {
-  document.querySelector("#dialog-handelsbetingelser").showModal();
+  document.querySelector("#dialog-tradeing-terms").showModal();
 }
 
 function showDialogDatapolitik() {
-  document.querySelector("#dialog-datapolitik").showModal();
+  document.querySelector("#dialog-data-policy").showModal();
 }
