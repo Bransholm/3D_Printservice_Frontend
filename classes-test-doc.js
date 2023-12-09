@@ -176,30 +176,28 @@ export async function viewButtonClicked(instance) {
   document
     .querySelector("#chosenColour")
     .addEventListener("change", setProductColour);
-    
-    
-// Set product colour - for the drop down 
-// activateColour()
 
+  // Set product colour - for the drop down
+  // activateColour()
 
-function setProductMaterial(event) {
-  const selectedMaterial = event.target.value;
-  console.log("selected material ", selectedMaterial);
+  function setProductMaterial(event) {
+    const selectedMaterial = event.target.value;
+    console.log("selected material ", selectedMaterial);
 
-  document.querySelector("#chosenColour").innerHTML = "";
-  
-  for (const material of stockInStorage) {
-    console.log("get name: ", material.Name);
-    if (selectedMaterial === material.Name.toLowerCase()) {
-      activateColour(material.Colour, material.Id);
+    document.querySelector("#chosenColour").innerHTML = "";
+
+    for (const material of stockInStorage) {
+      console.log("get name: ", material.Name);
+      if (selectedMaterial === material.Name.toLowerCase()) {
+        activateColour(material.Colour, material.Id);
+      }
     }
   }
-}
 
-//   document
-//     .querySelector("#chosenColour")
-//     .insertAdjacentElement("beforeend", html);
-// }
+  //   document
+  //     .querySelector("#chosenColour")
+  //     .insertAdjacentElement("beforeend", html);
+}
 
 function activateColour(colour, id) {
   const newColourOption = document.createElement("option");
