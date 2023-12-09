@@ -71,16 +71,21 @@ footer {
     text-decoration: none;
 }
 
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 50px;
+}
 
 /* grid */
-.grid-container {
+/* .grid-container {
   display: grid;
   grid-template-columns: 2fr 2fr;
   gap: 1em;
   padding: 1em;
-}
+} */
 
-@media (min-width: 550px) {
+/* @media (min-width: 550px) {
   .grid-container {
     grid-template-columns: 1fr 1fr;
   }
@@ -96,7 +101,7 @@ footer {
   .grid-container {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
-} 
+}  */
 
 
 
