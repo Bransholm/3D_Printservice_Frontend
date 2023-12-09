@@ -28,17 +28,48 @@ function start() {
 // Dette er en test funktion der skal se om vi kan hente data:
 async function getAllData() {
   const catalougeItemObjects = await getCatalogueData();
-  // const stockInStorage = await getAvailableStockData();
-  // console.log(stockInStorage);
-showCatalougeToCustomers(catalougeItemObjects);
+  const stockInStorage = await getAvailableStockData();
+  console.log(stockInStorage);
+  showSelectableMaterials(stockInStorage);
+
+  showCatalougeToCustomers(catalougeItemObjects);
 }
+
+function showSelectableMaterials(stockInStorage) {
+  // Alle farver skal skjules...
+  
+  const allColours = [
+    "rød",
+    "grøn",
+    "blå",
+    "violet",
+    "gul",
+    "orange",
+    "sort",
+    "hvid",
+  ];
+  const stockType = ["blød", "elastisk", "hård"];
+
+  for (const stock of stockInStorage) {
+    console.log(stock.Name.toLowerCase(), "_", stock.Colour.toLowerCase());
+    const stockName = stock.Name.toLowerCase();
+    const stockColour = stock.Colour.toLowerCase();
+    for (const colour of allColours){
+      if (colour === stockColour) {
+        //fjern den class der skjuler alt
+      }
+  }
+}
+
+
+}
+
+
 
 function showCatalougeToCustomers(catalougeItemObjects) {
   const classList = createCatalogClasses(catalougeItemObjects, catalogueItem);
   callRenderMethod(classList, "produkt_overblik");
 }
-
-
 
 function activateEventListeners() {
   document.querySelector("#faq-link").addEventListener("click", showDialogFaq);

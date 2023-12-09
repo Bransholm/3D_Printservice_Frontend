@@ -116,20 +116,26 @@ export function viewButtonClicked(instance) {
     
     <label for="chosenMaterial">Materiale</label>
                 <select name="material" id="chosenMaterial">
-                <option value="A">MaterialeA</option>
-                <option value="B">MaterialeB</option>
-                <option value="C">MaterialeC</option>
-                <option value="D">MaterialeD</option>
+                <option value="blød">Blød</option>
+                <option value="elastisk">Elastisk</option>
+                <option value="hård">Hård</option>
                 </select>
 
 
       <label for="chosenMaterial">Farve</label>
                 <select name="material" id="chosenMaterial">
-                <option value="A">FarveA</option>
-                <option value="B">FarveB</option>
-                <option value="C">FarveC</option>
-                <option value="D">FarveD</option>
+                <option value="rød">rød</option>
+                <option value="grøn">grøn</option>
+                <option value="blå">blå</option>
+                <option value="violet">violet</option>
+                <option value="gul">gul</option>
+                <option value="orange">orange</option>
+                <option value="sort">sort</option>
+                <option value="hvid">hvid</option>
                 </select>
+
+
+
 
     </div>
     <div id="selectProductSize">
