@@ -88,6 +88,7 @@ let size = 15;
 let amount = 1;
 let materialPrice = 155;
 let stockInStorage;
+let producthMaterialColour;
 
 export async function viewButtonClicked(instance) {
   console.log("view button clicked: ", instance.id);
@@ -97,8 +98,11 @@ export async function viewButtonClicked(instance) {
   stockInStorage = await getAvailableStockData();
   console.log("The available stock", stockInStorage);
 
+  // RUN ALL EVENTS AND GET THE PRICE!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+  // activteAllEvents();
+
   // NB: Vi skal lave et fetch som tjekker om en side er løbet tør for noget bestemt...
-  const productInfromationHTML =
+  const html =
     /*html*/
     `
 <article>
@@ -141,7 +145,7 @@ export async function viewButtonClicked(instance) {
     <div id="selectProductSize">
     <p id="showSliderSize">Valgte højde 15 cm</p>
        <label for="chosenSize">Størrelse</label>
-                <input type="range" min="1" max="30" value="15" name="size" id="chosenSize">
+                <input type="range" min="1" max="30" value="15" name="size" id="productSizeSlider">
                
     </div>
 
@@ -158,9 +162,7 @@ export async function viewButtonClicked(instance) {
 
 </article>
 `;
-  document
-    .querySelector("#product_id")
-    .insertAdjacentHTML("beforeend", productInfromationHTML);
+  document.querySelector("#product_id").insertAdjacentHTML("beforeend", html);
 
   document
     .querySelector("#selectProductSize")
@@ -176,8 +178,8 @@ export async function viewButtonClicked(instance) {
   document
     .querySelector("#chosenMaterial")
     .addEventListener("change", setProductMaterial);
-  
-    document
+
+  document
     .querySelector("#chosenColour")
     .addEventListener("change", setProductColour);
 
@@ -188,24 +190,38 @@ export async function viewButtonClicked(instance) {
   // Set product colour - for the drop down
   // activateColour()
 
-  function setProductMaterial(event) {
-    const selectedMaterial = event.target.value;
-    console.log("selected material ", selectedMaterial);
+  //set the item size
+  size = instance.standardSize;
+  console.log(size);
+  document.querySelector("#productSizeSlider").value = size;
+    document.querySelector(
+      "#showSliderSize"
+    ).innerHTML = `Valgte højde ${size} cm`;
+}
 
-    document.querySelector("#chosenColour").innerHTML = "";
+function setProductMaterial(event) {
+  const selectedMaterial = event.target.value;
+  console.log("selected material ", selectedMaterial);
 
-    for (const material of stockInStorage) {
-      // console.log("get name: ", material.Name);
-      if (selectedMaterial === material.Name.toLowerCase()) {
-        activateColour(material.Colour, material.Id);
+  document.querySelector("#chosenColour").innerHTML = "";
 
-        // this should only happen once!
-        materialPrice = material.SalesPrice;
-        console.log(materialPrice);
-      }
+  for (const material of stockInStorage) {
+    // console.log("get name: ", material.Name);
+    if (selectedMaterial === material.Name.toLowerCase()) {
+      activateColour(material.Colour, material.Id);
+
+      // this should only happen once!
+      materialPrice = material.SalesPrice;
+      console.log(materialPrice);
     }
-    setProductPrice();
   }
+  setProductPrice();
+}
+
+function activteAllEvents() {
+  setProductSize();
+  setProductMaterial();
+  setProductColour();
 }
 
 function activateColour(colour, id) {
@@ -218,6 +234,7 @@ function activateColour(colour, id) {
 
 function setProductColour(event) {
   console.log("product colour ID: ", event.target.value);
+  producthMaterialColour = event.target.value;
 }
 
 function setProductSize(event) {
@@ -228,8 +245,8 @@ function setProductSize(event) {
     "#showSliderSize"
   ).innerHTML = `Valgte højde ${size} cm`;
 
-  setProductPrice(size);
-}
+  setProductPrice();
+  }
 
 function setProductPrice() {
   const tax = 1.25;
@@ -239,7 +256,7 @@ function setProductPrice() {
     `Samlet pris = materiale ${materialPrice}, størrelse${size}, antal${amount}`
   );
   //der mangler en vloume udregning på baggrund af vægt i forhold til størrelsen.
-  const price = ((((materialPrice / 1000) * (size * 1.8)) * amount) * tax) + shipping;
+  const price = (materialPrice / 1000) * (size * 1.8) * amount * tax + shipping;
   // run op!
   document.querySelector(
     "#productPrice"
@@ -272,6 +289,11 @@ function showSelectedAmount() {
 function addProductToBasket() {
   console.log("this is your product! ");
 
+  // const catalogueID = catalogueItem.id;
+  const productSize = size;
+  const productAmount = amount;
+  const productPrice = 0;
+  const stockID = "x";
 
   /* 
  Sleceted Catalogue ITEM (the ID)
