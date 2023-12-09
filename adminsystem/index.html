@@ -16,19 +16,25 @@
     </div>
 
 <container id="functions"> Alt andet
- <section id="adminStockOverview">
-        <h2>Lager Status</h2>
-        <th>
-            <td>Materiale</td>
-            <td>Farve</td>
-            <td>Mængde på Lager</td>
-            <td>Udsolgts Status</td>
-        </th>
-        <tb>
-            Lager Materialerne
-        </tb>
+        <h2>Lager Status</h2> 
+      
+        <table>
+        <thead>
+            <th>Navn</th>
+            <th>Materiale</th>
+            <th>Farve</th>
+            <th>Mængde på Lager</th>
+            <th>Udsolgts Status</th>
+            <th>Salgspris</th>
+        </thead>
+        <tbody id="adminStockTableBody">
+        </tbody>
+      </table> 
+    
+    </br>
 
         <form id="addNewMaterialForm">
+          <containter id="stockMaterialOveriew" >
 
             <label for="StockName">Produktnavn</label>
             <input type="text" id="catalogueName" name="name" placeholder="Produktnavn" required/>
@@ -74,7 +80,7 @@
             <button type="submit" >Opret</button>
         </form>
         <div id="updateMaterialForm"></div>
-    </section>
+    </containter>
 
     <section id="catalougeOveriew">
         <h2>Katalog Oversigt</h2>
@@ -149,7 +155,7 @@
         </form>
        </container>
       
-       <container id="produkt_overblik" class="grid-container"> Hele Kataloget </container>
+       <container id="productOverview" class="grid-container"> Hele Kataloget </container>
 
 
         <div id="updateCatalougeForm"></div>

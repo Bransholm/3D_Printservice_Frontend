@@ -1,29 +1,27 @@
-// import { catalogueItem } from "./view-render-classes/catalogue-class.js";
-import { stockMaterial } from "./view-render-classes/stock-class.js";
 
-// Denne funktion laver klasserne for vores katalog-vare
-export function createCatalogClasses(dataList, classType, htmlId) {
-  console.log("No.1 createCatalogClasses");
-  // Opret en tom liste så hvert objekt vi fetcher kan komme ind som en instans af en klasse
-  const classList = [];
+// // Denne funktion laver klasserne for vores katalog-vare
+// export function createCatalogClasses(dataList, classType, htmlId) {
+//   console.log("No.1 createCatalogClasses");
+//   // Opret en tom liste så hvert objekt vi fetcher kan komme ind som en instans af en klasse
+//   const classList = [];
 
-  // Loop på listen af vores fetchede data:
-  for (const object of dataList) {
-    // Hvert objekt i listen bliver nu lavet til en ny instans.
-    const newInstance = new classType (object);
+//   // Loop på listen af vores fetchede data:
+//   for (const object of dataList) {
+//     // Hvert objekt i listen bliver nu lavet til en ny instans.
+//     const newInstance = new classType (object);
 
-    // Enstansen bliver puttet i vores nye liste.
-    classList.push(newInstance);
-  }
-  console.log("classlist: ", classList);
+//     // Enstansen bliver puttet i vores nye liste.
+//     classList.push(newInstance);
+//   }
+//   console.log("classlist: ", classList);
 
-  //Her køres render metoden for alle vores instances af catalogue klassen.
-  console.log(classList);
-  callRenderMethod(classList, htmlId);
+//   //Her køres render metoden for alle vores instances af catalogue klassen.
+//   console.log(classList);
+//   callRenderMethod(classList, htmlId);
 
-  // Her laver jeg en instance af Product...
-  // createInstanceOfProdut();
-}
+//   // Her laver jeg en instance af Product...
+//   // createInstanceOfProdut();
+// }
 
 function callRenderMethod(listOfInstances, htmlId) {
   console.log("No3. CallRenderMethod");
@@ -84,62 +82,9 @@ Er det her hovedpinen værd?
  */
 
 // Produkt klassen skal (ned)arve fra catalogItem (og StockMaterial) klassen - derfor skal der skrives "extends"
-class product {
-  constructor(productObjekt, stockObject) {
-    // super - er noget der reffere til conturctoren fra den parrent-class som vi arver/extender fra
-    // super(productObjekt);
 
-    // Kalder constructor af den anden parrent-class (StockMaterial)... her bruger vi "compositions" da JS ikke KAN arve fra 2 klasser
-    // StockMaterial.call(this, stockObject);
 
-    // this.stock = new stockMaterial(stockObject);
-    // this.catalogue = new catalogueItem(productObjekt);
-
-    // Attributterne fra det catalog-varen
-    // this.catalogueId = productObjekt.Id;
-    // Attributterne fra stock-materialet burde være her
-    this.stock_Id = productObjekt.Stock_Id;
-    // Attributterne unikke for produktet:
-    this.productSize = productObjekt.ProductSize;
-    this.standardWeight;
-
-    // Denne her bør være private og skal have en metode der udregner den - Lukas.
-    this.calculatedPrize = this.prizeCalculator(
-      this.StandardWeight,
-      this.ProductSize
-    );
-  }
-
-  get catalogue_Id() {
-    return this.catalogue.Id;
-  }
-
-  render() {
-    const productHTML =
-      /*html*/
-      `
-    <article>
-    <img href=${this.imageLink}>
-    <h3>Produkt Navn: ${this.title}</h3>
-    <p>Kategori: ${this.category}</p>
-    <p>Produkt Beskrivelse: ${this.itemDescription} </p>
-    <p>skal printes i : ${this.name}</p>
-    <p>Materiale: ${this.minAmountReachedaterial}</p>
-    <p>Farve: ${this.colour}</p>
-    <p>Produktets ønskede størrelse: ${this.productSize} cm</p>
-    <p>Produktets beregnede pris: ${this.calculatedPrize} dkk</p>
-    </article>
-    `;
-    return productHTML;
-  }
-
-  // Her er en metode som giver en attirbut, så en setter?
-  prizeCalculator(weight, height) {
-    return weight + height * 20;
-  }
-}
-
-function viewButtonClicked(instance) {
+export function viewButtonClicked(instance) {
   console.log("view button clicked: ", instance.id);
   // document.querySelector("#produkt_overblik").innerHTML = "";
   document.querySelector("#produkt_tilpasning").innerHTML = "";
