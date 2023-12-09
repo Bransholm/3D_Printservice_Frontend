@@ -35,7 +35,7 @@ showCatalougeToCustomers(catalougeItemObjects);
 
 function showCatalougeToCustomers(catalougeItemObjects) {
   const classList = createCatalogClasses(catalougeItemObjects, catalogueItem);
-  callRenderMethod(classList, "product_catalog");
+  callRenderMethod(classList, "product_catalogue");
 }
 
 function activateEventListeners() {
