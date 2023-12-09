@@ -74,16 +74,19 @@ function createInstanceOfProdut() {
 }
 
 /* MIN TANKE er at arve fra 2 klasser - fordi det er sådan mit ERD ser ud - det giver mening at genbruge... 
- attributter, men giver det meing at nedarve fra 2 klasser her egentlig, kan jeg ikke bare give den et par attributter mere manuelt...
+attributter, men giver det meing at nedarve fra 2 klasser her egentlig, kan jeg ikke bare give den et par attributter mere manuelt...
 
- Der er jo ikke en IS-A relation? Der er en HAS-A relation 
+Der er jo ikke en IS-A relation? Der er en HAS-A relation 
 Product has a catalog-item (og is an Item) og has a material.
 
 Er det her hovedpinen værd?
- */
+*/
 
 // Produkt klassen skal (ned)arve fra catalogItem (og StockMaterial) klassen - derfor skal der skrives "extends"
 
+let size = 15;
+let amount = 1;
+let materialPrice = 155;
 let stockInStorage;
 
 export async function viewButtonClicked(instance) {
@@ -173,9 +176,14 @@ export async function viewButtonClicked(instance) {
   document
     .querySelector("#chosenMaterial")
     .addEventListener("change", setProductMaterial);
-  document
+  
+    document
     .querySelector("#chosenColour")
     .addEventListener("change", setProductColour);
+
+  document
+    .querySelector(".btn-add-basket")
+    .addEventListener("click", addProductToBasket);
 
   // Set product colour - for the drop down
   // activateColour()
@@ -187,60 +195,29 @@ export async function viewButtonClicked(instance) {
     document.querySelector("#chosenColour").innerHTML = "";
 
     for (const material of stockInStorage) {
-      console.log("get name: ", material.Name);
+      // console.log("get name: ", material.Name);
       if (selectedMaterial === material.Name.toLowerCase()) {
         activateColour(material.Colour, material.Id);
+
+        // this should only happen once!
+        materialPrice = material.SalesPrice;
+        console.log(materialPrice);
       }
     }
+    setProductPrice();
   }
-
-  //   document
-  //     .querySelector("#chosenColour")
-  //     .insertAdjacentElement("beforeend", html);
 }
 
 function activateColour(colour, id) {
   const newColourOption = document.createElement("option");
   newColourOption.value = id;
   newColourOption.text = colour;
-
-  console.log(colour);
-  console.log(newColourOption);
+  // console.log(newColourOption);
   document.querySelector("#chosenColour").add(newColourOption);
 }
 
-
-
-// function showSelectableMaterials(stockInStorage) {
-//   // Alle farver skal skjules...
-
-//   const allColours = [
-//     "rød",
-//     "grøn",
-//     "blå",
-//     "violet",
-//     "gul",
-//     "orange",
-//     "sort",
-//     "hvid",
-//   ];
-//   const stockType = ["blød", "elastisk", "hård"];
-
-//   for (const stock of stockInStorage) {
-//     console.log(stock.Name.toLowerCase(), "_", stock.Colour.toLowerCase());
-//     const stockName = stock.Name.toLowerCase();
-//     const stockColour = stock.Colour.toLowerCase();
-//     for (const colour of allColours){
-//       if (colour === stockColour) {
-//         //fjern den class der skjuler alt
-//       }
-//   }
-// }
-
-// }
-
 function setProductColour(event) {
-  console.log("product colour ", event.target.colour.value);
+  console.log("product colour ID: ", event.target.value);
 }
 
 function setProductSize(event) {
@@ -258,14 +235,16 @@ function setProductPrice() {
   const tax = 1.25;
   const shipping = 39;
   document.querySelector("#productPrice").innerHTML = "";
-  const price = size * 1.8 * amount * tax + shipping;
+  console.log(
+    `Samlet pris = materiale ${materialPrice}, størrelse${size}, antal${amount}`
+  );
+  //der mangler en vloume udregning på baggrund af vægt i forhold til størrelsen.
+  const price = ((((materialPrice / 1000) * (size * 1.8)) * amount) * tax) + shipping;
+  // run op!
   document.querySelector(
     "#productPrice"
-  ).innerHTML = `Samlet Pris: ${price} DKK`;
+  ).innerHTML = `Samlet Pris: ${Math.round(price)} DKK`;
 }
-
-let size;
-let amount = 1;
 
 function incrementProductAmount(event) {
   event.preventDefault();
@@ -288,4 +267,21 @@ function showSelectedAmount() {
   ).innerHTML = `Antal ${amount} stk`;
 
   setProductPrice();
+}
+
+function addProductToBasket() {
+  console.log("this is your product! ");
+
+
+  /* 
+ Sleceted Catalogue ITEM (the ID)
+ Photo - the size?
+ Selected Material (the ID)
+ AMOUTN 
+ (+PRICE)
+ (Change Amount)
+ (Pop ITEM!)
+
+  
+  */
 }
