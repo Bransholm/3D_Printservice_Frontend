@@ -179,7 +179,7 @@ export async function viewButtonClicked(instance) {
     
     
 // Set product colour - for the drop down 
-activateColour()
+// activateColour()
 
 
 function setProductMaterial(event) {
