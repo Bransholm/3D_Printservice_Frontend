@@ -55,21 +55,21 @@ function showCatalougeToCustomers(catalougeItemObjects) {
 function activateEventListeners() {
   document.querySelector("#faq-link").addEventListener("click", showDialogFaq);
   document
-    .querySelector("#handelsbetingelser-link")
-    .addEventListener("click", showDialogHandelsbetingelser);
+    .querySelector("#tradeing-terms-link")
+    .addEventListener("click", showDialogTradeingTerms);
   document
-    .querySelector("#datapolitik-link")
-    .addEventListener("click", showDialogDatapolitik);
+    .querySelector("#data-policy-link")
+    .addEventListener("click", showDialogDataPolicyLink);
 }
 
 function showDialogFaq() {
   document.querySelector("#dialog-faq").showModal();
 }
 
-function showDialogHandelsbetingelser() {
+function showDialogTradeingTerms() {
   document.querySelector("#dialog-tradeing-terms").showModal();
 }
 
-function showDialogDatapolitik() {
+function showDialogDataPolicyLink() {
   document.querySelector("#dialog-data-policy").showModal();
 }
