@@ -9,8 +9,14 @@ window.addEventListener("load", startAdmin);
 // import { createNewMaterial } from "./create-new-stock-item.js";
 import { createNewCatalogueItem } from "../create-update-forms/create-new-catelogue-item.js";
 import { getCatalogueData, getStockData } from "./fetch-data.js";
-import { createCatalogClasses } from "./classes-test-doc.js";
+// import { createCatalogClasses } from "../classes-test-doc.js";
 import { stockMaterial } from "./view-render-classes/stock-class.js";
+import { catalogueItem } from "./view-render-classes/catalogue-class.js";
+
+
+import { createCatalogClasses } from "../instance-creator.js";
+import { callRenderMethod } from "../render-controller.js";
+
 
 function startAdmin() {
   console.log("Admin site is working");
@@ -19,10 +25,24 @@ function startAdmin() {
 }
 
 async function getAllData() {
-  const Materials = await getStockData();
-  console.log("material list: ", Materials);
-  const CatalougeItems = await getCatalogueData();
-  createCatalogClasses(CatalougeItems);
+  const stockMaterialData = await getStockData();
+  console.log("material list: ", stockMaterialData);
+  
+  const catalougeItemObjects = await getCatalogueData();
+  showCatalougeToAdmin(catalougeItemObjects);
+  showAllStockMaterials(stockMaterialData);
+}
+
+
+function showAllStockMaterials(stockMaterialData) {
+  const stockClassList = createCatalogClasses(stockMaterialData, stockMaterial);
+    callRenderMethod(stockClassList, "stockMaterialOveriew");
+
+}
+
+function showCatalougeToAdmin(catalougeItemObjects) {
+  const classList = createCatalogClasses(catalougeItemObjects, catalogueItem);
+  callRenderMethod(classList, "productOverview");
 }
 
 // async function readAllCatalogueItems() {

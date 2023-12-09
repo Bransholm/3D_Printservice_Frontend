@@ -5,22 +5,25 @@ export class stockMaterial {
     this.colour = stockObject.Colour;
     this.gramInStock = stockObject.GramInStock;
     this.minAmountReached = stockObject.MinAmountReached;
-    this.salesPrize = stockObject.SalesPrize;
+    this.salesPrice = stockObject.SalesPrice;
   }
 
   render() {
     const stockHTML =
       /*html*/
       `
-    <article>
-    <h3>Produkt Navn: ${this.name}</h3>
-    <p>Materiale: ${this.material}</p>
-    <p>Farve: ${this.colour} cm</p>
-    <:> Mængde på lager: ${this.gramInStock} gram</p>
-    <p>Minimum nået: ${this.minAmountReached} </p>
-    <p>Salgspris: ${this.salesPrize} dkk/gram</p>
-    </article>
+  <tr>
+    <td>${this.name}</td>
+    <td>${this.material}</td>
+    <td>${this.colour} cm</td>
+    <td>${this.gramInStock} gram</td>
+    <td>${this.minAmountReached.data} </td>
+    <td>${this.salesPrice} dkk/kg</td>
+  </tr>
     `;
     return stockHTML;
   }
 }
+
+
+ 

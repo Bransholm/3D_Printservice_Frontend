@@ -11,7 +11,9 @@ import { catalogueItem } from "./view-render-classes/catalogue-class.js";
 import { catalogueData, stockData } from "./tempoary-data-doc.js";
 
 // Modules for testing af klasse opbygning...
-import { createCatalogClasses } from "./classes-test-doc.js";
+// import { createCatalogClasses } from "./classes-test-doc.js";
+import { createCatalogClasses } from "./instance-creator.js";
+import { callRenderMethod } from "./render-controller.js";
 
 window.addEventListener("load", start);
 
@@ -25,14 +27,18 @@ function start() {
 
 // Dette er en test funktion der skal se om vi kan hente data:
 async function getAllData() {
-  const CatalougeItems = await getCatalogueData();
-  const stockInStorage = await getAvailableStockData();
-  console.log(stockInStorage);
-  // console.log(CatalougeItems);
-
-  // console.log(catalogueData);
-  createCatalogClasses(CatalougeItems, catalogueItem, "produkt_overblik");
+  const catalougeItemObjects = await getCatalogueData();
+  // const stockInStorage = await getAvailableStockData();
+  // console.log(stockInStorage);
+showCatalougeToCustomers(catalougeItemObjects);
 }
+
+function showCatalougeToCustomers(catalougeItemObjects) {
+  const classList = createCatalogClasses(catalougeItemObjects, catalogueItem);
+  callRenderMethod(classList, "produkt_overblik");
+}
+
+
 
 function activateEventListeners() {
   document.querySelector("#faq-link").addEventListener("click", showDialogFaq);
