@@ -1,9 +1,6 @@
 "use strict";
 window.addEventListener("load", startAdmin);
 
-
-
-
 // import {
 //   extractStockDataForUpdate,
 //   updateStockData,
@@ -19,10 +16,11 @@ import { catalogueItem } from "./view-render-classes/catalogue-class.js";
 import { createCatalogClasses } from "../instance-creator.js";
 // import { callRenderMethod as stockXYZ } from "../render-controller.js";
 
-// update-button clicked: Send data to stock-update-form 
-import {extractStockDataForUpdate} from "./create-update-forms/update-stock-item.js"
-
-
+// update-button clicked: Send data to stock-update-form
+import {
+  extractStockDataForUpdate,
+  updateStockData,
+} from "./create-update-forms/update-stock-item.js";
 
 function startAdmin() {
   console.log("Admin site is working");
@@ -66,47 +64,55 @@ function eventListenerAdder(htmlId, classInstance) {
 
   document
     .querySelector(`#${htmlId} tr:last-child .btn_update_stock`)
-    .addEventListener("click", () => updateStockButtonClicked(classInstance));
+    .addEventListener("click", updateStockButtonClicked);
+  stockItemToUpdate = classInstance;
 }
 
-function updateStockButtonClicked(instance) {
-  console.log("Update your materials! ", instance);
-  const updatedInfromation = extractStockDataForUpdate(instance);
+let stockItemToUpdate;
 
-  //Aktiver opdater knappen så vi kan opdatere! 
+function updateStockButtonClicked(event) {
+  event.preventDefault();
+  const stockDataUpdated = updateStockData(stockItemToUpdate.id);
+  updateStockRoute(stockDataUpdated);
+}
+
+function updateStockRoute(instance) {
+  console.log("Update your materials! ", instance);
+  
+  // const updatedInfromation = extractStockDataForUpdate(instance);
+
+  //Aktiver opdater knappen så vi kan opdatere!
   document
     .querySelector("#updateMaterialForm")
     .addEventListener("submit", () => updateStockMaterial(instance));
 }
 
-async function updateStockMaterial(data){
-console.log("POSTING: ", data);
-try {
-  const response = await fetch(`${endpoint}stock`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      // Add any additional headers if needed
-    },
-    body: JSON.stringify(data),
-  });
+async function updateStockMaterial(data) {
+  console.log("POSTING: ", data);
+  try {
+    const response = await fetch(`${endpoint}stock`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        // Add any additional headers if needed
+      },
+      body: JSON.stringify(data),
+    });
 
-  console.log(response);
-  if (!response.ok) {
-    throw new Error(`HTTP error! Status: ${response.status}`);
-  } else {
-    const result = await response.json();
-    console.log("update successful! ", result);
+    console.log(response);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    } else {
+      const result = await response.json();
+      console.log("update successful! ", result);
+    }
+
+    return;
+  } catch (error) {
+    // Handle errors here
+    console.error("Error:", error);
   }
-
-  return;
-} catch (error) {
-  // Handle errors here
-  console.error("Error:", error);
 }
-}
-
-
 
 async function postCatelogueItem(data) {
   console.log("POSTING: ", data);
@@ -134,9 +140,6 @@ async function postCatelogueItem(data) {
     console.error("Error:", error);
   }
 }
-
-
-
 
 function showCatalougeToAdmin(catalougeItemObjects) {
   const catalogueClassList = createCatalogClasses(

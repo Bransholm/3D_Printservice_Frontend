@@ -10,14 +10,15 @@ function extractStockDataForUpdate(stockMaterial) {
   updateForm.gramInStock.value = stockMaterial.gramInStock;
   updateForm.salesPrice.value = stockMaterial.salesPrice;
   updateForm.minAmountReached.value = stockMaterial.minAmountReached;
+
 }
 
 /* ... */
 
-function updateStockData(event) {
-  event.preventDefault();
+function updateStockData(id) {
   const form = document.querySelector("#updateMaterialForm").element;
 
+  const id = id;
   const name = form.name.value;
   const material = form.material.value;
   const colour = form.colour.value;
@@ -26,6 +27,7 @@ function updateStockData(event) {
   const salesPrize = form.price.value;
 
   return {
+    id,
     name,
     material,
     colour,
