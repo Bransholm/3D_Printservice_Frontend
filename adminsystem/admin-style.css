@@ -46,13 +46,24 @@ main {
     padding: 10px;
 }
 
+/* Admin: Stock Overview Table*/
 
-table {
-  border-collapse: collapse;
-  width: 100%;
+ table {
+    display: table;
+    border-collapse: separate;
+    box-sizing: border-box;
+    text-indent: initial;
+    border-spacing: 2px;
+    border-color: gray;
+}
+td {
+    display: table-cell;
+    vertical-align: inherit;
 }
 
-th, td {
+
+
+th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;

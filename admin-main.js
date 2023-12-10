@@ -1,6 +1,9 @@
 "use strict";
 window.addEventListener("load", startAdmin);
 
+
+
+
 // import {
 //   extractStockDataForUpdate,
 //   updateStockData,
@@ -15,6 +18,11 @@ import { catalogueItem } from "./view-render-classes/catalogue-class.js";
 
 import { createCatalogClasses } from "../instance-creator.js";
 // import { callRenderMethod as stockXYZ } from "../render-controller.js";
+
+// update-button clicked: Send data to stock-update-form 
+import {extractStockDataForUpdate} from "./create-update-forms/update-stock-item.js"
+
+
 
 function startAdmin() {
   console.log("Admin site is working");
@@ -34,37 +42,41 @@ async function getAllData() {
 function showAllStockMaterials(stockMaterialData) {
   const stockClassList = createCatalogClasses(stockMaterialData, stockMaterial);
   //4callRenderMethod(stockClassList, "stockMaterialOveriew");
-  stockXYZ(stockClassList, "stockMaterialOveriew");
+  stockXYZ(stockClassList, "adminStockTableBody");
 }
 
 function stockXYZ(listOfInstances, htmlId) {
   console.log("No3. CallRenderMethod");
   document.querySelector(`#${htmlId}`).innerHTML = "";
 
-  for (const instance of listOfInstances) {
-    const classHTML = instance.render();
+  for (const stockInstance of listOfInstances) {
+    const stockHTML = stockInstance.render();
 
     document
       .querySelector(`#${htmlId}`)
-      .insertAdjacentHTML("beforeend", classHTML);
+      .insertAdjacentHTML("beforeend", stockHTML);
 
     //Fit the eventlistener first!
-    eventListenerAdder(htmlId, instance);
-
-    function eventListenerAdder(htmlId, classInstance) {
-      // what eventlisteners to add for a given instance needs to go here...
-
-      document
-        .querySelector(`#${htmlId}:last-child .btn_update_stock`)
-        .addEventListener("click", updateStockClicked);
-    }
-
-    function updateStockClicked(event) {
-      console.log("Update your materials!");
-      event.preventDefault();
-    }
+    eventListenerAdder(htmlId, stockInstance);
   }
 }
+
+function eventListenerAdder(htmlId, classInstance) {
+  // what eventlisteners to add for a given instance needs to go here...
+
+  document
+    .querySelector(`#${htmlId} tr:last-child .btn_update_stock`)
+    .addEventListener("click", () => updateStockButtonClicked(classInstance));
+}
+
+function updateStockButtonClicked(instance) {
+  console.log("Update your materials! ", instance);
+  extractStockDataForUpdate(instance);
+  // event.preventDefault();
+}
+
+
+
 
 function showCatalougeToAdmin(catalougeItemObjects) {
   const catalogueClassList = createCatalogClasses(
