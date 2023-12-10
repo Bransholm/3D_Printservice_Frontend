@@ -221,14 +221,22 @@ function refreshColourSelector(selectedMaterial) {
 
   for (const material of stockInStorage) {
     if (selectedMaterial === material.Name.toLowerCase()) {
-
       activateColour(material.Colour, material.Id);
 
       // this should only happen once!
-      materialPrice = material.SalesPrice;
+        setMaterialText(material.Material);
+        materialPrice = material.SalesPrice;
     }
   }
   setProductPrice();
+}
+
+//
+function setMaterialText(material) {
+  document.querySelector("#produktMaterialName").innerHTML = "";
+  document.querySelector(
+    "#produktMaterialName"
+  ).innerHTML = `Produktet bliver printet i: ${material}`;
 }
 
 function activateColour(colour, id) {
