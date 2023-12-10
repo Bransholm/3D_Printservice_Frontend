@@ -3,6 +3,7 @@ window.addEventListener("load", startAdmin);
 
 // stores the item to be updated!
 let stockItemToUpdate;
+const endpoint = "https://3dprintservice.azurewebsites.net/";
 
 // import {
 //   extractStockDataForUpdate,
@@ -73,6 +74,7 @@ function eventListenerAdder(htmlId, classInstance) {
   document
     .querySelector(`#${htmlId} tr:last-child .btn_update_stock`)
     .addEventListener("click", () => updateStockButtonClicked(classInstance));
+  stockItemToUpdate = classInstance;
 }
 
 function updateStockButtonClicked(instance) {
@@ -82,14 +84,16 @@ function updateStockButtonClicked(instance) {
 
 function submitStockUpdate(event) {
   event.preventDefault();
-  const data = updateStockDataThroughForm();
-  console.log(data);
+  console.log("update data:  ", stockItemToUpdate)
+  const data = updateStockDataThroughForm(stockItemToUpdate);
+  console.log("the update: ", data)
+  stockUpdateRoute(data);
 }
 
-async function run(data) {
-  console.log("POSTING: ", data);
+async function stockUpdateRoute(data) {
+  // console.log("PUTTING: ", data);
   try {
-    const response = await fetch(`${endpoint}stock`, {
+    const response = await fetch(`${endpoint}stock/${data.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -113,32 +117,32 @@ async function run(data) {
   }
 }
 
-async function postCatelogueItem(data) {
-  console.log("POSTING: ", data);
-  try {
-    const response = await fetch(`${endpoint}catalogue`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        // Add any additional headers if needed
-      },
-      body: JSON.stringify(data),
-    });
+// async function postCatelogueItem(data) {
+//   console.log("POSTING: ", data);
+//   try {
+//     const response = await fetch(`${endpoint}catalogue`, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//         // Add any additional headers if needed
+//       },
+//       body: JSON.stringify(data),
+//     });
 
-    console.log(response);
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    } else {
-      const result = await response.json();
-      console.log(result);
-    }
+//     console.log(response);
+//     if (!response.ok) {
+//       throw new Error(`HTTP error! Status: ${response.status}`);
+//     } else {
+//       const result = await response.json();
+//       console.log(result);
+//     }
 
-    return;
-  } catch (error) {
-    // Handle errors here
-    console.error("Error:", error);
-  }
-}
+//     return;
+//   } catch (error) {
+//     // Handle errors here
+//     console.error("Error:", error);
+//   }
+// }
 
 function showCatalougeToAdmin(catalougeItemObjects) {
   const catalogueClassList = createCatalogClasses(

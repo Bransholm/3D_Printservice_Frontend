@@ -1,5 +1,6 @@
 export class stockMaterial {
   constructor(stockObject) {
+    this.id = stockObject.Id;
     this.name = stockObject.Name;
     this.material = stockObject.Material;
     this.colour = stockObject.Colour;

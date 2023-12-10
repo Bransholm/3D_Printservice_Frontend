@@ -14,23 +14,26 @@ function extractStockDataForUpdate(stockMaterial) {
 
 /* ... */
 
-function updateStockDataThroughForm() {
+function updateStockDataThroughForm(stockMaterial) {
   const form = document.querySelector("#updateMaterialForm");
+
+  const id = stockMaterial.id;
 
   const name = form.name.value;
   const material = form.material.value;
   const colour = form.colour.value;
-  const gramInStock = form.gramInStock.value;
+  const gramInStock = Number(form.gramInStock.value);
   const minAmountReached = form.minAmountReached.value;
-  const salesPrice = form.salesPrice.value;
+  const salesPrice = Number(form.salesPrice.value);
 
   return {
+    id,
     name,
     material,
     colour,
     gramInStock,
     minAmountReached,
-    salesPrice,
+    salesPrice
   };
 }
 
