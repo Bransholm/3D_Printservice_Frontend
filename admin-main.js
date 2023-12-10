@@ -71,8 +71,68 @@ function eventListenerAdder(htmlId, classInstance) {
 
 function updateStockButtonClicked(instance) {
   console.log("Update your materials! ", instance);
-  extractStockDataForUpdate(instance);
-  // event.preventDefault();
+  const updatedInfromation = extractStockDataForUpdate(instance);
+
+  //Aktiver opdater knappen så vi kan opdatere! 
+  document
+    .querySelector("#updateMaterialForm")
+    .addEventListener("submit", () => updateStockMaterial(instance));
+}
+
+async function updateStockMaterial(data){
+console.log("POSTING: ", data);
+try {
+  const response = await fetch(`${endpoint}stock`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      // Add any additional headers if needed
+    },
+    body: JSON.stringify(data),
+  });
+
+  console.log(response);
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
+  } else {
+    const result = await response.json();
+    console.log("update successful! ", result);
+  }
+
+  return;
+} catch (error) {
+  // Handle errors here
+  console.error("Error:", error);
+}
+}
+
+
+
+async function postCatelogueItem(data) {
+  console.log("POSTING: ", data);
+  try {
+    const response = await fetch(`${endpoint}catalogue`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // Add any additional headers if needed
+      },
+      body: JSON.stringify(data),
+    });
+
+    console.log(response);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    } else {
+      const result = await response.json();
+      console.log(result);
+    }
+
+    return;
+  } catch (error) {
+    // Handle errors here
+    console.error("Error:", error);
+  }
 }
 
 
