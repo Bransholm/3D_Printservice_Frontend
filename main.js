@@ -53,7 +53,7 @@ function activateEventListeners() {
     .querySelector("#data-policy-link")
     .addEventListener("click", showDialogDataPolicyLink);
   document.querySelector("#filter-search").addEventListener("change", filterContent);
-  // document.querySelector("#search-button").addEventListener("click", searchContent);
+  document.querySelector("#search-button").addEventListener("click", searchContent);
 }
 
 function showDialogFaq() {
@@ -77,19 +77,26 @@ async function filterContent(event) {
     filterValue = "Bygninger";
     console.log(filterValue);
   } else if (value === "Dyr") {
-    getCatalogueData();
+    const catalougeItemObjects = await getCatalogueData();
     showCatalougeToCustomers(catalougeItemObjects);
     filterValue = "Dyr";
     console.log(filterValue);
   } else if (value === "Eventyr") {
-    getCatalogueData();
+    const catalougeItemObjects = await getCatalogueData();
     showCatalougeToCustomers(catalougeItemObjects);
     filterValue = "Eventyr";
     console.log(filterValue);
   } else if (value === "Sci-fi") {
-    getCatalogueData();
+    const catalougeItemObjects = await getCatalogueData();
     showCatalougeToCustomers(catalougeItemObjects);
     filterValue = "Sci-fi";
     console.log(filterValue);
   }
+}
+
+async function searchContent() {
+  searchValue = document.querySelector("#search").value;
+  const catalougeItemObjects = await getCatalogueData();
+  showCatalougeToCustomers(catalougeItemObjects);
+  console.log(searchValue);
 }
