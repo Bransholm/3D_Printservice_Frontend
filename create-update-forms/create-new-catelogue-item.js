@@ -3,7 +3,6 @@ const endpoint = "http://localhost:4811/";
 
 // This function creates a new catalogue item - is only accessible for the admin.
 function createNewCatalogueItem(event) {
-  console.log("Item created");
   // Er det nu .target.value?
   const catelogueForm = event.target;
 
