@@ -15,7 +15,7 @@ import { catalogueItem } from "./view-render-classes/catalogue-class.js";
 
 
 import { createCatalogClasses } from "../instance-creator.js";
-import { callRenderMethod } from "../render-controller.js";
+// import { callRenderMethod as stockXYZ } from "../render-controller.js";
 
 
 function startAdmin() {
@@ -29,21 +29,55 @@ async function getAllData() {
   console.log("material list: ", stockMaterialData);
   
   const catalougeItemObjects = await getCatalogueData();
-  showCatalougeToAdmin(catalougeItemObjects);
+  // showCatalougeToAdmin(catalougeItemObjects);
   showAllStockMaterials(stockMaterialData);
 }
 
 
 function showAllStockMaterials(stockMaterialData) {
   const stockClassList = createCatalogClasses(stockMaterialData, stockMaterial);
-    callRenderMethod(stockClassList, "stockMaterialOveriew");
-
+    //4callRenderMethod(stockClassList, "stockMaterialOveriew");
+  stockXYZ(stockClassList, "stockMaterialOveriew");
 }
+
+
+function stockXYZ(listOfInstances, htmlId) {
+  console.log("No3. CallRenderMethod");
+  document.querySelector(`#${htmlId}`).innerHTML = "";
+
+  for (const instance of listOfInstances) {
+    const classHTML = instance.render();
+
+    document
+      .querySelector(`#${htmlId}`)
+      .insertAdjacentHTML("beforeend", classHTML);
+
+      //Fit the eventlistener first! 
+      eventListenerAdder(htmlId, instance);
+
+      function eventListenerAdder(htmlId, classInstance) {
+        // what eventlisteners to add for a given instance needs to go here...
+    
+        document
+          .querySelector(`#${htmlId} article:last-child .btn-view-product`)
+          .addEventListener("click", () => updateStockClicked(classInstance));
+      }
+    }
+  }
+
+function updateStockClicked(){
+  console.log("Update your materials!")
+}
+
+
+
 
 function showCatalougeToAdmin(catalougeItemObjects) {
-  const classList = createCatalogClasses(catalougeItemObjects, catalogueItem);
-  callRenderMethod(classList, "productOverview");
+  const catalogueClassList = createCatalogClasses(catalougeItemObjects, catalogueItem);
+  // callRenderMethod(classList, "productOverview");
 }
+
+
 
 // async function readAllCatalogueItems() {
 //   const catelogueData = await getCatalogueData();
