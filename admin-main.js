@@ -1,6 +1,9 @@
 "use strict";
 window.addEventListener("load", startAdmin);
 
+// stores the item to be updated!
+let stockItemToUpdate;
+
 // import {
 //   extractStockDataForUpdate,
 //   updateStockData,
@@ -19,13 +22,18 @@ import { createCatalogClasses } from "../instance-creator.js";
 // update-button clicked: Send data to stock-update-form
 import {
   extractStockDataForUpdate,
-  updateStockData,
+  updateStockDataThroughForm,
 } from "./create-update-forms/update-stock-item.js";
 
 function startAdmin() {
   console.log("Admin site is working");
   activateEventListeners();
   getAllData();
+
+  // submit update...
+  document
+    .querySelector("#updateMaterialForm")
+    .addEventListener("submit", submitStockUpdate);
 }
 
 async function getAllData() {
@@ -40,10 +48,10 @@ async function getAllData() {
 function showAllStockMaterials(stockMaterialData) {
   const stockClassList = createCatalogClasses(stockMaterialData, stockMaterial);
   //4callRenderMethod(stockClassList, "stockMaterialOveriew");
-  stockXYZ(stockClassList, "adminStockTableBody");
+  renderAllStocks(stockClassList, "adminStockTableBody");
 }
 
-function stockXYZ(listOfInstances, htmlId) {
+function renderAllStocks(listOfInstances, htmlId) {
   console.log("No3. CallRenderMethod");
   document.querySelector(`#${htmlId}`).innerHTML = "";
 
@@ -64,30 +72,21 @@ function eventListenerAdder(htmlId, classInstance) {
 
   document
     .querySelector(`#${htmlId} tr:last-child .btn_update_stock`)
-    .addEventListener("click", updateStockButtonClicked);
-  stockItemToUpdate = classInstance;
+    .addEventListener("click", () => updateStockButtonClicked(classInstance));
 }
 
-let stockItemToUpdate;
-
-function updateStockButtonClicked(event) {
-  event.preventDefault();
-  const stockDataUpdated = updateStockData(stockItemToUpdate.id);
-  updateStockRoute(stockDataUpdated);
-}
-
-function updateStockRoute(instance) {
+function updateStockButtonClicked(instance) {
   console.log("Update your materials! ", instance);
-  
-  // const updatedInfromation = extractStockDataForUpdate(instance);
-
-  //Aktiver opdater knappen så vi kan opdatere!
-  document
-    .querySelector("#updateMaterialForm")
-    .addEventListener("submit", () => updateStockMaterial(instance));
+  extractStockDataForUpdate(instance);
 }
 
-async function updateStockMaterial(data) {
+function submitStockUpdate(event) {
+  event.preventDefault();
+  const data = updateStockDataThroughForm();
+  console.log(data);
+}
+
+async function run(data) {
   console.log("POSTING: ", data);
   try {
     const response = await fetch(`${endpoint}stock`, {

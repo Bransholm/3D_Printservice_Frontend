@@ -1,5 +1,5 @@
 function extractStockDataForUpdate(stockMaterial) {
-  console.log(stockMaterial)
+  console.log(stockMaterial);
   const updateForm = document.querySelector("#updateMaterialForm");
   // const x = event.target
 
@@ -8,33 +8,30 @@ function extractStockDataForUpdate(stockMaterial) {
   updateForm.material.value = stockMaterial.material;
   updateForm.colour.value = stockMaterial.colour;
   updateForm.gramInStock.value = stockMaterial.gramInStock;
-  updateForm.salesPrice.value = stockMaterial.salesPrice;
   updateForm.minAmountReached.value = stockMaterial.minAmountReached;
-
+  updateForm.salesPrice.value = stockMaterial.salesPrice;
 }
 
 /* ... */
 
-function updateStockData(id) {
-  const form = document.querySelector("#updateMaterialForm").element;
+function updateStockDataThroughForm() {
+  const form = document.querySelector("#updateMaterialForm");
 
-  const id = id;
   const name = form.name.value;
   const material = form.material.value;
   const colour = form.colour.value;
   const gramInStock = form.gramInStock.value;
-  const minAmountReached = form.minAmount.value;
-  const salesPrize = form.price.value;
+  const minAmountReached = form.minAmountReached.value;
+  const salesPrice = form.salesPrice.value;
 
   return {
-    id,
     name,
     material,
     colour,
     gramInStock,
     minAmountReached,
-    salesPrize,
+    salesPrice,
   };
 }
 
-export { extractStockDataForUpdate, updateStockData };
+export { extractStockDataForUpdate, updateStockDataThroughForm };
