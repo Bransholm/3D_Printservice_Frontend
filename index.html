@@ -10,7 +10,7 @@
   <body>
     <!-- Header -->
     <header id="header">3D Printservice</header>
-
+    
     <!-- Nav bar -->
     <nav>
       <a href="#products" class="view-link">PRODUKTER</a>
@@ -24,7 +24,25 @@
 
         <!-- Section products -->
         <section id="products" class="view-content">
+        
+        <!-- The dropdown filter -->
+        <container id="filter-search">
+        <label for="options">Show:</label>
+        <select id="options">
+        <option value="Bygninger">Bygninger</option>
+        <option value="Dyr" selected>Dyr</option>
+        <option value="Eventyr">Eventyr</option>
+        <option value="Sci-fi">Sci-fi</option>        
+        </select>
+
+        <!-- The search bar -->
+        <input type="text" id="search" placeholder="Search...">
+        <button id="search-button">Search</button>
+        </container>
+   
         <container id="product_id"> Det enkelte prodult </container>
+
+        <!-- Here shows the product catalogue -->
         <container id="product_catalogue" class="grid-container"> Hele Kataloget </container>
         </section>
         
