@@ -18,8 +18,8 @@ export class catalogueItem {
       /*html*/
       `
     <article>
-    <h3>Produkt Navn: ${this.title}</h3>
     <img src="../images/${this.imageLink}" alt="Produktbillede ${this.title}"/>
+    <h3>Produkt Navn: ${this.title}</h3>
     <p>Kategori: ${this.category}</p>
     <p>Standard Størrelse: ${this.standardSize} cm</p>
     <p>Standard Vægt: ${this.standardWeight} gram</p>
