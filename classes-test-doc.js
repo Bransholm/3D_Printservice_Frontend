@@ -109,7 +109,7 @@ export async function viewButtonClicked(instance) {
     <p>Kategori: ${instance.category}</p>
     <p>Produkt Beskrivelse: ${instance.itemDescription}</p>
     <p>Standard Størrelse: ${instance.standardSize} cm</p>
-    <p>Standard vægt: ${instance.standardWeight}</p>
+    <p>Standard vægt: ${instance.standardWeight} gram</p>
         
 
     <h3 id="productPrice"> Samlet Pris: XXX.XX DKK</h3>
@@ -186,53 +186,50 @@ export async function viewButtonClicked(instance) {
 
   // RUN ALL EVENTS AND GET THE PRICE!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
   setDefaultProduct(instance.standardSize);
-
-
 }
-
-
-
-
 
 function setDefaultProduct(defaultSize) {
   console.log("Set all events");
   //set the item size
-  size = defaultSize ;
+  size = defaultSize;
   document.querySelector("#productSizeSlider").value = size;
   document.querySelector(
     "#showSliderSize"
   ).innerHTML = `Valgte højde ${size} cm`;
- 
-  // Set the actual MATERIAL! 
-  // Set the standard colours...
 
-
+  //Set the actual MATERIAL!
+  console.log("base material: ", stockInStorage[1]);
+  refreshColourSelector(stockInStorage[1].Name.toLowerCase());
 
   setProductPrice();
 }
-
 
 // FIND A WAY TO DO THIS FOR BLØD!!!!
 function setProductMaterial(event) {
   const selectedMaterial = event.target.value;
   console.log("selected material ", selectedMaterial);
 
+  refreshColourSelector(selectedMaterial);
+}
+
+//det er ID og materiale der er vigtigt... hvad hvis det jeg sætter den til ikke er tilgængeligt...
+// sæt et materiale
+// vis alle farver
+// vælg en farve...
+function refreshColourSelector(selectedMaterial) {
   document.querySelector("#chosenColour").innerHTML = "";
 
   for (const material of stockInStorage) {
-    // console.log("get name: ", material.Name);
     if (selectedMaterial === material.Name.toLowerCase()) {
+
       activateColour(material.Colour, material.Id);
 
       // this should only happen once!
       materialPrice = material.SalesPrice;
-      console.log(materialPrice);
     }
   }
   setProductPrice();
 }
-
-
 
 function activateColour(colour, id) {
   const newColourOption = document.createElement("option");
@@ -256,7 +253,7 @@ function setProductSize(event) {
   ).innerHTML = `Valgte højde ${size} cm`;
 
   setProductPrice();
-  }
+}
 
 function setProductPrice() {
   const tax = 1.25;
