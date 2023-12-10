@@ -98,9 +98,6 @@ export async function viewButtonClicked(instance) {
   stockInStorage = await getAvailableStockData();
   console.log("The available stock", stockInStorage);
 
-  // RUN ALL EVENTS AND GET THE PRICE!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-  // activteAllEvents();
-
   // NB: Vi skal lave et fetch som tjekker om en side er løbet tør for noget bestemt...
   const html =
     /*html*/
@@ -187,18 +184,35 @@ export async function viewButtonClicked(instance) {
     .querySelector(".btn-add-basket")
     .addEventListener("click", addProductToBasket);
 
-  // Set product colour - for the drop down
-  // activateColour()
+  // RUN ALL EVENTS AND GET THE PRICE!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+  setDefaultProduct(instance.standardSize);
 
-  //set the item size
-  size = instance.standardSize;
-  console.log(size);
-  document.querySelector("#productSizeSlider").value = size;
-    document.querySelector(
-      "#showSliderSize"
-    ).innerHTML = `Valgte højde ${size} cm`;
+
 }
 
+
+
+
+
+function setDefaultProduct(defaultSize) {
+  console.log("Set all events");
+  //set the item size
+  size = defaultSize ;
+  document.querySelector("#productSizeSlider").value = size;
+  document.querySelector(
+    "#showSliderSize"
+  ).innerHTML = `Valgte højde ${size} cm`;
+ 
+  // Set the actual MATERIAL! 
+  // Set the standard colours...
+
+
+
+  setProductPrice();
+}
+
+
+// FIND A WAY TO DO THIS FOR BLØD!!!!
 function setProductMaterial(event) {
   const selectedMaterial = event.target.value;
   console.log("selected material ", selectedMaterial);
@@ -218,11 +232,7 @@ function setProductMaterial(event) {
   setProductPrice();
 }
 
-function activteAllEvents() {
-  setProductSize();
-  setProductMaterial();
-  setProductColour();
-}
+
 
 function activateColour(colour, id) {
   const newColourOption = document.createElement("option");

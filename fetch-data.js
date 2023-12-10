@@ -1,7 +1,5 @@
 const endpoint = "https://3dprintservice.azurewebsites.net/";
 
-// let filterValue = "all";
-// let searchValue = " ";
 
 async function getCatalogueData() {
   const response = await fetch(`${endpoint}/catalogue`);
@@ -9,13 +7,7 @@ async function getCatalogueData() {
   return catalogueData;
 }
 
-async function fetchSearchContent() {
-	const response = await fetch(
-		`${endpoint}/search?type=${filterValue}Name&q=${searchValue}`
-	);
-	const data = await response.json();
-	return data;
-}
+
 // async function fetchSearchContent() {
 // 	const response = await fetch(
 // 		`${endpoint}/search?type=${filterValue}Name&q=${searchValue}`
@@ -41,5 +33,4 @@ export {
 	getCatalogueData,
 	getStockData,
 	getAvailableStockData,
-	// fetchSearchContent,
 };
