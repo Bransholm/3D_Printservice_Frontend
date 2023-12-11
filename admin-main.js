@@ -19,37 +19,36 @@ import { stockMaterial } from "./view-render-classes/stock-class.js";
 import { catalogueItem } from "./view-render-classes/catalogue-class.js";
 
 import { createCatalogClasses } from "../instance-creator.js";
-import {
-	callRenderMethod,
-	callRenderMethodAdmin,
-} from "./render-controller.js";
+import { callRenderMethodAdmin } from "./render-controller-admin.js";
 // import { callRenderMethod as stockXYZ } from "../render-controller.js";
 
 // update-button clicked: Send data to stock-update-form
 import {
-  extractStockDataForUpdate,
-  updateStockDataThroughForm,
+	extractStockDataForUpdate,
+	updateStockDataThroughForm,
 } from "./create-update-forms/update-stock-item.js";
 import { catalogueData } from "./tempoary-data-doc.js";
 
 function startAdmin() {
-  console.log("Admin site is working");
-  activateEventListeners();
-  getAllData();
+	console.log("Admin site is working");
+	document
+		.querySelector("#addToCatalogueForm")
+		.addEventListener("submit", createNewCatalogueItem);
+	getAllData();
 
-  // submit update...
-  document
-    .querySelector("#updateMaterialForm")
-    .addEventListener("submit", submitStockUpdate);
+	// submit update...
+	document
+		.querySelector("#updateMaterialForm")
+		.addEventListener("submit", submitStockUpdate);
 }
 
 async function getAllData() {
-  const stockMaterialData = await getStockData();
-  console.log("material list: ", stockMaterialData);
+	const stockMaterialData = await getStockData();
+	console.log("material list: ", stockMaterialData);
 
-  const catalougeItemObjects = await getCatalogueData();
-  showCatalougeToAdmin(catalougeItemObjects);
-  showAllStockMaterials(stockMaterialData);
+	const catalougeItemObjects = await getCatalogueData();
+	showCatalougeToAdmin(catalougeItemObjects);
+	showAllStockMaterials(stockMaterialData);
 }
 
 function showCatalougeToAdmin(catalougeItemObjects) {
@@ -59,74 +58,74 @@ function showCatalougeToAdmin(catalougeItemObjects) {
 }
 
 function showAllStockMaterials(stockMaterialData) {
-  const stockClassList = createCatalogClasses(stockMaterialData, stockMaterial);
-  //4callRenderMethod(stockClassList, "stockMaterialOveriew");
-  renderAllStocks(stockClassList, "adminStockTableBody");
+	const stockClassList = createCatalogClasses(stockMaterialData, stockMaterial);
+	//4callRenderMethod(stockClassList, "stockMaterialOveriew");
+	renderAllStocks(stockClassList, "adminStockTableBody");
 }
 
 function renderAllStocks(listOfInstances, htmlId) {
-  console.log("No3. CallRenderMethod");
-  document.querySelector(`#${htmlId}`).innerHTML = "";
+	console.log("No3. CallRenderMethod");
+	document.querySelector(`#${htmlId}`).innerHTML = "";
 
-  for (const stockInstance of listOfInstances) {
-    const stockHTML = stockInstance.render();
+	for (const stockInstance of listOfInstances) {
+		const stockHTML = stockInstance.render();
 
-    document
-      .querySelector(`#${htmlId}`)
-      .insertAdjacentHTML("beforeend", stockHTML);
+		document
+			.querySelector(`#${htmlId}`)
+			.insertAdjacentHTML("beforeend", stockHTML);
 
-    //Fit the eventlistener first!
-    eventListenerAdder(htmlId, stockInstance);
-  }
+		//Fit the eventlistener first!
+		eventListenerAdder(htmlId, stockInstance);
+	}
 }
 
 function eventListenerAdder(htmlId, classInstance) {
-  // what eventlisteners to add for a given instance needs to go here...
+	// what eventlisteners to add for a given instance needs to go here...
 
-  document
-    .querySelector(`#${htmlId} tr:last-child .btn_update_stock`)
-    .addEventListener("click", () => updateStockButtonClicked(classInstance));
-  stockItemToUpdate = classInstance;
+	document
+		.querySelector(`#${htmlId} tr:last-child .btn_update_stock`)
+		.addEventListener("click", () => updateStockButtonClicked(classInstance));
+	stockItemToUpdate = classInstance;
 }
 
 function updateStockButtonClicked(instance) {
-  console.log("Update your materials! ", instance);
-  extractStockDataForUpdate(instance);
+	console.log("Update your materials! ", instance);
+	extractStockDataForUpdate(instance);
 }
 
 function submitStockUpdate(event) {
-  event.preventDefault();
-  console.log("update data:  ", stockItemToUpdate)
-  const data = updateStockDataThroughForm(stockItemToUpdate);
-  console.log("the update: ", data)
-  stockUpdateRoute(data);
+	event.preventDefault();
+	console.log("update data:  ", stockItemToUpdate);
+	const data = updateStockDataThroughForm(stockItemToUpdate);
+	console.log("the update: ", data);
+	stockUpdateRoute(data);
 }
 
 async function stockUpdateRoute(data) {
-  // console.log("PUTTING: ", data);
-  try {
-    const response = await fetch(`${endpoint}stock/${data.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        // Add any additional headers if needed
-      },
-      body: JSON.stringify(data),
-    });
+	// console.log("PUTTING: ", data);
+	try {
+		const response = await fetch(`${endpoint}stock/${data.id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+				// Add any additional headers if needed
+			},
+			body: JSON.stringify(data),
+		});
 
-    console.log(response);
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    } else {
-      const result = await response.json();
-      console.log("update successful! ", result);
-    }
+		console.log(response);
+		if (!response.ok) {
+			throw new Error(`HTTP error! Status: ${response.status}`);
+		} else {
+			const result = await response.json();
+			console.log("update successful! ", result);
+		}
 
-    return;
-  } catch (error) {
-    // Handle errors here
-    console.error("Error:", error);
-  }
+		return;
+	} catch (error) {
+		// Handle errors here
+		console.error("Error:", error);
+	}
 }
 
 // async function postCatelogueItem(data) {
@@ -169,20 +168,17 @@ async function stockUpdateRoute(data) {
 //   // createCatalogClasses(catelogueData);
 //   }
 
-function activateEventListeners() {
-  document
-    .querySelector("#addToCatalogueForm")
-    .addEventListener("submit", createNewCatalogueItem);
-}
+// function activateAdminEventListeners() {
+// }
 
 export function deleteButtonClicked(instance) {
-console.log("Delete Item Clicked:", instance.id);
-catalogueId = instance.id
+	console.log("Delete Item Clicked:", instance.id);
+	catalogueId = instance.id;
 }
 
 export function updateButtonClicked(instance) {
-console.log("Update Item Clicked:", instance.id);
-catalogueId = instance.id;
+	console.log("Update Item Clicked:", instance.id);
+	catalogueId = instance.id;
 }
 
 export { startAdmin as launchAdminFunctions };
