@@ -300,7 +300,7 @@ function setDefaultProduct(defaultSize) {
 // Sets the material to the type selected in the "chooseMaterial" drop down
 function setProductMaterial(event) {
   const selectedMaterial = event.target.value;
-  console.log("selected material ", selectedMaterial);
+  // console.log("selected material ", selectedMaterial);
 
   // Resets the "chosenColour" drop down option
   refreshColourSelector(selectedMaterial);
@@ -352,7 +352,7 @@ function setDeafaultProductMaterial(material, price, id) {
 // Changes the selected maetrial id to the material shown in the "choosenMaterial" drop down with the first available colour in the "choosenColour" drop down
 function setDefaultMaterialId(id) {
   stockId = id;
-  console.log("New defaut stockID ", stockId);
+  // console.log("New defaut stockID ", stockId);
 }
 
 // Stores the price value of the selected material
@@ -463,38 +463,61 @@ Så lægger vi porto til
   }
 */
 
-function checkForDoublets(prod) {
-  console.log("This is your product: ", prod);
+
+// There is 0 items -> Push
+// There are itesm...
+// I need to loop through the entire list before i push
+
+
+function checkForDoublets(newProduct) {
+  console.log("This is your product: ", newProduct);
   console.log("number of cart items ", shoppingCart.length);
 
+  // Cheks if the cart is empty
   if (shoppingCart.length > 0) {
     for (const product of shoppingCart) {
-      // console.log("This is  product in your mcart: ", product)
+      compareAttirbutes(product, newProduct), ;
+   }
+  } else {
+    shoppingCart.push(newProduct)
+  }
+
+
+}
+
+
+function compareAttirbutes(cartProduct, newProduct) {
+  // console.log("This is  product in your mcart: ", product)
+  console.log(
+    `Item in cart catalogue ${cartProduct.catalogueId} === ${newProduct.catalogueId}`
+  );
+  // If the catalouge items are the same - make a new check
+  if (cartProduct.catalogueId === newProduct.catalogueId) {
+    console.log("catalogue item is the same");
+    console.log(
+      `Item in cart material ${cartProduct.stockId} === ${newProduct.stockId}`
+    );
+    if (cartProduct.stockId === newProduct.stockId) {
+      console.log("the material is also the same");
       console.log(
-        `Item in cart catalogue ${product.catalogueId} === ${prod.catalogueId}`
+        `Item in cart size ${cartProduct.productSize} === ${newProduct.productSize}`
       );
-      if (product.catalogueId === prod.catalogueId) {
-        console.log("catalogue is the same");
-        console.log(
-          `Item in cart material ${product.stockId} === ${prod.stockId}`
-        );
-        if (product.stockId === prod.stockId) {
-          console.log("material is also the same");
-          console.log(
-            `Item in cart size ${product.productSize} === ${prod.productSize}`
-          );
-          if (product.productSize === prod.productSize) {
-            console.log("Even the size is the same");
-          }
-        }
+      if (cartProduct.productSize === newProduct.productSize) {
+        console.log("Even the size is the same");
       } else {
-        continue;
+        pushProduct(newProduct);
       }
     }
-  } else {
-    pushProduct(prod);
   }
 }
+
+
+
+
+
+// Check det er falsk... 
+
+
 
 function pushProduct(selectedProduct) {
   shoppingCart.push(selectedProduct);
