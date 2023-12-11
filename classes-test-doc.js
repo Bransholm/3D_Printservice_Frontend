@@ -440,48 +440,37 @@ function showSelectedAmount() {
   setProductPrice();
 }
 
-/*
-Først prisen per produkt
-(Materialet og vægt -- på baggrund af størrelsen * konstant)
-Så prisen for hvor mange du har
-Så regner du mom ud
-Så lægger vi porto til
-*/
+// BASKET....
 
-// THE PRODUCT BASKET
-
-/*
-    this.catalogueId = catalogueId;
-    this.stockId = stockId;
-    this.productSize = size;
-    this.productAmount = amount;
-    this.productPrice = price;
-  }
-*/
-
-// There is 0 items -> Push
-// There are itesm...
-// I need to loop through the entire list before i push
-
+// Cheks if an product instance has a doublicate in the system
 function checkForDoublets(newProduct) {
   console.log("This is your product: ", newProduct);
   console.log("number of cart items ", shoppingCart.length);
 
   // Cheks if the cart is empty
   if (shoppingCart.length > 0) {
-    shoppingCart.foreach(compareAttirbutes(newProduct));
+    // Sets the unique status
+    let itemIsUnique = true;
     for (const product of shoppingCart) {
-      if (!compareAttirbutes(product, newProduct)) {
-        shoppingCart.push(newProduct);
-      } else {
-        console.log("Exists!");
+      // If the products are similar their amount-values are added
+      if (compareAttirbutes(product, newProduct)) {
+        itemIsUnique = false;
+        product.productAmount += newProduct.productAmount;
       }
     }
+    // If the unique status is true the item is pushed.
+    if (itemIsUnique === true) {
+      pushProduct(newProduct);
+    } else {
+      console.log("Item already found");
+    }
   } else {
-    shoppingCart.push(newProduct);
+    // Pushes the item if the cart is already empty
+    pushProduct(newProduct);
   }
 }
 
+// checks if the material, catalogue item and size are matching
 function compareAttirbutes(cartProduct, newProduct) {
   // console.log("This is  product in your mcart: ", product)
   return (
@@ -489,35 +478,17 @@ function compareAttirbutes(cartProduct, newProduct) {
     cartProduct.stockId === newProduct.stockId &&
     cartProduct.productSize === newProduct.productSize
   );
-  // console.log(
-  //   `Item in cart catalogue ${cartProduct.catalogueId} === ${newProduct.catalogueId}`
-  // );
-  // // If the catalouge items are the same - make a new check
-  // if (cartProduct.catalogueId === newProduct.catalogueId) {
-  //   console.log("catalogue item is the same");
-  //   console.log(
-  //     `Item in cart material ${cartProduct.stockId} === ${newProduct.stockId}`
-  //   );
-  //   if (cartProduct.stockId === newProduct.stockId) {
-  //     console.log("the material is also the same");
-  //     console.log(
-  //       `Item in cart size ${cartProduct.productSize} === ${newProduct.productSize}`
-  //     );
-  //     if (cartProduct.productSize === newProduct.productSize) {
-  //       console.log("Even the size is the same");
-  //     }
-  //   }
-  // }
 }
 
-// Check det er falsk...
-
+// Pushes the product to the shoppingCart Array
 function pushProduct(selectedProduct) {
   shoppingCart.push(selectedProduct);
   console.log("producted added!");
 }
 
 function addProductToBasket() {
+  console.log("hat is my size? ", size);
+  // creates an instance productOrder class
   const productForBasket = new productOrder(
     catalogueId,
     stockId,
@@ -526,26 +497,29 @@ function addProductToBasket() {
     price
   );
 
+  // Check if the product is already in the shopping cart
   checkForDoublets(productForBasket);
   console.log("this is your shopping cart", shoppingCart);
+  // Refreshes the shopping cart html
+  // showItemsInCart();
 
-  // const catalogueID = catalogueId;
-  // const productSize = size;
-  // const productAmount = amount;
-  // const productPrice = price;
-  // const stockID = stockId;
-
-  // // Amount needs to be altered
-  // // Price needs to be altered.
-
-  // const productObject = {
-  //   catalogueID,
-  //   productSize,
-  //   productAmount,
-  //   productPrice,
-  //   stockID,
-  // };
 }
+// const catalogueID = catalogueId;
+// const productSize = size;
+// const productAmount = amount;
+// const productPrice = price;
+// const stockID = stockId;
+
+// // Amount needs to be altered
+// // Price needs to be altered.
+
+// const productObject = {
+//   catalogueID,
+//   productSize,
+//   productAmount,
+//   productPrice,
+//   stockID,
+// };
 
 class productOrder {
   constructor(catalogueId, stockId, size, amount, price) {
@@ -556,8 +530,37 @@ class productOrder {
     this.productPrice = price;
   }
 
+  render() {
+    html =
+      /*html*/
+      `
+    <h3>INSERT NAME</h3>
+    <p>catalogueId ${catalogueId}</p>
+    <p>stockId ${stockId}</p>
+    <p>productSize ${productSize}</p>
+    <button></button>
+    <p>Amount ${productAmount}</p>
+    <button class="btn_derement_amount">-</button>
+    <p>CALCULATE PRICE</p>
+    <button class="btn_increment_amount">+</button>
+    <p>Price ${productPrice}</p>
+    <button class="btn_remove_cart_item">Fjern</button>
+    `;
+  }
   // test this!
   setAmount(newAmount) {
     this.productAmount = newAmount;
+  }
+}
+
+function showItemsInCart() {
+  document.querySelector("#special_products").innerHTML = "";
+  for (const product of shoppingCart) {
+    const productOrderHTML = product.render();
+
+    // --------------- NEW HTML ID/ PAGE NEEDED!!! --------------------------------------------- OBS!!!!!
+    document
+      .querySelector("#special_products")
+      .insertAdjacentElement("beforeend", productOrderHTML);
   }
 }
