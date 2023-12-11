@@ -49,4 +49,6 @@ async function searchContent() {
 export {
     filterContent,
     searchContent,
+    filterValue,
+    searchValue,
 };
