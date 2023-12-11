@@ -172,7 +172,7 @@ let stockId;
 
 export async function viewButtonClicked(instance) {
   console.log("view button clicked: ", instance.id);
-  
+
   // Sets the id for the chosen catalogue item
   catalogueId = instance.id;
 
@@ -184,8 +184,6 @@ export async function viewButtonClicked(instance) {
 
   // Sets the product DOM with information from the chosen catalogue item
   showCustomizeProductSite(instance);
-  
-  
 
   // set values for the product before custumization starts
   setDefaultProduct(instance.standardSize);
@@ -284,24 +282,20 @@ function addProductSiteEventListeners() {
     .addEventListener("click", addProductToBasket);
 }
 
+// Set all the standard product values
 function setDefaultProduct(defaultSize) {
   console.log("Set all events");
-  //set the item size
 
+  // Set the item size to fit the item.standardSize
   size = defaultSize;
-  document.querySelector("#productSizeSlider").value = size;
-  document.querySelector(
-    "#showSliderSize"
-  ).innerHTML = `Valgte højde ${size} cm`;
-
-  //Set the actual MATERIAL!
-  // console.log("base material: ", stockInStorage[1]);
+  // Set the size information shown to the product customization site
+ setProductSizeInfo();
+  // Show the default material type and colour - set the first available as chosen
   refreshColourSelector(stockInStorage[0].Name.toLowerCase());
-  setDefaultMaterialId(stockInStorage[0].Id);
+  // Set the default 
   setProductPrice();
 }
 
-function resetProductValues() {}
 
 // Sets the material to the type selected in the "chooseMaterial" drop down
 function setProductMaterial(event) {
@@ -345,13 +339,14 @@ function refreshColourSelector(selectedMaterial) {
   }
 }
 
-function setDeafaultProductMaterial(material, price) {
+// Sets the default material including type, colour and price 
+function setDeafaultProductMaterial(material, price, id) {
   // Tells the customer what plastic type the product will be printed in
   setMaterialText(material);
   // Sets the value of the product material price
   setProductMaterialPrice(price);
   // Sets the default selected material id - indirectly the chosen colour
-  setDefaultMaterialId(material.Id);
+  setDefaultMaterialId(id);
 }
 
 // Changes the selected maetrial id to the material shown in the "choosenMaterial" drop down with the first available colour in the "choosenColour" drop down
@@ -365,8 +360,7 @@ function setProductMaterialPrice(newPrice) {
   materialPrice = newPrice;
 }
 
-// Functions that set the product material and colour
-
+//  --- Functions that set the product material and colour
 // Clear and shwos the print material on screen
 function setMaterialText(material) {
   document.querySelector("#produktMaterialName").innerHTML = "";
@@ -387,29 +381,40 @@ function activateColour(colour, id) {
 // Sets the chosen color AND material
 function setProductColour(event) {
   // console.log("product colour ID: ", event.target.value);
-  stockId = Number(event.target.value);
+  const chosenMaterialAndColour = Number(event.target.value);
+  setDefaultMaterialId(chosenMaterialAndColour);
 }
 
 function setProductSize(event) {
   size = Number(event.target.value);
+  setProductSizeInfo();
+  setProductPrice();
+}
+
+// Alteres the size information showed to the customer
+function setProductSizeInfo() {
   document.querySelector("#showSliderSize").innerHTML = "";
   // console.log("The size is ", event.target.value, " CM");
   document.querySelector(
     "#showSliderSize"
   ).innerHTML = `Valgte højde ${size} cm`;
-
-  setProductPrice();
 }
+
+
+
 
 function setProductPrice() {
   const tax = 1.25;
   const shipping = 39;
+
   document.querySelector("#productPrice").innerHTML = "";
   // console.log(
   //   `Samlet pris = materiale ${materialPrice}, størrelse${size}, antal${amount}`
   // );
   //der mangler en vloume udregning på baggrund af vægt i forhold til størrelsen.
-  price = (materialPrice / 1000) * (size * 1.8) * amount * tax + shipping;
+  const productPrice = (materialPrice / 1000) * (size * 1.8);
+  const bundlePrice = productPrice * amount;
+  price = bundlePrice * tax + shipping;
   // run op!
   document.querySelector(
     "#productPrice"
