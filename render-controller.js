@@ -1,7 +1,8 @@
 import { viewButtonClicked } from "./classes-test-doc.js";
+// import {deleteButtonClicked, updateButtonClicked} from "./admin-main.js"
 
 
-export function callRenderMethod(listOfInstances, htmlId) {
+ function callRenderMethod(listOfInstances, htmlId) {
   console.log("No3. CallRenderMethod");
   document.querySelector(`#${htmlId}`).innerHTML = "";
 
@@ -25,3 +26,7 @@ export function callRenderMethod(listOfInstances, htmlId) {
       .addEventListener("click", () => viewButtonClicked(classInstance));
   }
 }
+
+ 
+
+export { callRenderMethod };

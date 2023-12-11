@@ -1,6 +1,6 @@
 "use strict";
 
-import { startViews } from "./spa-router.js";
+import { startViews } from "./spa-router.js";  
 import {
   getCatalogueData,
   getStockData,
@@ -21,7 +21,7 @@ window.addEventListener("load", start);
 
 function start() {
   startViews();
-  activateEventListeners();
+  activateCustomerEventListeners();
   console.log("Hello Team10");
   // Tester om man kan hente data - Lukas
   getAllData();
@@ -43,7 +43,7 @@ function showCatalougeToCustomers(catalougeItemObjects) {
   callRenderMethod(classList, "product_catalogue");
 }
 
-function activateEventListeners() {
+function activateCustomerEventListeners() {
   document.querySelector("#faq-link").addEventListener("click", showDialogFaq);
   document
     .querySelector("#tradeing-terms-link")
