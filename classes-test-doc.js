@@ -172,19 +172,22 @@ let stockId;
 
 export async function viewButtonClicked(instance) {
   console.log("view button clicked: ", instance.id);
+  
+  // Sets the id for the chosen catalogue item
   catalogueId = instance.id;
 
-  // document.querySelector("#produkt_overblik").innerHTML = "";
   document.querySelector("#product_id").innerHTML = "";
 
+  // Fetches all the stock materials that are not sold out
   stockInStorage = await getAvailableStockData();
   // console.log("The available stock", stockInStorage);
 
+  // Sets the product DOM with information from the chosen catalogue item
   showCustomizeProductSite(instance);
+  
+  
 
-  addProductSiteEventListeners();
-
-  // RUN ALL EVENTS AND GET THE PRICE!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+  // set values for the product before custumization starts
   setDefaultProduct(instance.standardSize);
 }
 
@@ -252,6 +255,8 @@ function showCustomizeProductSite(instance) {
 `;
 
   document.querySelector("#product_id").insertAdjacentHTML("beforeend", html);
+  // Activates all eventlisternes used on the product customization site
+  addProductSiteEventListeners();
 }
 
 function addProductSiteEventListeners() {
@@ -292,8 +297,7 @@ function setDefaultProduct(defaultSize) {
   //Set the actual MATERIAL!
   // console.log("base material: ", stockInStorage[1]);
   refreshColourSelector(stockInStorage[0].Name.toLowerCase());
-  stockId = stockInStorage[0].Id;
-
+  setDefaultMaterialId(stockInStorage[0].Id);
   setProductPrice();
 }
 
@@ -350,8 +354,10 @@ function setDeafaultProductMaterial(material, price) {
   setDefaultMaterialId(material.Id);
 }
 
+// Changes the selected maetrial id to the material shown in the "choosenMaterial" drop down with the first available colour in the "choosenColour" drop down
 function setDefaultMaterialId(id) {
   stockId = id;
+  console.log("New defaut stockID ", stockId);
 }
 
 // Stores the price value of the selected material
