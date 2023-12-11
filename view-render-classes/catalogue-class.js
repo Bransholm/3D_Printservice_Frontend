@@ -36,13 +36,13 @@ export class catalogueItem {
       `
     <article>
     <h3>Produkt Navn: ${this.title}</h3>
-    <img src="./images/${this.imageLink}" alt="Produktbillede ${this.title}"/>
+    <img src="../images/${this.imageLink}" alt="Produktbillede ${this.title}"/>
     <p>Kategori: ${this.category}</p>
     <p>Standard Størrelse: ${this.standardSize} cm</p>
     <p>Standard Vægt: ${this.standardWeight} gram</p>
     <p>Produkt Beskrivelse: ${this.itemDescription} </p>
-    <button class="btn_update_product" >Se Produkt</button>
-    <button class="btn_delete_product" >Se Produkt</button>
+    <button class="btn_update_product" >Update</button>
+    <button class="btn_delete_product" >Delete</button>
 
     </article>
     `;

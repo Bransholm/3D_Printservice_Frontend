@@ -3,6 +3,7 @@ window.addEventListener("load", startAdmin);
 
 // stores the item to be updated!
 let stockItemToUpdate;
+let catalogueId;
 const endpoint = "https://3dprintservice.azurewebsites.net/";
 
 // import {
@@ -18,6 +19,10 @@ import { stockMaterial } from "./view-render-classes/stock-class.js";
 import { catalogueItem } from "./view-render-classes/catalogue-class.js";
 
 import { createCatalogClasses } from "../instance-creator.js";
+import {
+	callRenderMethod,
+	callRenderMethodAdmin,
+} from "./render-controller.js";
 // import { callRenderMethod as stockXYZ } from "../render-controller.js";
 
 // update-button clicked: Send data to stock-update-form
@@ -25,6 +30,7 @@ import {
   extractStockDataForUpdate,
   updateStockDataThroughForm,
 } from "./create-update-forms/update-stock-item.js";
+import { catalogueData } from "./tempoary-data-doc.js";
 
 function startAdmin() {
   console.log("Admin site is working");
@@ -42,8 +48,14 @@ async function getAllData() {
   console.log("material list: ", stockMaterialData);
 
   const catalougeItemObjects = await getCatalogueData();
-  // showCatalougeToAdmin(catalougeItemObjects);
+  showCatalougeToAdmin(catalougeItemObjects);
   showAllStockMaterials(stockMaterialData);
+}
+
+function showCatalougeToAdmin(catalougeItemObjects) {
+	const classList = createCatalogClasses(catalougeItemObjects, catalogueItem);
+	console.log("Der er et fetch");
+	callRenderMethodAdmin(classList, "productOverview");
 }
 
 function showAllStockMaterials(stockMaterialData) {
@@ -144,13 +156,13 @@ async function stockUpdateRoute(data) {
 //   }
 // }
 
-function showCatalougeToAdmin(catalougeItemObjects) {
-  const catalogueClassList = createCatalogClasses(
-    catalougeItemObjects,
-    catalogueItem
-  );
-  // callRenderMethod(classList, "productOverview");
-}
+// function showCatalougeToAdmin(catalougeItemObjects) {
+//   const catalogueClassList = createCatalogClasses(
+//     catalougeItemObjects,
+//     catalogueItem
+//   );
+//   // callRenderMethod(classList, "productOverview");
+// }
 
 // async function readAllCatalogueItems() {
 //   const catelogueData = await getCatalogueData();
@@ -161,6 +173,16 @@ function activateEventListeners() {
   document
     .querySelector("#addToCatalogueForm")
     .addEventListener("submit", createNewCatalogueItem);
+}
+
+export function deleteButtonClicked(instance) {
+console.log("Delete Item Clicked:", instance.id);
+catalogueId = instance.id
+}
+
+export function updateButtonClicked(instance) {
+console.log("Update Item Clicked:", instance.id);
+catalogueId = instance.id;
 }
 
 export { startAdmin as launchAdminFunctions };
