@@ -88,76 +88,76 @@ Er det her hovedpinen værd?
 
 // Produkt klassen skal (ned)arve fra catalogItem (og StockMaterial) klassen - derfor skal der skrives "extends"
 
-class customizedProduct {
-  constructor() {
-    this.productSize;
-    this.amount = 1;
-    this.SalesPrice = 155;
-  }
+// class customizedProduct {
+//   constructor() {
+//     this.productSize;
+//     this.amount = 1;
+//     this.SalesPrice = 155;
+//   }
 
-  interfaceRender(instance) {
-    const html =
-      /*html*/
-      `
-<article>
-    <article>
-    <h3>Produkt Navn: ${instance.title}</h3>
-    <img src="./images/${instance.imageLink}" alt="Produktbillede ${instance.title}"/>
-    <p>Kategori: ${instance.category}</p>
-    <p>Produkt Beskrivelse: ${instance.itemDescription}</p>
-    <p>Standard Størrelse: ${instance.standardSize} cm</p>
-    <p>Standard vægt: ${instance.standardWeight} gram</p>
+//   interfaceRender(instance) {
+//     const html =
+//       /*html*/
+//       `
+// <article>
+//     <article>
+//     <h3>Produkt Navn: ${instance.title}</h3>
+//     <img src="./images/${instance.imageLink}" alt="Produktbillede ${instance.title}"/>
+//     <p>Kategori: ${instance.category}</p>
+//     <p>Produkt Beskrivelse: ${instance.itemDescription}</p>
+//     <p>Standard Størrelse: ${instance.standardSize} cm</p>
+//     <p>Standard vægt: ${instance.standardWeight} gram</p>
         
 
-    <h3 id="productPrice"> Samlet Pris: XXX.XX DKK</h3>
-    <form>
+//     <h3 id="productPrice"> Samlet Pris: XXX.XX DKK</h3>
+//     <form>
 
-    <div id="selectAmount">
-    <button class="btn_increment_amount"> + </button>
-    <p id="selectProductAmount">Antal 1 stk.</p>
-    <button class="btn_decrement_amount"> - </button>
-    </div>
+//     <div id="selectAmount">
+//     <button class="btn_increment_amount"> + </button>
+//     <p id="selectProductAmount">Antal 1 stk.</p>
+//     <button class="btn_decrement_amount"> - </button>
+//     </div>
 
-    <div id="selectMaterial">
+//     <div id="selectMaterial">
     
-    <label for="chosenMaterial">Materiale</label>
-                <select name="material" id="chosenMaterial">
-                <option value="blød">Blød</option>
-                <option value="elastisk">Elastisk</option>
-                <option value="hård">Hård</option>
-                </select>
+//     <label for="chosenMaterial">Materiale</label>
+//                 <select name="material" id="chosenMaterial">
+//                 <option value="blød">Blød</option>
+//                 <option value="elastisk">Elastisk</option>
+//                 <option value="hård">Hård</option>
+//                 </select>
 
 
-      <label for="chosenColour">Farve</label>
-                <select name="colour" id="chosenColour">
-                </select>
+//       <label for="chosenColour">Farve</label>
+//                 <select name="colour" id="chosenColour">
+//                 </select>
 
 
 
 
-    </div>
-    <div id="selectProductSize">
-    <p id="showSliderSize">Valgte højde 15 cm</p>
-       <label for="chosenSize">Størrelse</label>
-                <input type="range" min="1" max="30" value="15" name="size" id="productSizeSlider">
+//     </div>
+//     <div id="selectProductSize">
+//     <p id="showSliderSize">Valgte højde 15 cm</p>
+//        <label for="chosenSize">Størrelse</label>
+//        <input type="range" min="1" max="30" value="15" name="size" id="productSizeSlider">
                
-    </div>
+//     </div>
 
-    <p id="productPrice"> Udrgenede vægt pr. produkt: XXXX gram </p>
-    <p id="produktMaterialName"> Produktet bliver printet i: PLA</p>
+//     <p id="productPrice"> Udrgenede vægt pr. produkt: XXXX gram </p>
+//     <p id="produktMaterialName"> Produktet bliver printet i: PLA</p>
     
-    </form>
+//     </form>
     
-        <button class="btn-add-basket" >Læg i kruv</button>
-        <button class="btn-return-" >Forstæt shopping</button>
+//         <button class="btn-add-basket" >Læg i kruv</button>
+//         <button class="btn-return-" >Forstæt shopping</button>
 
     
-    </article>
+//     </article>
 
-</article>
-`;
-  }
-}
+// </article>
+// `;
+//   }
+// }
 
 // ALT SKAL RESETTES NÅR VIEW BUTTON & ADD TO BASKET KLIKKES!
 // Everything needed to make the product
@@ -233,7 +233,7 @@ function showCustomizeProductSite(instance) {
     </div>
     <div id="selectProductSize">
     <p id="showSliderSize">Valgte højde 15 cm</p>
-       <label for="chosenSize">Størrelse</label>
+       <label for="productSizeSlider">Størrelse</label>
                 <input type="range" min="1" max="30" value="15" name="size" id="productSizeSlider">
                
     </div>
@@ -288,6 +288,8 @@ function setDefaultProduct(defaultSize) {
 
   // Set the item size to fit the item.standardSize
   size = defaultSize;
+  // Set the size-slider value to the default size
+  document.querySelector("#productSizeSlider").value = size;
   // Set the size information shown to the product customization site
   setProductSizeInfo();
   // Show the default material type and colour - set the first available as chosen
@@ -305,10 +307,6 @@ function setProductMaterial(event) {
   refreshColourSelector(selectedMaterial);
 }
 
-//det er ID og materiale der er vigtigt... hvad hvis det jeg sætter den til ikke er tilgængeligt...
-// sæt et materiale
-// vis alle farver
-// vælg en farve...
 
 // Resets all the colours in the "chosenColour" drop down
 function refreshColourSelector(selectedMaterial) {
