@@ -289,13 +289,12 @@ function setDefaultProduct(defaultSize) {
   // Set the item size to fit the item.standardSize
   size = defaultSize;
   // Set the size information shown to the product customization site
- setProductSizeInfo();
+  setProductSizeInfo();
   // Show the default material type and colour - set the first available as chosen
   refreshColourSelector(stockInStorage[0].Name.toLowerCase());
-  // Set the default 
+  // Set the default
   setProductPrice();
 }
-
 
 // Sets the material to the type selected in the "chooseMaterial" drop down
 function setProductMaterial(event) {
@@ -339,7 +338,7 @@ function refreshColourSelector(selectedMaterial) {
   }
 }
 
-// Sets the default material including type, colour and price 
+// Sets the default material including type, colour and price
 function setDeafaultProductMaterial(material, price, id) {
   // Tells the customer what plastic type the product will be printed in
   setMaterialText(material);
@@ -399,9 +398,6 @@ function setProductSizeInfo() {
     "#showSliderSize"
   ).innerHTML = `Valgte højde ${size} cm`;
 }
-
-
-
 
 function setProductPrice() {
   const tax = 1.25;
@@ -463,11 +459,9 @@ Så lægger vi porto til
   }
 */
 
-
 // There is 0 items -> Push
 // There are itesm...
 // I need to loop through the entire list before i push
-
 
 function checkForDoublets(newProduct) {
   console.log("This is your product: ", newProduct);
@@ -475,49 +469,48 @@ function checkForDoublets(newProduct) {
 
   // Cheks if the cart is empty
   if (shoppingCart.length > 0) {
+    shoppingCart.foreach(compareAttirbutes(newProduct));
     for (const product of shoppingCart) {
-      compareAttirbutes(product, newProduct), ;
-   }
+      if (!compareAttirbutes(product, newProduct)) {
+        shoppingCart.push(newProduct);
+      } else {
+        console.log("Exists!");
+      }
+    }
   } else {
-    shoppingCart.push(newProduct)
+    shoppingCart.push(newProduct);
   }
-
-
 }
-
 
 function compareAttirbutes(cartProduct, newProduct) {
   // console.log("This is  product in your mcart: ", product)
-  console.log(
-    `Item in cart catalogue ${cartProduct.catalogueId} === ${newProduct.catalogueId}`
+  return (
+    cartProduct.catalogueId === newProduct.catalogueId &&
+    cartProduct.stockId === newProduct.stockId &&
+    cartProduct.productSize === newProduct.productSize
   );
-  // If the catalouge items are the same - make a new check
-  if (cartProduct.catalogueId === newProduct.catalogueId) {
-    console.log("catalogue item is the same");
-    console.log(
-      `Item in cart material ${cartProduct.stockId} === ${newProduct.stockId}`
-    );
-    if (cartProduct.stockId === newProduct.stockId) {
-      console.log("the material is also the same");
-      console.log(
-        `Item in cart size ${cartProduct.productSize} === ${newProduct.productSize}`
-      );
-      if (cartProduct.productSize === newProduct.productSize) {
-        console.log("Even the size is the same");
-      } else {
-        pushProduct(newProduct);
-      }
-    }
-  }
+  // console.log(
+  //   `Item in cart catalogue ${cartProduct.catalogueId} === ${newProduct.catalogueId}`
+  // );
+  // // If the catalouge items are the same - make a new check
+  // if (cartProduct.catalogueId === newProduct.catalogueId) {
+  //   console.log("catalogue item is the same");
+  //   console.log(
+  //     `Item in cart material ${cartProduct.stockId} === ${newProduct.stockId}`
+  //   );
+  //   if (cartProduct.stockId === newProduct.stockId) {
+  //     console.log("the material is also the same");
+  //     console.log(
+  //       `Item in cart size ${cartProduct.productSize} === ${newProduct.productSize}`
+  //     );
+  //     if (cartProduct.productSize === newProduct.productSize) {
+  //       console.log("Even the size is the same");
+  //     }
+  //   }
+  // }
 }
 
-
-
-
-
-// Check det er falsk... 
-
-
+// Check det er falsk...
 
 function pushProduct(selectedProduct) {
   shoppingCart.push(selectedProduct);
