@@ -8,7 +8,7 @@ async function getCatalogueData() {
 }
 
 
-// async function fetchSearchContent() {
+// async function fetchSearchContent(filterValue, searchValue) {
 // 	const response = await fetch(
 // 		`${endpoint}/search?type=${filterValue}Name&q=${searchValue}`
 // 	);

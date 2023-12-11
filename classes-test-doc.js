@@ -1,4 +1,8 @@
+// Imports only the stockMaterials that is not sold out
 import { getAvailableStockData } from "./fetch-data.js";
+
+// Contains all products added to the cart
+const shoppingCart = [];
 
 // // Denne funktion laver klasserne for vores katalog-vare
 // export function createCatalogClasses(dataList, classType, htmlId) {
@@ -155,6 +159,7 @@ class customizedProduct {
   }
 }
 
+// ALT SKAL RESETTES NÅR VIEW BUTTON & ADD TO BASKET KLIKKES!
 // Everything needed to make the product
 let catalogueId;
 let size = 15;
@@ -168,12 +173,22 @@ let stockId;
 export async function viewButtonClicked(instance) {
   console.log("view button clicked: ", instance.id);
   catalogueId = instance.id;
+
   // document.querySelector("#produkt_overblik").innerHTML = "";
   document.querySelector("#product_id").innerHTML = "";
 
   stockInStorage = await getAvailableStockData();
-  console.log("The available stock", stockInStorage);
+  // console.log("The available stock", stockInStorage);
 
+  showCustomizeProductSite(instance);
+
+  addProductSiteEventListeners();
+
+  // RUN ALL EVENTS AND GET THE PRICE!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+  setDefaultProduct(instance.standardSize);
+}
+
+function showCustomizeProductSite(instance) {
   // NB: Vi skal lave et fetch som tjekker om en side er løbet tør for noget bestemt...
   const html =
     /*html*/
@@ -237,11 +252,6 @@ export async function viewButtonClicked(instance) {
 `;
 
   document.querySelector("#product_id").insertAdjacentHTML("beforeend", html);
-
-  addProductSiteEventListeners();
-
-  // RUN ALL EVENTS AND GET THE PRICE!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-  setDefaultProduct(instance.standardSize);
 }
 
 function addProductSiteEventListeners() {
@@ -272,6 +282,7 @@ function addProductSiteEventListeners() {
 function setDefaultProduct(defaultSize) {
   console.log("Set all events");
   //set the item size
+
   size = defaultSize;
   document.querySelector("#productSizeSlider").value = size;
   document.querySelector(
@@ -279,18 +290,21 @@ function setDefaultProduct(defaultSize) {
   ).innerHTML = `Valgte højde ${size} cm`;
 
   //Set the actual MATERIAL!
-  console.log("base material: ", stockInStorage[1]);
+  // console.log("base material: ", stockInStorage[1]);
   refreshColourSelector(stockInStorage[0].Name.toLowerCase());
   stockId = stockInStorage[0].Id;
 
   setProductPrice();
 }
 
-// FIND A WAY TO DO THIS FOR BLØD!!!!
+function resetProductValues() {}
+
+// Sets the material to the type selected in the "chooseMaterial" drop down
 function setProductMaterial(event) {
   const selectedMaterial = event.target.value;
   console.log("selected material ", selectedMaterial);
 
+  // Resets the "chosenColour" drop down option
   refreshColourSelector(selectedMaterial);
 }
 
@@ -298,22 +312,56 @@ function setProductMaterial(event) {
 // sæt et materiale
 // vis alle farver
 // vælg en farve...
+
+// Resets all the colours in the "chosenColour" drop down
 function refreshColourSelector(selectedMaterial) {
   document.querySelector("#chosenColour").innerHTML = "";
 
-  for (const material of stockInStorage) {
+  // Checks if the match is the first
+  let matchValue = 0;
+
+  // Loops through all available materials to find those matching with the selected type
+  for (let n = 0; n < stockInStorage.length; n++) {
+    const material = stockInStorage[n];
+
     if (selectedMaterial === material.Name.toLowerCase()) {
+      //  For every match available - an option is made available
       activateColour(material.Colour, material.Id);
 
-      // this should only happen once!
-      setMaterialText(material.Material);
-      materialPrice = material.SalesPrice;
+      // Sets the first avaialbe material as the product default
+      if (matchValue === 0) {
+        setDeafaultProductMaterial(
+          material.Material,
+          material.SalesPrice,
+          material.Id
+        );
+        matchValue = 1;
+      }
     }
   }
-  setProductPrice();
 }
 
-//
+function setDeafaultProductMaterial(material, price) {
+  // Tells the customer what plastic type the product will be printed in
+  setMaterialText(material);
+  // Sets the value of the product material price
+  setProductMaterialPrice(price);
+  // Sets the default selected material id - indirectly the chosen colour
+  setDefaultMaterialId(material.Id);
+}
+
+function setDefaultMaterialId(id) {
+  stockId = id;
+}
+
+// Stores the price value of the selected material
+function setProductMaterialPrice(newPrice) {
+  materialPrice = newPrice;
+}
+
+// Functions that set the product material and colour
+
+// Clear and shwos the print material on screen
 function setMaterialText(material) {
   document.querySelector("#produktMaterialName").innerHTML = "";
   document.querySelector(
@@ -321,6 +369,7 @@ function setMaterialText(material) {
   ).innerHTML = `Produktet bliver printet i: ${material}`;
 }
 
+// Creates the options for the colour drop down - value is the stockMaterial.id
 function activateColour(colour, id) {
   const newColourOption = document.createElement("option");
   newColourOption.value = id;
@@ -329,15 +378,16 @@ function activateColour(colour, id) {
   document.querySelector("#chosenColour").add(newColourOption);
 }
 
+// Sets the chosen color AND material
 function setProductColour(event) {
-  console.log("product colour ID: ", event.target.value);
+  // console.log("product colour ID: ", event.target.value);
   stockId = Number(event.target.value);
 }
 
 function setProductSize(event) {
-  size = event.target.value;
+  size = Number(event.target.value);
   document.querySelector("#showSliderSize").innerHTML = "";
-  console.log("The size is ", event.target.value, " CM");
+  // console.log("The size is ", event.target.value, " CM");
   document.querySelector(
     "#showSliderSize"
   ).innerHTML = `Valgte højde ${size} cm`;
@@ -349,9 +399,9 @@ function setProductPrice() {
   const tax = 1.25;
   const shipping = 39;
   document.querySelector("#productPrice").innerHTML = "";
-  console.log(
-    `Samlet pris = materiale ${materialPrice}, størrelse${size}, antal${amount}`
-  );
+  // console.log(
+  //   `Samlet pris = materiale ${materialPrice}, størrelse${size}, antal${amount}`
+  // );
   //der mangler en vloume udregning på baggrund af vægt i forhold til størrelsen.
   price = (materialPrice / 1000) * (size * 1.8) * amount * tax + shipping;
   // run op!
@@ -393,22 +443,51 @@ Så lægger vi porto til
 
 // THE PRODUCT BASKET
 
-const shoppingCart = [];
+/*
+    this.catalogueId = catalogueId;
+    this.stockId = stockId;
+    this.productSize = size;
+    this.productAmount = amount;
+    this.productPrice = price;
+  }
+*/
 
+function checkForDoublets(prod) {
+  console.log("This is your product: ", prod);
+  console.log("number of cart items ", shoppingCart.length);
 
-
-function checkForDoublets(prod){
-  if(shoppingCart[0] != "");{
-    for(const product in shoppingCart){
-      if(product.catalcatalogueId === prod.catalcatalogueId && product.stockId === prod.stockId && product.size === prod.size){
-        console.log("The items are indentical!");
-      }else{
-        shoppingCart.push(productForBasket);
+  if (shoppingCart.length > 0) {
+    for (const product of shoppingCart) {
+      // console.log("This is  product in your mcart: ", product)
+      console.log(
+        `Item in cart catalogue ${product.catalogueId} === ${prod.catalogueId}`
+      );
+      if (product.catalogueId === prod.catalogueId) {
+        console.log("catalogue is the same");
+        console.log(
+          `Item in cart material ${product.stockId} === ${prod.stockId}`
+        );
+        if (product.stockId === prod.stockId) {
+          console.log("material is also the same");
+          console.log(
+            `Item in cart size ${product.productSize} === ${prod.productSize}`
+          );
+          if (product.productSize === prod.productSize) {
+            console.log("Even the size is the same");
+          }
+        }
+      } else {
+        continue;
       }
     }
-
+  } else {
+    pushProduct(prod);
   }
+}
 
+function pushProduct(selectedProduct) {
+  shoppingCart.push(selectedProduct);
+  console.log("producted added!");
 }
 
 function addProductToBasket() {
@@ -419,12 +498,8 @@ function addProductToBasket() {
     amount,
     price
   );
-  
-  console.log("this is your product! ", productForBasket);
-  
-  checkForDoublets(productForBasket)
 
-  
+  checkForDoublets(productForBasket);
   console.log("this is your shopping cart", shoppingCart);
 
   // const catalogueID = catalogueId;
@@ -447,8 +522,8 @@ function addProductToBasket() {
 
 class productOrder {
   constructor(catalogueId, stockId, size, amount, price) {
-    this.catalogueID = catalogueId;
-    this.stockID = stockId;
+    this.catalogueId = catalogueId;
+    this.stockId = stockId;
     this.productSize = size;
     this.productAmount = amount;
     this.productPrice = price;
