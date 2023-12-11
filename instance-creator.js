@@ -15,7 +15,6 @@ export function createCatalogClasses(dataList, classType) {
   console.log("classlist: ", classList);
 
   //Her køres render metoden for alle vores instances af catalogue klassen.
-  console.log(classList);
   return classList;
 
   // Her laver jeg en instance af Product...
