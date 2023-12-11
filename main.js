@@ -15,10 +15,9 @@ import { catalogueData, stockData } from "./tempoary-data-doc.js";
 import { createCatalogClasses } from "./instance-creator.js";
 import { callRenderMethod } from "./render-controller.js";
 
-window.addEventListener("load", start);
+import { filterContent, searchContent, } from "./catalogue-filter-search.js";
 
-let filterValue = "all";
-let searchValue = "";
+window.addEventListener("load", start);
 
 function start() {
   startViews();
@@ -68,40 +67,4 @@ function showDialogDataPolicyLink() {
   document.querySelector("#dialog-data-policy").showModal();
 }
 
-
-async function filterContent(event) {
-  const value = event.target.value;
-  if (value === "Bygninger") {
-    const catalougeItemObjects = await getCatalogueData();
-    showCatalougeToCustomers(catalougeItemObjects);
-    filterValue = "Bygninger";
-    console.log(filterValue);
-  } else if (value === "Dyr") {
-    const catalougeItemObjects = await getCatalogueData();
-    showCatalougeToCustomers(catalougeItemObjects);
-    filterValue = "Dyr";
-    console.log(filterValue);
-  } else if (value === "Eventyr") {
-    const catalougeItemObjects = await getCatalogueData();
-    showCatalougeToCustomers(catalougeItemObjects);
-    filterValue = "Eventyr";
-    console.log(filterValue);
-  } else if (value === "Sci-fi") {
-    const catalougeItemObjects = await getCatalogueData();
-    showCatalougeToCustomers(catalougeItemObjects);
-    filterValue = "Sci-fi";
-    console.log(filterValue);
-  } else if (value === "all") {
-    const catalougeItemObjects = await getCatalogueData();
-    showCatalougeToCustomers(catalougeItemObjects);
-    filterValue = "all";
-    console.log(filterValue);
-  }
-}
-
-async function searchContent() {
-  searchValue = document.querySelector("#search").value;
-  const catalougeItemObjects = await getCatalogueData();
-  showCatalougeToCustomers(catalougeItemObjects);
-  console.log(searchValue);
-}
+export { showCatalougeToCustomers };
