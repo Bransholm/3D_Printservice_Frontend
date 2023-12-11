@@ -15,10 +15,9 @@ import { catalogueData, stockData } from "./tempoary-data-doc.js";
 import { createCatalogClasses } from "./instance-creator.js";
 import { callRenderMethod } from "./render-controller.js";
 
-window.addEventListener("load", start);
+import { filterContent, searchContent, } from "./catalogue-filter-search.js";
 
-let filterValue = "Dyr";
-let searchValue = "";
+window.addEventListener("load", start);
 
 function start() {
   startViews();
@@ -53,7 +52,7 @@ function activateCustomerEventListeners() {
     .querySelector("#data-policy-link")
     .addEventListener("click", showDialogDataPolicyLink);
   document.querySelector("#filter-search").addEventListener("change", filterContent);
-  // document.querySelector("#search-button").addEventListener("click", searchContent);
+  document.querySelector("#search-button").addEventListener("click", searchContent);
 }
 
 function showDialogFaq() {
@@ -68,28 +67,4 @@ function showDialogDataPolicyLink() {
   document.querySelector("#dialog-data-policy").showModal();
 }
 
-
-async function filterContent(event) {
-  const value = event.target.value;
-  if (value === "Bygninger") {
-    const catalougeItemObjects = await getCatalogueData();
-    showCatalougeToCustomers(catalougeItemObjects);
-    filterValue = "Bygninger";
-    console.log(filterValue);
-  } else if (value === "Dyr") {
-    getCatalogueData();
-    showCatalougeToCustomers(catalougeItemObjects);
-    filterValue = "Dyr";
-    console.log(filterValue);
-  } else if (value === "Eventyr") {
-    getCatalogueData();
-    showCatalougeToCustomers(catalougeItemObjects);
-    filterValue = "Eventyr";
-    console.log(filterValue);
-  } else if (value === "Sci-fi") {
-    getCatalogueData();
-    showCatalougeToCustomers(catalougeItemObjects);
-    filterValue = "Sci-fi";
-    console.log(filterValue);
-  }
-}
+export { showCatalougeToCustomers };

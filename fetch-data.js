@@ -1,11 +1,24 @@
+import { filterValue, searchValue, } from "./catalogue-filter-search.js";
+
 const endpoint = "https://3dprintservice.azurewebsites.net/";
 
-
+// Kenneths get
 async function getCatalogueData() {
-  const response = await fetch(`${endpoint}/catalogue`);
+  const response = await fetch(`${endpoint}/catalogue?filter=${filterValue}&search=${searchValue}`);
   const catalogueData = await response.json();
   return catalogueData;
 }
+
+//127.0.0.1:4811/Catalogue?filter=${filterValue}&search=${searchValue}
+
+// ${endpoint}/search ?filter=${filterValue}Name&q=${searchValue}
+
+// Lukases get
+// async function getCatalogueData() {
+//   const response = await fetch(`${endpoint}/catalogue`);
+//   const catalogueData = await response.json();
+//   return catalogueData;
+// }
 
 
 // async function fetchSearchContent(filterValue, searchValue) {
