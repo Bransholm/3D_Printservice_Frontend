@@ -107,7 +107,6 @@ Er det her hovedpinen værd?
 //     <p>Produkt Beskrivelse: ${instance.itemDescription}</p>
 //     <p>Standard Størrelse: ${instance.standardSize} cm</p>
 //     <p>Standard vægt: ${instance.standardWeight} gram</p>
-        
 
 //     <h3 id="productPrice"> Samlet Pris: XXX.XX DKK</h3>
 //     <form>
@@ -119,7 +118,7 @@ Er det her hovedpinen værd?
 //     </div>
 
 //     <div id="selectMaterial">
-    
+
 //     <label for="chosenMaterial">Materiale</label>
 //                 <select name="material" id="chosenMaterial">
 //                 <option value="blød">Blød</option>
@@ -127,31 +126,26 @@ Er det her hovedpinen værd?
 //                 <option value="hård">Hård</option>
 //                 </select>
 
-
 //       <label for="chosenColour">Farve</label>
 //                 <select name="colour" id="chosenColour">
 //                 </select>
-
-
-
 
 //     </div>
 //     <div id="selectProductSize">
 //     <p id="showSliderSize">Valgte højde 15 cm</p>
 //        <label for="chosenSize">Størrelse</label>
 //        <input type="range" min="1" max="30" value="15" name="size" id="productSizeSlider">
-               
+
 //     </div>
 
 //     <p id="productPrice"> Udrgenede vægt pr. produkt: XXXX gram </p>
 //     <p id="produktMaterialName"> Produktet bliver printet i: PLA</p>
-    
+
 //     </form>
-    
+
 //         <button class="btn-add-basket" >Læg i kruv</button>
 //         <button class="btn-return-" >Forstæt shopping</button>
 
-    
 //     </article>
 
 // </article>
@@ -163,7 +157,7 @@ Er det her hovedpinen værd?
 // Everything needed to make the product
 let catalogueId;
 let size = 15;
-let amount = 1;
+let amount;
 // Used to calculate the set price...
 let materialPrice = 155;
 let stockInStorage;
@@ -286,6 +280,8 @@ function addProductSiteEventListeners() {
 function setDefaultProduct(defaultSize) {
   console.log("Set all events");
 
+  // Sets the chosen amount to 1
+  resetProductAmount();
   // Set the item size to fit the item.standardSize
   size = defaultSize;
   // Set the size-slider value to the default size
@@ -296,6 +292,14 @@ function setDefaultProduct(defaultSize) {
   refreshColourSelector(stockInStorage[0].Name.toLowerCase());
   // Set the default
   setProductPrice();
+
+  
+}
+
+
+function resetProductAmount() {
+  amount = 1;
+  showSelectedAmount();
 }
 
 // Sets the material to the type selected in the "chooseMaterial" drop down
@@ -306,7 +310,6 @@ function setProductMaterial(event) {
   // Resets the "chosenColour" drop down option
   refreshColourSelector(selectedMaterial);
 }
-
 
 // Resets all the colours in the "chosenColour" drop down
 function refreshColourSelector(selectedMaterial) {
@@ -486,6 +489,7 @@ function pushProduct(selectedProduct) {
 
 function addProductToBasket() {
   console.log("hat is my size? ", size);
+  resetProductAmount();
   // creates an instance productOrder class
   const productForBasket = new productOrder(
     catalogueId,
@@ -499,8 +503,7 @@ function addProductToBasket() {
   checkForDoublets(productForBasket);
   console.log("this is your shopping cart", shoppingCart);
   // Refreshes the shopping cart html
-  // showItemsInCart();
-
+  showItemsInCart();
 }
 // const catalogueID = catalogueId;
 // const productSize = size;
@@ -528,22 +531,30 @@ class productOrder {
     this.productPrice = price;
   }
 
+  // Fetch or find the date based on the ID
+  // Get title/ photo
+  // Get the material and colour...
+  // WE NEVER CALCULATE THE GRAM!
+
   render() {
-    html =
+    const productOrderHTML =
       /*html*/
       `
+    <article>
     <h3>INSERT NAME</h3>
-    <p>catalogueId ${catalogueId}</p>
-    <p>stockId ${stockId}</p>
-    <p>productSize ${productSize}</p>
-    <button></button>
-    <p>Amount ${productAmount}</p>
+    <p>catalogueId ${this.catalogueId}</p>
+    <p>stockId ${this.stockId}</p>
+    <p>Size ${this.productSize}</p>
+    <button class="btn_increment_amount">+</button>
+    <p>Amount ${this.productAmount}</p>
     <button class="btn_derement_amount">-</button>
     <p>CALCULATE PRICE</p>
-    <button class="btn_increment_amount">+</button>
-    <p>Price ${productPrice}</p>
+    <p>Price ${this.productPrice}</p>
     <button class="btn_remove_cart_item">Fjern</button>
+    </article>
     `;
+
+    return productOrderHTML;
   }
   // test this!
   setAmount(newAmount) {
@@ -553,12 +564,51 @@ class productOrder {
 
 function showItemsInCart() {
   document.querySelector("#special_products").innerHTML = "";
-  for (const product of shoppingCart) {
+
+  for (let i = 0; i < shoppingCart.length; i++) {
+    const product = shoppingCart[i];
+    console.log("shopping card index ", i, " is ", product);
     const productOrderHTML = product.render();
 
     // --------------- NEW HTML ID/ PAGE NEEDED!!! --------------------------------------------- OBS!!!!!
     document
       .querySelector("#special_products")
-      .insertAdjacentElement("beforeend", productOrderHTML);
+      .insertAdjacentHTML("beforeend", productOrderHTML);
+
+    // Eventlisteners!
+     document
+       .querySelector(
+         "#special_products article:last-child .btn_increment_amount"
+       )
+       .addEventListener("click", () =>
+         incrementCartProductAmount()
+       );
+
+     document
+       .querySelector("#special_products article:last-child .btn_derement_amount")
+       .addEventListener("click", () =>
+         decrementcartProductAmount()
+       );
+
+       document
+         .querySelector(
+           "#special_products article:last-child .btn_remove_cart_item"
+         )
+         .addEventListener("click", () =>
+           removeProductFromCart(i)
+         );
   }
+}
+
+function removeProductFromCart(i) {
+  shoppingCart.splice(shoppingCart[i], 1)
+  showItemsInCart();
+}
+
+function incrementCartProductAmount() {
+  console.log("++")
+}
+
+function decrementcartProductAmount() {
+    console.log("--");
 }
