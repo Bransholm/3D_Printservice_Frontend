@@ -292,10 +292,7 @@ function setDefaultProduct(defaultSize) {
   refreshColourSelector(stockInStorage[0].Name.toLowerCase());
   // Set the default
   setProductPrice();
-
-  
 }
-
 
 function resetProductAmount() {
   amount = 1;
@@ -556,9 +553,13 @@ class productOrder {
 
     return productOrderHTML;
   }
-  // test this!
-  setAmount(newAmount) {
-    this.productAmount = newAmount;
+
+  incrementProductAmount() {
+    this.productAmount++;
+  }
+
+  decrementProductAmount() {
+    this.productAmount--;
   }
 }
 
@@ -576,39 +577,40 @@ function showItemsInCart() {
       .insertAdjacentHTML("beforeend", productOrderHTML);
 
     // Eventlisteners!
-     document
-       .querySelector(
-         "#special_products article:last-child .btn_increment_amount"
-       )
-       .addEventListener("click", () =>
-         incrementCartProductAmount()
-       );
+    document
+      .querySelector(
+        "#special_products article:last-child .btn_increment_amount"
+      )
+      .addEventListener("click", () => incrementCartProductAmount(product));
 
-     document
-       .querySelector("#special_products article:last-child .btn_derement_amount")
-       .addEventListener("click", () =>
-         decrementcartProductAmount()
-       );
+    document
+      .querySelector(
+        "#special_products article:last-child .btn_derement_amount"
+      )
+      .addEventListener("click", () => decrementcartProductAmount(product));
 
-       document
-         .querySelector(
-           "#special_products article:last-child .btn_remove_cart_item"
-         )
-         .addEventListener("click", () =>
-           removeProductFromCart(i)
-         );
+    document
+      .querySelector(
+        "#special_products article:last-child .btn_remove_cart_item"
+      )
+      .addEventListener("click", () => removeProductFromCart(i));
   }
 }
 
 function removeProductFromCart(i) {
-  shoppingCart.splice(shoppingCart[i], 1)
+  shoppingCart.splice(shoppingCart[i], 1);
   showItemsInCart();
 }
 
-function incrementCartProductAmount() {
-  console.log("++")
+function incrementCartProductAmount(product) {
+  product.incrementProductAmount();
+  showItemsInCart();
+
 }
 
-function decrementcartProductAmount() {
-    console.log("--");
+function decrementcartProductAmount(product) {
+  if(product.productAmount > 1){
+    product.decrementProductAmount();
+  }
+  showItemsInCart();
 }
