@@ -40,10 +40,11 @@ async function filterContent(event) {
 
 // Sets the search term from the product catalogue page search input into the search variable
 async function searchContent() {
-  searchValue = document.querySelector("#search").value;
-  const catalougeItemObjects = await getCatalogueData();
-  showCatalougeToCustomers(catalougeItemObjects);
-  console.log(searchValue);
+    searchValue = document.querySelector("#search").value;
+    const catalougeItemObjects = await getCatalogueData();
+    showCatalougeToCustomers(catalougeItemObjects);
+    console.log(searchValue);
+    searchValue = "";
 }
 
 export {
