@@ -17,7 +17,7 @@ import { callRenderMethod } from "./render-controller.js";
 
 window.addEventListener("load", start);
 
-let filterValue = "Dyr";
+let filterValue = "all";
 let searchValue = "";
 
 function start() {
@@ -90,6 +90,11 @@ async function filterContent(event) {
     const catalougeItemObjects = await getCatalogueData();
     showCatalougeToCustomers(catalougeItemObjects);
     filterValue = "Sci-fi";
+    console.log(filterValue);
+  } else if (value === "all") {
+    const catalougeItemObjects = await getCatalogueData();
+    showCatalougeToCustomers(catalougeItemObjects);
+    filterValue = "all";
     console.log(filterValue);
   }
 }
