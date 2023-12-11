@@ -1,5 +1,6 @@
 export class stockMaterial {
   constructor(stockObject) {
+    this.id = stockObject.Id;
     this.name = stockObject.Name;
     this.material = stockObject.Material;
     this.colour = stockObject.Colour;
@@ -21,15 +22,15 @@ export class stockMaterial {
     const stockHTML =
       /*html*/
       `
-      
   <tr>
-    <td>${this.name}</td>
     <td>${this.material}</td>
+    <td>${this.name}</td>
     <td>${this.colour} cm</td>
     <td>${this.gramInStock} gram</td>
     <td> ${availability} </td>
     <td>${this.salesPrice} dkk/kg</td>
-    <button>Opdater!</button>
+    <td>  <button  class="btn_update_stock">Opdater!</button> </td>
+
   </tr>
     `;
     return stockHTML;

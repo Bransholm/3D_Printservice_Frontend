@@ -1,34 +1,40 @@
-function extractStockDataForUpdate(catalogueItem) {
+function extractStockDataForUpdate(stockMaterial) {
+  console.log(stockMaterial);
   const updateForm = document.querySelector("#updateMaterialForm");
   // const x = event.target
 
   // Doublecheck if attirbute needs to be with capital sarting letter...
-  updateForm.name.value = catalogueItem.name;
-  updateForm.material.value = catalogueItem.material;
-  updateForm.colour.value = catalogueItem.colour;
-  updateForm.minAmountReached.value = catalogueItem.inStock;
-  updateForm.salesPrize.value = catalogueItem.minAmount;
-
+  updateForm.name.value = stockMaterial.name;
+  updateForm.material.value = stockMaterial.material;
+  updateForm.colour.value = stockMaterial.colour;
+  updateForm.gramInStock.value = stockMaterial.gramInStock;
+  updateForm.minAmountReached.value = stockMaterial.minAmountReached;
+  updateForm.salesPrice.value = stockMaterial.salesPrice;
 }
 
+/* ... */
 
-function updateStockData(event) {
-  event.preventDefault();
-  const form = document.querySelector("#updateMaterialForm").element;
+function updateStockDataThroughForm(stockMaterial) {
+  const form = document.querySelector("#updateMaterialForm");
+
+  const id = stockMaterial.id;
 
   const name = form.name.value;
-  const standardSize = form.material.value;
-  const standardWeight = form.inStock.value;
-  const minAmountReached = form.minAmount.value;
-  const salesPrize = form.price.value;
+  const material = form.material.value;
+  const colour = form.colour.value;
+  const gramInStock = Number(form.gramInStock.value);
+  const minAmountReached = form.minAmountReached.value;
+  const salesPrice = Number(form.salesPrice.value);
 
   return {
+    id,
     name,
-    standardSize,
-    standardWeight,
+    material,
+    colour,
+    gramInStock,
     minAmountReached,
-    salesPrize,
+    salesPrice
   };
 }
 
-export { extractStockDataForUpdate, updateStockData };
+export { extractStockDataForUpdate, updateStockDataThroughForm };

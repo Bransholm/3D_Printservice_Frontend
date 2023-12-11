@@ -15,41 +15,46 @@
         <main>Admin indhold</main>
     </div>
 
-<container id="functions"> Alt andet
-        <h2>Lager Status</h2> 
+    // ADMIN
+    <container> Alt andet
+    </br>
+    
+    // Admin Stock Overview
+    <section id="stockMaterialOveriew" >
+      <h2>Lager Status</h2> 
       
-        <table>
+      <table id="stockOverviewTable">
         <thead>
-            <th>Navn</th>
+          <tr>
             <th>Materiale</th>
+            <th>Egenskab</th>
             <th>Farve</th>
-            <th>Mængde på Lager</th>
-            <th>Udsolgts Status</th>
+            <th>Mængde Tilgængelig</th>
+            <th>Status</th>
             <th>Salgspris</th>
+            <th>Opdater</th>
+          </tr>
         </thead>
         <tbody id="adminStockTableBody">
         </tbody>
       </table> 
-    
-    </br>
+      
+  // Admin Update Stock Form
+        <form id="updateMaterialForm">
 
-        <form id="addNewMaterialForm">
-          <containter id="stockMaterialOveriew" >
-
-            <label for="StockName">Produktnavn</label>
-            <input type="text" id="catalogueName" name="name" placeholder="Produktnavn" required/>
+            <label for="StockName">Materiale kendetegn</label>
+            <input type="text" id="catalogueName" name="name" placeholder="Fks. blød" required/>
 
             <label for="stockMaterial">Materiale</label>
-                <select name="minAmount" id="minAmountStock">
+                <select name="material" id="minAmountStock">
                 <option value= "PLA" >PLA</option>
                 <option value="ABS">ABS</option>
-                <option value="CARBON">Carbon</option>
-                <option value="NYLON-CARBOM">ABS</option>
+                <option value="TPU">TPU<ption>
                 </select>
 
             <label for="stockColour">Farve</label>
                 <input type="text" id="stockColour" name="colour"
-                  placeholder="Rød"
+                  placeholder=" fks ... Rød"
                   required
                 />                
                 
@@ -57,8 +62,8 @@
                 <input
                   type="text"
                   id="amountInStock"
-                  name="inStock"
-                  placeholder="..."
+                  name="gramInStock"
+                  placeholder="mængde i gram"
                   required
                 />
 
@@ -66,28 +71,33 @@
                 <input
                   type="text"
                   id="salesPrice"
-                  name="price"
-                  placeholder="..."
+                  name="salesPrice"
+                  placeholder="pris i DKK"
                   required
                 />
 
             <label for="minAmountStock">Salgs Status</label>
-                <select name="minAmount" id="minAmountStock">
-                <option value= "true" > Udsolgt </option>
-                <option value="false"> På Lager </option>
+                <select name="minAmountReached" id="minAmountReached">
+                <option value= "1" > Udsolgt </option>
+                <option value= "0" > På Lager </option>
                 </select>
 
-            <button type="submit" >Opret</button>
+            <button type="submit" class="btn_update_stock">Opdater</button>
         </form>
-        <div id="updateMaterialForm"></div>
-    </containter>
+    </section>
 
+
+
+
+
+    // Admin catalogue Section
     <section id="catalougeOveriew">
         <h2>Katalog Oversigt</h2>
         
-        <container id="adminCatalogueOverview">
-        </container>
-        <container>
+        <article id="adminCatalogueOverview">
+        </article>
+
+        <article>
         <form id="addToCatalogueForm">
 
          <label for="catalogueTitle">Produktnavn</label>
@@ -153,7 +163,7 @@
 
 
         </form>
-       </container>
+       </article>
       
        <container id="productOverview" class="grid-container"> Hele Kataloget </container>
 

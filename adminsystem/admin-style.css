@@ -45,3 +45,30 @@ main {
     border-bottom: 1px solid black;
     padding: 10px;
 }
+
+/* Admin: Stock Overview Table*/
+
+ table {
+    display: table;
+    border-collapse: separate;
+    box-sizing: border-box;
+    text-indent: initial;
+    border-spacing: 2px;
+    border-color: gray;
+}
+td {
+    display: table-cell;
+    vertical-align: inherit;
+}
+
+
+
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+th {
+  background-color: #f2f2f2;
+}

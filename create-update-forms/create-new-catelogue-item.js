@@ -6,6 +6,7 @@ function createNewCatalogueItem(event) {
   // Er det nu .target.value?
   const catelogueForm = event.target;
 
+  // WHERE IS THE ID in all of this???
   const title = catelogueForm.title.value;
   const standardSize = Number(catelogueForm.size.value);
   const standardWeight = Number(catelogueForm.weight.value);
@@ -67,7 +68,7 @@ async function postCatelogueItem(data) {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     } else {
-      const  result = await response.json();
+      const result = await response.json();
       console.log(result);
     }
 

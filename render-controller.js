@@ -1,6 +1,5 @@
 import { viewButtonClicked } from "./classes-test-doc.js";
 
-let runte = 0;
 
 export function callRenderMethod(listOfInstances, htmlId) {
   console.log("No3. CallRenderMethod");
@@ -9,8 +8,7 @@ export function callRenderMethod(listOfInstances, htmlId) {
   for (const instance of listOfInstances) {
     const classHTML = instance.render();
 
-    runte += 1;
-    console.log("Elementer vist: ", runte);
+
 
     document
       .querySelector(`#${htmlId}`)
