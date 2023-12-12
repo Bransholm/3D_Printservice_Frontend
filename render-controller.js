@@ -4,18 +4,28 @@ import { viewButtonClicked } from "./classes-test-doc.js";
 
  function callRenderMethod(listOfInstances, htmlId) {
   console.log("No3. CallRenderMethod");
-  document.querySelector(`#${htmlId}`).innerHTML = "";
+   
+   if (listOfInstances.length === 0) {
+    document.querySelector(`#${htmlId}`).innerHTML = "Beklager, der er ikke et produkt der matcher din søgning";
+   } else {
+     document.querySelector(`#${htmlId}`).innerHTML = "";
+     for (const instance of listOfInstances) {
+       const classHTML = instance.render();
+       
+          document
+            .querySelector(`#${htmlId}`)
+            .insertAdjacentHTML("beforeend", classHTML);
 
-  for (const instance of listOfInstances) {
-    const classHTML = instance.render();
+          eventListenerAdder(htmlId, instance);
+     }
+
+
+  // for (const instance of listOfInstances) {
+  //   const classHTML = instance.render();
 
 
 
-    document
-      .querySelector(`#${htmlId}`)
-      .insertAdjacentHTML("beforeend", classHTML);
-
-    eventListenerAdder(htmlId, instance);
+ 
   }
 
   function eventListenerAdder(htmlId, classInstance) {
