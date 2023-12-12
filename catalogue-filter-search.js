@@ -45,7 +45,7 @@ async function searchContent() {
     showCatalougeToCustomers(catalougeItemObjects);
     console.log(searchValue);
     searchValue = "";
-    document.getElementById('search').value = '';
+    document.querySelector("#search").value = "";
 }
 
 export {
