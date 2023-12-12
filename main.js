@@ -20,7 +20,7 @@ import { filterContent, searchContent, } from "./catalogue-filter-search.js";
 window.addEventListener("load", start);
 
 function start() {
-  // startViews();
+  startViews();
   activateCustomerEventListeners();
   console.log("Hello Team10");
   // Tester om man kan hente data - Lukas
