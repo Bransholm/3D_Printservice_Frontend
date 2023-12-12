@@ -181,4 +181,4 @@ export function updateButtonClicked(instance) {
 	catalogueId = instance.id;
 }
 
-export { startAdmin as launchAdminFunctions };
+// export { startAdmin as launchAdminFunctions };

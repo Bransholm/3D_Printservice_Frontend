@@ -88,103 +88,99 @@ Er det her hovedpinen værd?
 
 // Produkt klassen skal (ned)arve fra catalogItem (og StockMaterial) klassen - derfor skal der skrives "extends"
 
-class customizedProduct {
-  constructor() {
-    this.productSize;
-    this.amount = 1;
-    this.SalesPrice = 155;
-  }
+// class customizedProduct {
+//   constructor() {
+//     this.productSize;
+//     this.amount = 1;
+//     this.SalesPrice = 155;
+//   }
 
-  interfaceRender(instance) {
-    const html =
-      /*html*/
-      `
-<article>
-    <article>
-    <h3>Produkt Navn: ${instance.title}</h3>
-    <img src="./images/${instance.imageLink}" alt="Produktbillede ${instance.title}"/>
-    <p>Kategori: ${instance.category}</p>
-    <p>Produkt Beskrivelse: ${instance.itemDescription}</p>
-    <p>Standard Størrelse: ${instance.standardSize} cm</p>
-    <p>Standard vægt: ${instance.standardWeight} gram</p>
-        
+//   interfaceRender(instance) {
+//     const html =
+//       /*html*/
+//       `
+// <article>
+//     <article>
+//     <h3>Produkt Navn: ${instance.title}</h3>
+//     <img src="./images/${instance.imageLink}" alt="Produktbillede ${instance.title}"/>
+//     <p>Kategori: ${instance.category}</p>
+//     <p>Produkt Beskrivelse: ${instance.itemDescription}</p>
+//     <p>Standard Størrelse: ${instance.standardSize} cm</p>
+//     <p>Standard vægt: ${instance.standardWeight} gram</p>
 
-    <h3 id="productPrice"> Samlet Pris: XXX.XX DKK</h3>
-    <form>
+//     <h3 id="productPrice"> Samlet Pris: XXX.XX DKK</h3>
+//     <form>
 
-    <div id="selectAmount">
-    <button class="btn_increment_amount"> + </button>
-    <p id="selectProductAmount">Antal 1 stk.</p>
-    <button class="btn_decrement_amount"> - </button>
-    </div>
+//     <div id="selectAmount">
+//     <button class="btn_increment_amount"> + </button>
+//     <p id="selectProductAmount">Antal 1 stk.</p>
+//     <button class="btn_decrement_amount"> - </button>
+//     </div>
 
-    <div id="selectMaterial">
-    
-    <label for="chosenMaterial">Materiale</label>
-                <select name="material" id="chosenMaterial">
-                <option value="blød">Blød</option>
-                <option value="elastisk">Elastisk</option>
-                <option value="hård">Hård</option>
-                </select>
+//     <div id="selectMaterial">
 
+//     <label for="chosenMaterial">Materiale</label>
+//                 <select name="material" id="chosenMaterial">
+//                 <option value="blød">Blød</option>
+//                 <option value="elastisk">Elastisk</option>
+//                 <option value="hård">Hård</option>
+//                 </select>
 
-      <label for="chosenColour">Farve</label>
-                <select name="colour" id="chosenColour">
-                </select>
+//       <label for="chosenColour">Farve</label>
+//                 <select name="colour" id="chosenColour">
+//                 </select>
 
+//     </div>
+//     <div id="selectProductSize">
+//     <p id="showSliderSize">Valgte højde 15 cm</p>
+//        <label for="chosenSize">Størrelse</label>
+//        <input type="range" min="1" max="30" value="15" name="size" id="productSizeSlider">
 
+//     </div>
 
+//     <p id="productPrice"> Udrgenede vægt pr. produkt: XXXX gram </p>
+//     <p id="produktMaterialName"> Produktet bliver printet i: PLA</p>
 
-    </div>
-    <div id="selectProductSize">
-    <p id="showSliderSize">Valgte højde 15 cm</p>
-       <label for="chosenSize">Størrelse</label>
-                <input type="range" min="1" max="30" value="15" name="size" id="productSizeSlider">
-               
-    </div>
+//     </form>
 
-    <p id="productPrice"> Udrgenede vægt pr. produkt: XXXX gram </p>
-    <p id="produktMaterialName"> Produktet bliver printet i: PLA</p>
-    
-    </form>
-    
-        <button class="btn-add-basket" >Læg i kruv</button>
-        <button class="btn-return-" >Forstæt shopping</button>
+//         <button class="btn-add-basket" >Læg i kruv</button>
+//         <button class="btn-return-" >Forstæt shopping</button>
 
-    
-    </article>
+//     </article>
 
-</article>
-`;
-  }
-}
+// </article>
+// `;
+//   }
+// }
 
 // ALT SKAL RESETTES NÅR VIEW BUTTON & ADD TO BASKET KLIKKES!
 // Everything needed to make the product
 let catalogueId;
 let size = 15;
-let amount = 1;
+let amount;
 // Used to calculate the set price...
 let materialPrice = 155;
 let stockInStorage;
 let price;
 let stockId;
+let singleProductPrice;
 
 export async function viewButtonClicked(instance) {
   console.log("view button clicked: ", instance.id);
+
+  // Sets the id for the chosen catalogue item
   catalogueId = instance.id;
 
-  // document.querySelector("#produkt_overblik").innerHTML = "";
   document.querySelector("#product_id").innerHTML = "";
 
+  // Fetches all the stock materials that are not sold out
   stockInStorage = await getAvailableStockData();
   // console.log("The available stock", stockInStorage);
 
+  // Sets the product DOM with information from the chosen catalogue item
   showCustomizeProductSite(instance);
 
-  addProductSiteEventListeners();
-
-  // RUN ALL EVENTS AND GET THE PRICE!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+  // set values for the product before custumization starts
   setDefaultProduct(instance.standardSize);
 }
 
@@ -232,7 +228,7 @@ function showCustomizeProductSite(instance) {
     </div>
     <div id="selectProductSize">
     <p id="showSliderSize">Valgte højde 15 cm</p>
-       <label for="chosenSize">Størrelse</label>
+       <label for="productSizeSlider">Størrelse</label>
                 <input type="range" min="1" max="30" value="15" name="size" id="productSizeSlider">
                
     </div>
@@ -252,6 +248,8 @@ function showCustomizeProductSite(instance) {
 `;
 
   document.querySelector("#product_id").insertAdjacentHTML("beforeend", html);
+  // Activates all eventlisternes used on the product customization site
+  addProductSiteEventListeners();
 }
 
 function addProductSiteEventListeners() {
@@ -279,39 +277,37 @@ function addProductSiteEventListeners() {
     .addEventListener("click", addProductToBasket);
 }
 
+// Set all the standard product values
 function setDefaultProduct(defaultSize) {
   console.log("Set all events");
-  //set the item size
 
+  // Sets the chosen amount to 1
+  resetProductAmount();
+  // Set the item size to fit the item.standardSize
   size = defaultSize;
+  // Set the size-slider value to the default size
   document.querySelector("#productSizeSlider").value = size;
-  document.querySelector(
-    "#showSliderSize"
-  ).innerHTML = `Valgte højde ${size} cm`;
-
-  //Set the actual MATERIAL!
-  // console.log("base material: ", stockInStorage[1]);
+  // Set the size information shown to the product customization site
+  setProductSizeInfo();
+  // Show the default material type and colour - set the first available as chosen
   refreshColourSelector(stockInStorage[0].Name.toLowerCase());
-  stockId = stockInStorage[0].Id;
-
-  setProductPrice();
+  // Set the default
+  setCompleteProductPrice();
 }
 
-function resetProductValues() {}
+function resetProductAmount() {
+  amount = 1;
+  showSelectedAmount();
+}
 
 // Sets the material to the type selected in the "chooseMaterial" drop down
 function setProductMaterial(event) {
   const selectedMaterial = event.target.value;
-  console.log("selected material ", selectedMaterial);
+  // console.log("selected material ", selectedMaterial);
 
   // Resets the "chosenColour" drop down option
   refreshColourSelector(selectedMaterial);
 }
-
-//det er ID og materiale der er vigtigt... hvad hvis det jeg sætter den til ikke er tilgængeligt...
-// sæt et materiale
-// vis alle farver
-// vælg en farve...
 
 // Resets all the colours in the "chosenColour" drop down
 function refreshColourSelector(selectedMaterial) {
@@ -341,17 +337,20 @@ function refreshColourSelector(selectedMaterial) {
   }
 }
 
-function setDeafaultProductMaterial(material, price) {
+// Sets the default material including type, colour and price
+function setDeafaultProductMaterial(material, price, id) {
   // Tells the customer what plastic type the product will be printed in
   setMaterialText(material);
   // Sets the value of the product material price
   setProductMaterialPrice(price);
   // Sets the default selected material id - indirectly the chosen colour
-  setDefaultMaterialId(material.Id);
+  setDefaultMaterialId(id);
 }
 
+// Changes the selected maetrial id to the material shown in the "choosenMaterial" drop down with the first available colour in the "choosenColour" drop down
 function setDefaultMaterialId(id) {
   stockId = id;
+  // console.log("New defaut stockID ", stockId);
 }
 
 // Stores the price value of the selected material
@@ -359,8 +358,7 @@ function setProductMaterialPrice(newPrice) {
   materialPrice = newPrice;
 }
 
-// Functions that set the product material and colour
-
+//  --- Functions that set the product material and colour
 // Clear and shwos the print material on screen
 function setMaterialText(material) {
   document.querySelector("#produktMaterialName").innerHTML = "";
@@ -381,33 +379,45 @@ function activateColour(colour, id) {
 // Sets the chosen color AND material
 function setProductColour(event) {
   // console.log("product colour ID: ", event.target.value);
-  stockId = Number(event.target.value);
+  const chosenMaterialAndColour = Number(event.target.value);
+  setDefaultMaterialId(chosenMaterialAndColour);
 }
 
 function setProductSize(event) {
   size = Number(event.target.value);
+  setProductSizeInfo();
+  setCompleteProductPrice();
+}
+
+// Alteres the size information showed to the customer
+function setProductSizeInfo() {
   document.querySelector("#showSliderSize").innerHTML = "";
   // console.log("The size is ", event.target.value, " CM");
   document.querySelector(
     "#showSliderSize"
   ).innerHTML = `Valgte højde ${size} cm`;
-
-  setProductPrice();
 }
 
-function setProductPrice() {
+function setCompleteProductPrice() {
   const tax = 1.25;
   const shipping = 39;
+
   document.querySelector("#productPrice").innerHTML = "";
   // console.log(
   //   `Samlet pris = materiale ${materialPrice}, størrelse${size}, antal${amount}`
   // );
   //der mangler en vloume udregning på baggrund af vægt i forhold til størrelsen.
-  price = (materialPrice / 1000) * (size * 1.8) * amount * tax + shipping;
+  setSingleProductPrice();
+  const bundlePrice = productPrice * amount;
+  price = bundlePrice * tax + shipping;
   // run op!
   document.querySelector(
     "#productPrice"
   ).innerHTML = `Samlet Pris: ${Math.round(price)} DKK`;
+}
+
+function setSingleProductPrice() {
+  singleProductPrice = (materialPrice / 1000) * (size * 1.8);
 }
 
 function incrementProductAmount(event) {
@@ -430,67 +440,59 @@ function showSelectedAmount() {
     "#selectProductAmount"
   ).innerHTML = `Antal ${amount} stk`;
 
-  setProductPrice();
+  setCompleteProductPrice();
 }
 
-/*
-Først prisen per produkt
-(Materialet og vægt -- på baggrund af størrelsen * konstant)
-Så prisen for hvor mange du har
-Så regner du mom ud
-Så lægger vi porto til
-*/
+// BASKET....
 
-// THE PRODUCT BASKET
-
-/*
-    this.catalogueId = catalogueId;
-    this.stockId = stockId;
-    this.productSize = size;
-    this.productAmount = amount;
-    this.productPrice = price;
-  }
-*/
-
-function checkForDoublets(prod) {
-  console.log("This is your product: ", prod);
+// Cheks if an product instance has a doublicate in the system
+function checkForDoublets(newProduct) {
+  console.log("This is your product: ", newProduct);
   console.log("number of cart items ", shoppingCart.length);
 
+  // Cheks if the cart is empty
   if (shoppingCart.length > 0) {
+    // Sets the unique status
+    let itemIsUnique = true;
     for (const product of shoppingCart) {
-      // console.log("This is  product in your mcart: ", product)
-      console.log(
-        `Item in cart catalogue ${product.catalogueId} === ${prod.catalogueId}`
-      );
-      if (product.catalogueId === prod.catalogueId) {
-        console.log("catalogue is the same");
-        console.log(
-          `Item in cart material ${product.stockId} === ${prod.stockId}`
-        );
-        if (product.stockId === prod.stockId) {
-          console.log("material is also the same");
-          console.log(
-            `Item in cart size ${product.productSize} === ${prod.productSize}`
-          );
-          if (product.productSize === prod.productSize) {
-            console.log("Even the size is the same");
-          }
-        }
-      } else {
-        continue;
+      // If the products are similar their amount-values are added
+      if (compareAttirbutes(product, newProduct)) {
+        itemIsUnique = false;
+        product.productAmount += newProduct.productAmount;
       }
     }
+    // If the unique status is true the item is pushed.
+    if (itemIsUnique === true) {
+      pushProduct(newProduct);
+    } else {
+      console.log("Item already found");
+    }
   } else {
-    pushProduct(prod);
+    // Pushes the item if the cart is already empty
+    pushProduct(newProduct);
   }
 }
 
+// checks if the material, catalogue item and size are matching
+function compareAttirbutes(cartProduct, newProduct) {
+  // console.log("This is  product in your mcart: ", product)
+  return (
+    cartProduct.catalogueId === newProduct.catalogueId &&
+    cartProduct.stockId === newProduct.stockId &&
+    cartProduct.productSize === newProduct.productSize
+  );
+}
+
+// Pushes the product to the shoppingCart Array
 function pushProduct(selectedProduct) {
   shoppingCart.push(selectedProduct);
   console.log("producted added!");
 }
 
 function addProductToBasket() {
+  console.log("hat is my size? ", size);
+  resetProductAmount();
+  // creates an instance productOrder class
   const productForBasket = new productOrder(
     catalogueId,
     stockId,
@@ -499,38 +501,120 @@ function addProductToBasket() {
     price
   );
 
+  // Check if the product is already in the shopping cart
   checkForDoublets(productForBasket);
   console.log("this is your shopping cart", shoppingCart);
-
-  // const catalogueID = catalogueId;
-  // const productSize = size;
-  // const productAmount = amount;
-  // const productPrice = price;
-  // const stockID = stockId;
-
-  // // Amount needs to be altered
-  // // Price needs to be altered.
-
-  // const productObject = {
-  //   catalogueID,
-  //   productSize,
-  //   productAmount,
-  //   productPrice,
-  //   stockID,
-  // };
+  // Refreshes the shopping cart html
+  showItemsInCart();
 }
+// const catalogueID = catalogueId;
+// const productSize = size;
+// const productAmount = amount;
+// const productPrice = price;
+// const stockID = stockId;
+
+// // Amount needs to be altered
+// // Price needs to be altered.
+
+// const productObject = {
+//   catalogueID,
+//   productSize,
+//   productAmount,
+//   productPrice,
+//   stockID,
+// };
 
 class productOrder {
-  constructor(catalogueId, stockId, size, amount, price) {
+  constructor(catalogueId, stockId, size, amount, singleProductPrice) {
     this.catalogueId = catalogueId;
     this.stockId = stockId;
     this.productSize = size;
     this.productAmount = amount;
-    this.productPrice = price;
+    this.productPrice = singleProductPrice;
   }
 
-  // test this!
-  setAmount(newAmount) {
-    this.productAmount = newAmount;
+  // Fetch or find the date based on the ID
+  // Get title/ photo
+  // Get the material and colour...
+  // WE NEVER CALCULATE THE GRAM!
+
+  render() {
+    const productOrderHTML =
+      /*html*/
+      `
+    <article>
+    <h3>INSERT NAME</h3>
+    <p>catalogueId ${this.catalogueId}</p>
+    <p>stockId ${this.stockId}</p>
+    <p>Size ${this.productSize}</p>
+    <button class="btn_increment_amount">+</button>
+    <p>Amount ${this.productAmount}</p>
+    <button class="btn_derement_amount">-</button>
+    <p>CALCULATE PRICE</p>
+    <p>Price ${this.productPrice}</p>
+    <button class="btn_remove_cart_item">Fjern</button>
+    </article>
+    `;
+
+    return productOrderHTML;
   }
+
+  incrementProductAmount() {
+    this.productAmount++;
+  }
+
+  decrementProductAmount() {
+    this.productAmount--;
+  }
+}
+
+function showItemsInCart() {
+  document.querySelector("#special_products").innerHTML = "";
+
+  for (let i = 0; i < shoppingCart.length; i++) {
+    const product = shoppingCart[i];
+    console.log("shopping card index ", i, " is ", product);
+    const productOrderHTML = product.render();
+
+    // --------------- NEW HTML ID/ PAGE NEEDED!!! --------------------------------------------- OBS!!!!!
+    document
+      .querySelector("#special_products")
+      .insertAdjacentHTML("beforeend", productOrderHTML);
+
+    // Eventlisteners!
+    document
+      .querySelector(
+        "#special_products article:last-child .btn_increment_amount"
+      )
+      .addEventListener("click", () => incrementCartProductAmount(product));
+
+    document
+      .querySelector(
+        "#special_products article:last-child .btn_derement_amount"
+      )
+      .addEventListener("click", () => decrementcartProductAmount(product));
+
+    document
+      .querySelector(
+        "#special_products article:last-child .btn_remove_cart_item"
+      )
+      .addEventListener("click", () => removeProductFromCart(i));
+  }
+}
+
+function removeProductFromCart(i) {
+  shoppingCart.splice(shoppingCart[i], 1);
+  showItemsInCart();
+}
+
+function incrementCartProductAmount(product) {
+  product.incrementProductAmount();
+  showItemsInCart();
+}
+
+function decrementcartProductAmount(product) {
+  if (product.productAmount > 1) {
+    product.decrementProductAmount();
+  }
+  showItemsInCart();
 }
