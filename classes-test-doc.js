@@ -163,6 +163,7 @@ let materialPrice = 155;
 let stockInStorage;
 let price;
 let stockId;
+let singleProductPrice;
 
 export async function viewButtonClicked(instance) {
   console.log("view button clicked: ", instance.id);
@@ -291,7 +292,7 @@ function setDefaultProduct(defaultSize) {
   // Show the default material type and colour - set the first available as chosen
   refreshColourSelector(stockInStorage[0].Name.toLowerCase());
   // Set the default
-  setProductPrice();
+  setCompleteProductPrice();
 }
 
 function resetProductAmount() {
@@ -385,7 +386,7 @@ function setProductColour(event) {
 function setProductSize(event) {
   size = Number(event.target.value);
   setProductSizeInfo();
-  setProductPrice();
+  setCompleteProductPrice();
 }
 
 // Alteres the size information showed to the customer
@@ -397,7 +398,7 @@ function setProductSizeInfo() {
   ).innerHTML = `Valgte højde ${size} cm`;
 }
 
-function setProductPrice() {
+function setCompleteProductPrice() {
   const tax = 1.25;
   const shipping = 39;
 
@@ -406,13 +407,17 @@ function setProductPrice() {
   //   `Samlet pris = materiale ${materialPrice}, størrelse${size}, antal${amount}`
   // );
   //der mangler en vloume udregning på baggrund af vægt i forhold til størrelsen.
-  const productPrice = (materialPrice / 1000) * (size * 1.8);
+  setSingleProductPrice();
   const bundlePrice = productPrice * amount;
   price = bundlePrice * tax + shipping;
   // run op!
   document.querySelector(
     "#productPrice"
   ).innerHTML = `Samlet Pris: ${Math.round(price)} DKK`;
+}
+
+function setSingleProductPrice() {
+  singleProductPrice = (materialPrice / 1000) * (size * 1.8);
 }
 
 function incrementProductAmount(event) {
@@ -435,7 +440,7 @@ function showSelectedAmount() {
     "#selectProductAmount"
   ).innerHTML = `Antal ${amount} stk`;
 
-  setProductPrice();
+  setCompleteProductPrice();
 }
 
 // BASKET....
@@ -520,12 +525,12 @@ function addProductToBasket() {
 // };
 
 class productOrder {
-  constructor(catalogueId, stockId, size, amount, price) {
+  constructor(catalogueId, stockId, size, amount, singleProductPrice) {
     this.catalogueId = catalogueId;
     this.stockId = stockId;
     this.productSize = size;
     this.productAmount = amount;
-    this.productPrice = price;
+    this.productPrice = singleProductPrice;
   }
 
   // Fetch or find the date based on the ID
@@ -605,11 +610,10 @@ function removeProductFromCart(i) {
 function incrementCartProductAmount(product) {
   product.incrementProductAmount();
   showItemsInCart();
-
 }
 
 function decrementcartProductAmount(product) {
-  if(product.productAmount > 1){
+  if (product.productAmount > 1) {
     product.decrementProductAmount();
   }
   showItemsInCart();
