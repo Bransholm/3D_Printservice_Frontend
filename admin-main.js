@@ -11,6 +11,9 @@ const endpoint = "https://3dprintservice.azurewebsites.net/";
 //   updateStockData,
 // } from "./create-update-forms.js";
 
+// Imports the update route for strockMaterials
+import { stockUpdateRoute } from "./backend-routes/stock-put.js";
+
 // import { createNewMaterial } from "./create-new-stock-item.js";
 import { createNewCatalogueItem } from "../create-update-forms/create-new-catelogue-item.js";
 import { getCatalogueData, getStockData } from "./fetch-data-admin.js";
@@ -102,33 +105,6 @@ function submitStockUpdate(event) {
   const data = updateStockDataThroughForm(stockItemToUpdate);
   console.log("the update: ", data);
   stockUpdateRoute(data);
-}
-
-async function stockUpdateRoute(data) {
-  // console.log("PUTTING: ", data);
-  try {
-    const response = await fetch(`${endpoint}stock/${data.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        // Add any additional headers if needed
-      },
-      body: JSON.stringify(data),
-    });
-
-    console.log(response);
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    } else {
-      const result = await response.json();
-      console.log("update successful! ", result);
-    }
-
-    return;
-  } catch (error) {
-    // Handle errors here
-    console.error("Error:", error);
-  }
 }
 
 // async function postCatelogueItem(data) {
