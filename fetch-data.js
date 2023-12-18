@@ -9,6 +9,10 @@ async function getCatalogueData() {
   return catalogueData;
 }
 
+
+
+
+
 //127.0.0.1:4811/Catalogue?filter=${filterValue}&search=${searchValue}
 
 // ${endpoint}/search ?filter=${filterValue}Name&q=${searchValue}
@@ -41,9 +45,23 @@ async function getAvailableStockData(){
   return stockData;
 }
 
+async function getCatalougeItemById(id) {
+  const response = await fetch(`${endpoint}/catalogue/${id}`);
+  const stockData = await response.json();
+  return stockData;
+}
+
+async function getStockItemById(id) {
+  const response = await fetch(`${endpoint}/stock/${id}`);
+  const catalogueData = await response.json();
+  return catalogueData;
+}
+
 
 export {
-	getCatalogueData,
-	getStockData,
-	getAvailableStockData,
+  getCatalogueData,
+  getStockData,
+  getAvailableStockData,
+  getCatalougeItemById,
+  getStockItemById
 };
