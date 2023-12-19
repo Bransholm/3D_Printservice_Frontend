@@ -21,7 +21,7 @@ import { getCatalogueData, getStockData } from "../admin-model/fetch-data-admin.
 import { stockMaterial } from "../../view-render-classes/stock-class.js";
 import { catalogueItem } from "../../view-render-classes/catalogue-class.js";
 
-import { createCatalogClasses } from "../../instance-creator-admin.js";
+import { createCatalogClasses } from "./instance-creator-admin.js";
 import { callRenderMethodAdmin } from "../../render-controller-admin.js";
 // import { callRenderMethod as stockXYZ } from "../render-controller.js";
 
