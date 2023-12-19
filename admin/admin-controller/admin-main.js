@@ -22,7 +22,7 @@ import { stockMaterial } from "../../view-render-classes/stock-class.js";
 import { catalogueItem } from "../../view-render-classes/catalogue-class.js";
 
 import { createCatalogClasses } from "./instance-creator-admin.js";
-import { callRenderMethodAdmin } from "../../render-controller-admin.js";
+import { callRenderMethodAdmin } from "./render-controller-admin.js";
 // import { callRenderMethod as stockXYZ } from "../render-controller.js";
 
 // update-button clicked: Send data to stock-update-form
