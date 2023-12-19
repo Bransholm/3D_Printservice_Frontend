@@ -45,13 +45,9 @@ function showCatalougeToCustomers(catalougeItemObjects) {
 
 function activateCustomerEventListeners() {
   document.querySelector("#faq-link").addEventListener("click", showDialogFaq);
-  document
-    .querySelector("#tradeing-terms-link")
-    .addEventListener("click", showDialogTradeingTerms);
-  document
-    .querySelector("#data-policy-link")
-    .addEventListener("click", showDialogDataPolicyLink);
-  document.querySelector("#filter-search").addEventListener("change", filterContent);
+  document.querySelector("#tradeing-terms-link").addEventListener("click", showDialogTradeingTerms);
+  document.querySelector("#data-policy-link").addEventListener("click", showDialogDataPolicyLink);
+  document.querySelector("#filter-catagory").addEventListener("change", filterContent);
   document.querySelector("#search-button").addEventListener("click", searchContent);
 }
 
