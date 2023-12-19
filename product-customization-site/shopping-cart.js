@@ -73,9 +73,9 @@ export async function addProductToBasket(
     price
   );
 
-  console.log("What is my size? ", size);
-  console.log(await getStockItemById(27));
-  console.log("data ", productForBasket.stockInfo);
+  console.log("new class: ", productForBasket.stockInfo);
+  // console.log("What is my size? ", size);
+  // const x = new stockMaterial(await getStockItemById(productForBasket.stockId));
   // Check if the product is already in the shopping cart
   checkForDoublets(productForBasket);
   // console.log("this is your shopping cart", shoppingCart);
@@ -109,7 +109,7 @@ class productOrder {
 
     // creates an insance of the stockMaterial
     // this.stockInfo = new stockMaterial(await getStockItemById(this.stockId));
-    this.stockInfo = new stockMaterial(this.setStockInfo(this.stockId));
+    this.stockInfo = this.setStockInfo(this.stockId);
     this.productName = this.stockInfo.Name;
     this.productColour = this.stockInfo.colour;
     this.productMaterial = this.stockInfo.material;
@@ -166,11 +166,25 @@ class productOrder {
   }
 
   async setStockInfo(id) {
-    this.stockInfo = await getStockItemById(id);
+    const stockItemData = await this.getStockData(id);
+    console.log("the data: ", stockItemData);
+    const stockItemClass = new stockMaterial(stockItemData);
+    console.log("the class: ", stockItemClass);
+    return stockItemClass;
   }
 
   async setCatalougeInfo(id) {
     this.catalogueInfo = await getCatalougeItemById(id);
+  }
+
+  async getStockData(id) {
+    const stockItemData = await getStockItemById(id);
+    return stockItemData;
+  }
+
+  async setStockClass() {
+    const stockItemClass = new stockMaterial(stockItemData);
+    return stockItemClass;
   }
 
   incrementProductAmount() {
