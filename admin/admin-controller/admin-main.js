@@ -18,8 +18,8 @@ import { stockUpdateRoute } from "../admin-model/backend-routes/stock-put.js";
 import { createNewCatalogueItem } from "./create-update-forms/create-new-catelogue-item.js";
 import { getCatalogueData, getStockData } from "../admin-model/fetch-data-admin.js";
 // import { createCatalogClasses } from "../classes-test-doc.js";1
-import { stockMaterial } from "../../view-render-classes/stock-class.js";
-import { catalogueItem } from "../../view-render-classes/catalogue-class.js";
+import { stockMaterial } from "../admin-view/admin-view-render-classes/stock-class.js";
+import { catalogueItem } from "../admin-view/admin-view-render-classes/catalogue-class.js";
 
 import { createCatalogClasses } from "./instance-creator-admin.js";
 import { callRenderMethodAdmin } from "./render-controller-admin.js";

@@ -6,7 +6,7 @@ import {
   getStockData,
   getAvailableStockData,
 } from "../frontpage-model/fetch-data.js";
-import { catalogueItem } from "../../view-render-classes/catalogue-class.js";
+import { catalogueItem } from "../frontpage-view/view-render-classes/catalogue-class.js";
 
 // import { catalogueData, stockData } from "../../tempoary-data-doc.js";
 
