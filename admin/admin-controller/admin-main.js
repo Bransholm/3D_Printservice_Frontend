@@ -30,7 +30,7 @@ import {
   extractStockDataForUpdate,
   updateStockDataThroughForm,
 } from "../../create-update-forms/update-stock-item.js";
-import { catalogueData } from "../../tempoary-data-doc.js";
+// import { catalogueData } from "../../tempoary-data-doc.js";
 
 function startAdmin() {
   console.log("Admin site is working");

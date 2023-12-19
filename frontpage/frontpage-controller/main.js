@@ -8,7 +8,7 @@ import {
 } from "../frontpage-model/fetch-data.js";
 import { catalogueItem } from "../../view-render-classes/catalogue-class.js";
 
-import { catalogueData, stockData } from "../../tempoary-data-doc.js";
+// import { catalogueData, stockData } from "../../tempoary-data-doc.js";
 
 // Modules for testing af klasse opbygning...
 // import { createCatalogClasses } from "./classes-test-doc.js";
