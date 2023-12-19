@@ -168,7 +168,7 @@ class productOrder {
   async setStockInfo(id) {
     const stockItemData = await this.getStockData(id);
     console.log("the data: ", stockItemData);
-    const stockItemClass = new stockMaterial(stockItemData);
+    const stockItemClass = this.setStockClass(stockItemData);
     console.log("the class: ", stockItemClass);
     return stockItemClass;
   }
@@ -178,13 +178,13 @@ class productOrder {
   }
 
   async getStockData(id) {
-    const stockItemData = await getStockItemById(id);
-    return stockItemData;
+    const stockData = await getStockItemById(id);
+    return stockData;
   }
 
-  async setStockClass() {
-    const stockItemClass = new stockMaterial(stockItemData);
-    return stockItemClass;
+   setStockClass(stockItemData) {
+    const newDataInstance = new stockMaterial(stockItemData);
+    return newDataInstance;
   }
 
   incrementProductAmount() {
