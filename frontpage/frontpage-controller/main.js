@@ -1,21 +1,21 @@
 "use strict";
 
-import { startViews } from "./spa-router.js";
+import { startViews } from "../../spa-router.js";
 import {
   getCatalogueData,
   getStockData,
   getAvailableStockData,
-} from "./frontpage/frontpage-model/fetch-data.js";
-import { catalogueItem } from "./view-render-classes/catalogue-class.js";
+} from "../frontpage-model/fetch-data.js";
+import { catalogueItem } from "../../view-render-classes/catalogue-class.js";
 
-import { catalogueData, stockData } from "./tempoary-data-doc.js";
+import { catalogueData, stockData } from "../../tempoary-data-doc.js";
 
 // Modules for testing af klasse opbygning...
 // import { createCatalogClasses } from "./classes-test-doc.js";
-import { createCatalogClasses } from "./instance-creator.js";
-import { callRenderMethod } from "./render-controller.js";
+import { createCatalogClasses } from "../../instance-creator.js";
+import { callRenderMethod } from "../../render-controller.js";
 
-import { filterContent, searchContent } from "./catalogue-filter-search.js";
+import { filterContent, searchContent } from "../../catalogue-filter-search.js";
 
 window.addEventListener("load", start);
 
