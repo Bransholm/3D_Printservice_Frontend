@@ -16,8 +16,8 @@ import { stockUpdateRoute } from "./backend-routes/stock-put.js";
 
 // import { createNewMaterial } from "./create-new-stock-item.js";
 import { createNewCatalogueItem } from "../create-update-forms/create-new-catelogue-item.js";
-import { getCatalogueData, getStockData } from "./fetch-data-admin.js";
-// import { createCatalogClasses } from "../classes-test-doc.js";
+import { getCatalogueData, getStockData } from "./admin/admin-model/fetch-data-admin.js";
+// import { createCatalogClasses } from "../classes-test-doc.js";1
 import { stockMaterial } from "./view-render-classes/stock-class.js";
 import { catalogueItem } from "./view-render-classes/catalogue-class.js";
 
