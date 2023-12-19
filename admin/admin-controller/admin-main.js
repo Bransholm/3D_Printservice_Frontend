@@ -12,7 +12,7 @@ const endpoint = "https://3dprintservice.azurewebsites.net/";
 // } from "./create-update-forms.js";
 
 // Imports the update route for strockMaterials
-import { stockUpdateRoute } from "../../backend-routes/stock-put.js";
+import { stockUpdateRoute } from "../admin-model/backend-routes/stock-put.js";
 
 // import { createNewMaterial } from "./create-new-stock-item.js";
 import { createNewCatalogueItem } from "./create-update-forms/create-new-catelogue-item.js";
