@@ -1,6 +1,6 @@
 "use strict";
 
-import { startViews } from "../../spa-router.js";
+import { startViews } from "../frontpage-view/spa-router.js";
 import {
   getCatalogueData,
   getStockData,
