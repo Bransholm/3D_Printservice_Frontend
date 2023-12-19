@@ -12,25 +12,25 @@ const endpoint = "https://3dprintservice.azurewebsites.net/";
 // } from "./create-update-forms.js";
 
 // Imports the update route for strockMaterials
-import { stockUpdateRoute } from "./backend-routes/stock-put.js";
+import { stockUpdateRoute } from "../../backend-routes/stock-put.js";
 
 // import { createNewMaterial } from "./create-new-stock-item.js";
-import { createNewCatalogueItem } from "../create-update-forms/create-new-catelogue-item.js";
-import { getCatalogueData, getStockData } from "./admin/admin-model/fetch-data-admin.js";
+import { createNewCatalogueItem } from "../../create-update-forms/create-new-catelogue-item.js";
+import { getCatalogueData, getStockData } from "../admin-model/fetch-data-admin.js";
 // import { createCatalogClasses } from "../classes-test-doc.js";1
-import { stockMaterial } from "./view-render-classes/stock-class.js";
-import { catalogueItem } from "./view-render-classes/catalogue-class.js";
+import { stockMaterial } from "../../view-render-classes/stock-class.js";
+import { catalogueItem } from "../../view-render-classes/catalogue-class.js";
 
-import { createCatalogClasses } from "../instance-creator-admin.js";
-import { callRenderMethodAdmin } from "./render-controller-admin.js";
+import { createCatalogClasses } from "../../instance-creator-admin.js";
+import { callRenderMethodAdmin } from "../../render-controller-admin.js";
 // import { callRenderMethod as stockXYZ } from "../render-controller.js";
 
 // update-button clicked: Send data to stock-update-form
 import {
   extractStockDataForUpdate,
   updateStockDataThroughForm,
-} from "./create-update-forms/update-stock-item.js";
-import { catalogueData } from "./tempoary-data-doc.js";
+} from "../../create-update-forms/update-stock-item.js";
+import { catalogueData } from "../../tempoary-data-doc.js";
 
 function startAdmin() {
   console.log("Admin site is working");
