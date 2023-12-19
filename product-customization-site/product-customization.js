@@ -1,5 +1,5 @@
 // Imports only the stockMaterials that is not sold out
-import { getAvailableStockData } from "../fetch-data.js";
+import { getAvailableStockData } from "../frontpage/frontpage-model/fetch-data.js";
 import { addProductToBasket } from "./shopping-cart.js";
 
 let catalogueId;

@@ -1,4 +1,7 @@
-import { getCatalougeItemById, getStockItemById } from "../fetch-data.js";
+import {
+  getCatalougeItemById,
+  getStockItemById,
+} from "../frontpage/frontpage-model/fetch-data.js";
 import { stockMaterial } from "../view-render-classes/stock-class.js";
 import { catalogueItem } from "../view-render-classes/catalogue-class.js";
 import { resetProductAmount } from "./product-customization.js";
@@ -182,7 +185,7 @@ class productOrder {
     return stockData;
   }
 
-   setStockClass(stockItemData) {
+  setStockClass(stockItemData) {
     const newDataInstance = new stockMaterial(stockItemData);
     return newDataInstance;
   }
