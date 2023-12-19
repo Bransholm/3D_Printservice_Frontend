@@ -1,5 +1,5 @@
-import { getCatalogueData } from "./frontpage/frontpage-model/fetch-data.js";
-import { showCatalougeToCustomers } from "./frontpage/frontpage-controller/main.js";
+import { getCatalogueData } from "./fetch-data.js";
+import { showCatalougeToCustomers } from "../frontpage-controller/main.js";
 
 // This file handles the filter and search on the product catalogue page
 

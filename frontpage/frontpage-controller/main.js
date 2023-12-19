@@ -15,7 +15,10 @@ import { catalogueData, stockData } from "../../tempoary-data-doc.js";
 import { createCatalogClasses } from "../../instance-creator.js";
 import { callRenderMethod } from "../../render-controller.js";
 
-import { filterContent, searchContent } from "../../catalogue-filter-search.js";
+import {
+  filterContent,
+  searchContent,
+} from "../frontpage-model/catalogue-filter-search.js";
 
 window.addEventListener("load", start);
 
