@@ -12,7 +12,7 @@ import { catalogueData, stockData } from "../../tempoary-data-doc.js";
 
 // Modules for testing af klasse opbygning...
 // import { createCatalogClasses } from "./classes-test-doc.js";
-import { createCatalogClasses } from "../../instance-creator.js";
+import { createCatalogClasses } from "./instance-creator.js";
 import { callRenderMethod } from "../../render-controller.js";
 
 import {
