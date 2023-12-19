@@ -1,9 +1,9 @@
 import {
   getCatalougeItemById,
   getStockItemById,
-} from "../frontpage/frontpage-model/fetch-data.js";
-import { stockMaterial } from "../view-render-classes/stock-class.js";
-import { catalogueItem } from "../view-render-classes/catalogue-class.js";
+} from "../../frontpage-model/fetch-data.js";
+import { stockMaterial } from "../../../view-render-classes/stock-class.js";
+import { catalogueItem } from "../../../view-render-classes/catalogue-class.js";
 import { resetProductAmount } from "./product-customization.js";
 
 //NB::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::.. pris udregninger... SKAL genbruges!

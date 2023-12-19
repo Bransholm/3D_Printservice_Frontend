@@ -1,4 +1,4 @@
-import { viewButtonClicked } from "../../product-customization-site/product-customization.js";
+import { viewButtonClicked } from "./product-customization-site/product-customization.js";
 // import {deleteButtonClicked, updateButtonClicked} from "./admin-main.js"
 
 function callRenderMethod(listOfInstances, htmlId) {
