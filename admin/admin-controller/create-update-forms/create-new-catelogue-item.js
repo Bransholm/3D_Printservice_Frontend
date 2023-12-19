@@ -1,6 +1,6 @@
 // import { stringify } from "querystring";
 const endpoint = "http://localhost:4811/";
-import { postCatelogueItem } from "../backend-routes/catalouge-routes/catalogue-post.js";
+import { postCatelogueItem } from "../../../backend-routes/catalouge-routes/catalogue-post.js";
 
 // This function creates a new catalogue item - is only accessible for the admin.
 function createNewCatalogueItem(event) {

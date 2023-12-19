@@ -15,7 +15,7 @@ const endpoint = "https://3dprintservice.azurewebsites.net/";
 import { stockUpdateRoute } from "../../backend-routes/stock-put.js";
 
 // import { createNewMaterial } from "./create-new-stock-item.js";
-import { createNewCatalogueItem } from "../../create-update-forms/create-new-catelogue-item.js";
+import { createNewCatalogueItem } from "./create-update-forms/create-new-catelogue-item.js";
 import { getCatalogueData, getStockData } from "../admin-model/fetch-data-admin.js";
 // import { createCatalogClasses } from "../classes-test-doc.js";1
 import { stockMaterial } from "../../view-render-classes/stock-class.js";
@@ -29,7 +29,7 @@ import { callRenderMethodAdmin } from "./render-controller-admin.js";
 import {
   extractStockDataForUpdate,
   updateStockDataThroughForm,
-} from "../../create-update-forms/update-stock-item.js";
+} from "./create-update-forms/update-stock-item.js";
 // import { catalogueData } from "../../tempoary-data-doc.js";
 
 function startAdmin() {
