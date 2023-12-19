@@ -1,21 +1,24 @@
 "use strict";
 
-import { startViews } from "./spa-router.js";  
+import { startViews } from "../frontpage-view/spa-router.js";
 import {
   getCatalogueData,
   getStockData,
   getAvailableStockData,
-} from "./fetch-data.js";
-import { catalogueItem } from "./view-render-classes/catalogue-class.js";
+} from "../frontpage-model/fetch-data.js";
+import { catalogueItem } from "../../view-render-classes/catalogue-class.js";
 
-import { catalogueData, stockData } from "./tempoary-data-doc.js";
+import { catalogueData, stockData } from "../../tempoary-data-doc.js";
 
 // Modules for testing af klasse opbygning...
 // import { createCatalogClasses } from "./classes-test-doc.js";
 import { createCatalogClasses } from "./instance-creator.js";
 import { callRenderMethod } from "./render-controller.js";
 
-import { filterContent, searchContent, } from "./catalogue-filter-search.js";
+import {
+  filterContent,
+  searchContent,
+} from "../frontpage-model/catalogue-filter-search.js";
 
 window.addEventListener("load", start);
 
@@ -39,16 +42,24 @@ async function getAllData() {
 
 function showCatalougeToCustomers(catalougeItemObjects) {
   const classList = createCatalogClasses(catalougeItemObjects, catalogueItem);
-  console.log("Der er et fetch")
+  console.log("Der er et fetch");
   callRenderMethod(classList, "product_catalogue");
 }
 
 function activateCustomerEventListeners() {
   document.querySelector("#faq-link").addEventListener("click", showDialogFaq);
-  document.querySelector("#tradeing-terms-link").addEventListener("click", showDialogTradeingTerms);
-  document.querySelector("#data-policy-link").addEventListener("click", showDialogDataPolicyLink);
-  document.querySelector("#filter-catagory").addEventListener("change", filterContent);
-  document.querySelector("#search-button").addEventListener("click", searchContent);
+  document
+    .querySelector("#tradeing-terms-link")
+    .addEventListener("click", showDialogTradeingTerms);
+  document
+    .querySelector("#data-policy-link")
+    .addEventListener("click", showDialogDataPolicyLink);
+  document
+    .querySelector("#filter-catagory")
+    .addEventListener("change", filterContent);
+  document
+    .querySelector("#search-button")
+    .addEventListener("click", searchContent);
 }
 
 function showDialogFaq() {
