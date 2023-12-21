@@ -17,7 +17,7 @@ import { stockMaterial } from "../admin-view/admin-view-render-classes/stock-cla
 import { catalogueItem } from "../admin-view/admin-view-render-classes/catalogue-class.js";
 
 import { createCatalogClasses } from "./instance-creator-admin.js";
-import { callRenderMethodAdmin } from "./render-controller-admin.js";
+import { callRenderMethodeForCatalogueItems } from "./render-controller-admin.js";
 // import { callRenderMethod as stockXYZ } from "../render-controller.js";
 
 // update-button clicked: Send data to stock-update-form
@@ -57,7 +57,7 @@ function showCatalouge(catalougeItemObjects) {
     catalogueItem
   );
   console.log("Der er et fetch");
-  callRenderMethodAdmin(catalougueClassList, "productOverview");
+  callRenderMethodeForCatalogueItems(catalougueClassList, "productOverview");
 }
 
 // showing all materials

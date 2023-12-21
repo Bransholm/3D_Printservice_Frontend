@@ -1,48 +1,42 @@
+// Calling render methode for catalogue items
+function callRenderMethodeForCatalogueItems(listOfInstances, htmlId) {
+  console.log("AdminNo1. CallRenderMethodAdmin");
+  document.querySelector(`#${htmlId}`).innerHTML = "";
 
-function callRenderMethodAdmin(listOfInstances, htmlId) {
-	console.log("AdminNo1. CallRenderMethodAdmin");
-	document.querySelector(`#${htmlId}`).innerHTML = "";
+  for (const instance of listOfInstances) {
+    const classHTML = instance.adminRender();
 
-	for (const instance of listOfInstances) {
-		const classHTML = instance.adminRender();
+    document
+      .querySelector(`#${htmlId}`)
+      .insertAdjacentHTML("beforeend", classHTML);
 
-		document
-			.querySelector(`#${htmlId}`)
-			.insertAdjacentHTML("beforeend", classHTML);
+    eventListenerForCatalogueItemsButtons(htmlId, instance);
+  }
 
-		eventListenerAdderAdmin(htmlId, instance);
-	}
+  // add eventlistens for every catalogue items
+  function eventListenerForCatalogueItemsButtons(htmlId, classInstance) {
+    document
+      .querySelector(`#${htmlId} article:last-child .btn_update_product`)
+      .addEventListener("click", () =>
+        updateCatalogueItemButtonClicked(classInstance)
+      );
 
-	function eventListenerAdderAdmin(htmlId, classInstance) {
-		// what eventlisteners to add for a given instance needs to go here...
+    document
+      .querySelector(`#${htmlId} article:last-child .btn_delete_product`)
+      .addEventListener("click", () =>
+        deleteCatalogueItemButtonClicked(classInstance)
+      );
+  }
 
-		document
-			.querySelector(`#${htmlId} article:last-child .btn_update_product`)
-			.addEventListener("click", () => updateButtonClicked(classInstance));
+  // delete the selected catalogue item
+  function deleteCatalogueItemButtonClicked(instance) {
+    console.log("Delete Item Clicked:", instance.id);
+  }
 
-		document
-			.querySelector(`#${htmlId} article:last-child .btn_delete_product`)
-			.addEventListener("click", () => deleteButtonClicked(classInstance));
-	}
-
-	function deleteButtonClicked(instance) {
-		console.log("Delete Item Clicked:", instance.id);
-		
-	}
-	function updateButtonClicked(instance) {
-		console.log("Update Item Clicked:", instance.id);
-		
-	}
+  // update the selected catalogue item
+  function updateCatalogueItemButtonClicked(instance) {
+    console.log("Update Item Clicked:", instance.id);
+  }
 }
 
-// function deleteButtonClicked(instance) {
-// 	console.log("Delete Item Clicked:", instance.id);
-// 	catalogueId = instance.id;
-// }
-// function updateButtonClicked(instance) {
-// 	console.log("Update Item Clicked:", instance.id);
-// 	catalogueId = instance.id;
-// }
-
-
-export { callRenderMethodAdmin };
+export { callRenderMethodeForCatalogueItems };
