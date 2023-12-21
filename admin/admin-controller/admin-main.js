@@ -6,31 +6,19 @@ let stockItemToUpdate;
 let catalogueId;
 const endpoint = "https://3dprintservice.azurewebsites.net/";
 
-// import {
-//   extractStockDataForUpdate,
-//   updateStockData,
-// } from "./create-update-forms.js";
-
 // Imports the update route for strockMaterials
 import { stockUpdateRoute } from "../admin-model/backend-routes/stock-put.js";
-
-// import { createNewMaterial } from "./create-new-stock-item.js";
 import { createNewCatalogueItem } from "./create-update-forms/create-new-catelogue-item.js";
 import { getCatalogueData, getStockData } from "../admin-model/fetch-data-admin.js";
-// import { createCatalogClasses } from "../classes-test-doc.js";1
 import { stockMaterial } from "../admin-view/admin-view-render-classes/stock-class.js";
 import { catalogueItem } from "../admin-view/admin-view-render-classes/catalogue-class.js";
-
 import { createCatalogClasses } from "./instance-creator-admin.js";
-import { callRenderMethodAdmin } from "./render-controller-admin.js";
-// import { callRenderMethod as stockXYZ } from "../render-controller.js";
-
+import { callRenderMethodeForCatalogueItems } from "./render-controller-admin.js";
 // update-button clicked: Send data to stock-update-form
 import {
   extractStockDataForUpdate,
   updateStockDataThroughForm,
 } from "./create-update-forms/update-stock-item.js";
-// import { catalogueData } from "../../tempoary-data-doc.js";
 
 function startAdmin() {
   console.log("Admin site is working");
@@ -45,31 +33,35 @@ function startAdmin() {
     .addEventListener("submit", submitStockUpdate);
 }
 
+// fetching genereal data
 async function getDataController() {
   const stockMaterialData = await getStockData();
   console.log("material list: ", stockMaterialData);
 
   const catalougeItemObjects = await getCatalogueData();
-  showCatalougeToAdmin(catalougeItemObjects);
-  showAllStockMaterials(stockMaterialData);
+  showCatalouge(catalougeItemObjects);
+  showStockMaterials(stockMaterialData);
 }
 
-function showCatalougeToAdmin(catalougeItemObjects) {
+// showing the catalogue to the admin site
+function showCatalouge(catalougeItemObjects) {
   const catalougueClassList = createCatalogClasses(
     catalougeItemObjects,
     catalogueItem
   );
   console.log("Der er et fetch");
-  callRenderMethodAdmin(catalougueClassList, "productOverview");
+  callRenderMethodeForCatalogueItems(catalougueClassList, "productOverview");
 }
 
-function showAllStockMaterials(stockMaterialData) {
+// showing all materials
+function showStockMaterials(stockMaterialData) {
   const stockClassList = createCatalogClasses(stockMaterialData, stockMaterial);
   //4callRenderMethod(stockClassList, "stockMaterialOveriew");
-  renderAllStocks(stockClassList, "adminStockTableBody");
+  renderStocks(stockClassList, "adminStockTableBody");
 }
 
-function renderAllStocks(listOfInstances, htmlId) {
+// Create instances of the stock material class
+function renderStocks(listOfInstances, htmlId) {
   console.log("No3. CallRenderMethod");
   document.querySelector(`#${htmlId}`).innerHTML = "";
 
@@ -81,12 +73,13 @@ function renderAllStocks(listOfInstances, htmlId) {
       .insertAdjacentHTML("beforeend", stockHTML);
 
     //Fit the eventlistener first!
-    eventListenerAdder(htmlId, stockInstance);
+    eventListenerForStockUpdateButton(htmlId, stockInstance);
   }
 }
 
 
-function eventListenerAdder(htmlId, classInstance) {
+// function triggered by the eventListener for stock update button.
+function eventListenerForStockUpdateButton(htmlId, classInstance) {
   // what eventlisteners to add for a given instance needs to go here...
 
   document
@@ -95,12 +88,14 @@ function eventListenerAdder(htmlId, classInstance) {
   stockItemToUpdate = classInstance;
 }
 
+// The function that update the selected stock material while pussing the update button
 function updateStockButtonClicked(instance) {
   console.log("Update your materials! ", instance);
   extractStockDataForUpdate(instance);
 }
 
 
+// update the selected stock! 
 function submitStockUpdate(event) {
   event.preventDefault();
   console.log("update data:  ", stockItemToUpdate);
@@ -109,55 +104,14 @@ function submitStockUpdate(event) {
   stockUpdateRoute(data);
 }
 
-// async function postCatelogueItem(data) {
-//   console.log("POSTING: ", data);
-//   try {
-//     const response = await fetch(`${endpoint}catalogue`, {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//         // Add any additional headers if needed
-//       },
-//       body: JSON.stringify(data),
-//     });
-
-//     console.log(response);
-//     if (!response.ok) {
-//       throw new Error(`HTTP error! Status: ${response.status}`);
-//     } else {
-//       const result = await response.json();
-//       console.log(result);
-//     }
-
-//     return;
-//   } catch (error) {
-//     // Handle errors here
-//     console.error("Error:", error);
-//   }
-// }
-
-// function showCatalougeToAdmin(catalougeItemObjects) {
-//   const catalogueClassList = createCatalogClasses(
-//     catalougeItemObjects,
-//     catalogueItem
-//   );
-//   // callRenderMethod(classList, "productOverview");
-// }
-
-// async function readAllCatalogueItems() {
-//   const catelogueData = await getCatalogueData();
-//   // createCatalogClasses(catelogueData);
-//   }
-
-// function activateAdminEventListeners() {
-// }
-
-export function deleteButtonClicked(instance) {
+// the function that is triggered after clicking the delete button on a catalogue item
+export function deleteCatalogueItemButtonClicked(instance) {
   console.log("Delete Item Clicked:", instance.id);
   catalogueId = instance.id;
 }
 
-export function updateButtonClicked(instance) {
+// the function that is triggered after clicking the update button on a catalogue item
+export function updateCatalogueItemButtonClicked(instance) {
   console.log("Update Item Clicked:", instance.id);
   catalogueId = instance.id;
 }
