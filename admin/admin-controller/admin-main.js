@@ -46,12 +46,12 @@ async function getDataController() {
   console.log("material list: ", stockMaterialData);
 
   const catalougeItemObjects = await getCatalogueData();
-  showCatalougeToAdmin(catalougeItemObjects);
-  showAllStockMaterials(stockMaterialData);
+  showCatalouge(catalougeItemObjects);
+  showStockMaterials(stockMaterialData);
 }
 
-// showing the catalogue to admin
-function showCatalougeToAdmin(catalougeItemObjects) {
+// showing the catalogue to the admin site
+function showCatalouge(catalougeItemObjects) {
   const catalougueClassList = createCatalogClasses(
     catalougeItemObjects,
     catalogueItem
@@ -60,13 +60,15 @@ function showCatalougeToAdmin(catalougeItemObjects) {
   callRenderMethodAdmin(catalougueClassList, "productOverview");
 }
 
-function showAllStockMaterials(stockMaterialData) {
+// showing all materials
+function showStockMaterials(stockMaterialData) {
   const stockClassList = createCatalogClasses(stockMaterialData, stockMaterial);
   //4callRenderMethod(stockClassList, "stockMaterialOveriew");
-  renderAllStocks(stockClassList, "adminStockTableBody");
+  renderStocks(stockClassList, "adminStockTableBody");
 }
 
-function renderAllStocks(listOfInstances, htmlId) {
+// Create instances of the stock material class
+function renderStocks(listOfInstances, htmlId) {
   console.log("No3. CallRenderMethod");
   document.querySelector(`#${htmlId}`).innerHTML = "";
 
@@ -78,11 +80,12 @@ function renderAllStocks(listOfInstances, htmlId) {
       .insertAdjacentHTML("beforeend", stockHTML);
 
     //Fit the eventlistener first!
-    eventListenerAdder(htmlId, stockInstance);
+    eventListenerForStockUpdateButton(htmlId, stockInstance);
   }
 }
 
-function eventListenerAdder(htmlId, classInstance) {
+// function triggered by the eventListener for stock update button
+function eventListenerForStockUpdateButton(htmlId, classInstance) {
   // what eventlisteners to add for a given instance needs to go here...
 
   document
@@ -91,11 +94,13 @@ function eventListenerAdder(htmlId, classInstance) {
   stockItemToUpdate = classInstance;
 }
 
+// The function that update the selected stock material while pussing the update button
 function updateStockButtonClicked(instance) {
   console.log("Update your materials! ", instance);
   extractStockDataForUpdate(instance);
 }
 
+// update the selected stock 
 function submitStockUpdate(event) {
   event.preventDefault();
   console.log("update data:  ", stockItemToUpdate);
@@ -104,13 +109,14 @@ function submitStockUpdate(event) {
   stockUpdateRoute(data);
 }
 
-
-export function deleteButtonClicked(instance) {
+// the function that is triggered after clicking the delete button on a catalogue item
+export function deleteCatalogueItemButtonClicked(instance) {
   console.log("Delete Item Clicked:", instance.id);
   catalogueId = instance.id;
 }
 
-export function updateButtonClicked(instance) {
+// the function that is triggered after clicking the update button on a catalogue item
+export function updateCatalogueItemButtonClicked(instance) {
   console.log("Update Item Clicked:", instance.id);
   catalogueId = instance.id;
 }
