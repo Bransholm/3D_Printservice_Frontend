@@ -15,10 +15,7 @@ import { catalogueItem } from "../frontpage-view/view-render-classes/catalogue-c
 import { createCatalogClasses } from "./instance-creator.js";
 import { callRenderMethod } from "./render-controller.js";
 
-import {
-  filterContent,
-  searchContent,
-} from "../frontpage-model/catalogue-filter-search.js";
+import { filterContent, searchContent } from "./catalogue-filter-search.js";
 
 window.addEventListener("load", start);
 

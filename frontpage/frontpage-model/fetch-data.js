@@ -1,4 +1,7 @@
-import { filterValue, searchValue } from "./catalogue-filter-search.js";
+import {
+  filterValue,
+  searchValue,
+} from "../frontpage-controller/catalogue-filter-search.js";
 
 const endpoint = "https://3dprintservice.azurewebsites.net/";
 

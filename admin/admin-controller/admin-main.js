@@ -6,11 +6,6 @@ let stockItemToUpdate;
 let catalogueId;
 const endpoint = "https://3dprintservice.azurewebsites.net/";
 
-// import {
-//   extractStockDataForUpdate,
-//   updateStockData,
-// } from "./create-update-forms.js";
-
 // Imports the update route for strockMaterials
 import { stockUpdateRoute } from "../admin-model/backend-routes/stock-put.js";
 
@@ -45,6 +40,7 @@ function startAdmin() {
     .addEventListener("submit", submitStockUpdate);
 }
 
+// fetching genereal data
 async function getDataController() {
   const stockMaterialData = await getStockData();
   console.log("material list: ", stockMaterialData);
@@ -54,6 +50,7 @@ async function getDataController() {
   showAllStockMaterials(stockMaterialData);
 }
 
+// showing the catalogue to admin
 function showCatalougeToAdmin(catalougeItemObjects) {
   const catalougueClassList = createCatalogClasses(
     catalougeItemObjects,
@@ -107,48 +104,6 @@ function submitStockUpdate(event) {
   stockUpdateRoute(data);
 }
 
-// async function postCatelogueItem(data) {
-//   console.log("POSTING: ", data);
-//   try {
-//     const response = await fetch(`${endpoint}catalogue`, {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//         // Add any additional headers if needed
-//       },
-//       body: JSON.stringify(data),
-//     });
-
-//     console.log(response);
-//     if (!response.ok) {
-//       throw new Error(`HTTP error! Status: ${response.status}`);
-//     } else {
-//       const result = await response.json();
-//       console.log(result);
-//     }
-
-//     return;
-//   } catch (error) {
-//     // Handle errors here
-//     console.error("Error:", error);
-//   }
-// }
-
-// function showCatalougeToAdmin(catalougeItemObjects) {
-//   const catalogueClassList = createCatalogClasses(
-//     catalougeItemObjects,
-//     catalogueItem
-//   );
-//   // callRenderMethod(classList, "productOverview");
-// }
-
-// async function readAllCatalogueItems() {
-//   const catelogueData = await getCatalogueData();
-//   // createCatalogClasses(catelogueData);
-//   }
-
-// function activateAdminEventListeners() {
-// }
 
 export function deleteButtonClicked(instance) {
   console.log("Delete Item Clicked:", instance.id);
