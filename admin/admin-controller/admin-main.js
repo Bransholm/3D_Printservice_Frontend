@@ -85,6 +85,7 @@ function renderAllStocks(listOfInstances, htmlId) {
   }
 }
 
+
 function eventListenerAdder(htmlId, classInstance) {
   // what eventlisteners to add for a given instance needs to go here...
 
@@ -98,6 +99,7 @@ function updateStockButtonClicked(instance) {
   console.log("Update your materials! ", instance);
   extractStockDataForUpdate(instance);
 }
+
 
 function submitStockUpdate(event) {
   event.preventDefault();

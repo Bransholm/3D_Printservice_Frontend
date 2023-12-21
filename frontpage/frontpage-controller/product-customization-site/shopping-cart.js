@@ -76,31 +76,13 @@ export async function addProductToBasket(
     price
   );
 
-  console.log("new class: ", productForBasket.stockInfo);
-  // console.log("What is my size? ", size);
-  // const x = new stockMaterial(await getStockItemById(productForBasket.stockId));
-  // Check if the product is already in the shopping cart
+  await productForBasket.init();
+
+  console.log("new attribute ", productForBasket.productName);
+
   checkForDoublets(productForBasket);
-  // console.log("this is your shopping cart", shoppingCart);
-  // Refreshes the shopping cart html
   showItemsInCart();
 }
-// const catalogueID = catalogueId;
-// const productSize = size;
-// const productAmount = amount;
-// const productPrice = price;
-// const stockID = stockId;
-
-// // Amount needs to be altered
-// // Price needs to be altered.
-
-// const productObject = {
-//   catalogueID,
-//   productSize,
-//   productAmount,
-//   productPrice,
-//   stockID,
-// };
 
 class productOrder {
   constructor(catalogueId, stockId, size, amount, singleProductPrice) {
@@ -109,33 +91,21 @@ class productOrder {
     this.productSize = size;
     this.productAmount = amount;
     this.productPrice = singleProductPrice;
-
-    // creates an insance of the stockMaterial
-    // this.stockInfo = new stockMaterial(await getStockItemById(this.stockId));
-    this.stockInfo = this.setStockInfo(this.stockId);
-    this.productName = this.stockInfo.Name;
-    this.productColour = this.stockInfo.colour;
-    this.productMaterial = this.stockInfo.material;
-
-    // creates an insance of the CatalougeItem classes
-    this.catalogueInfo = new catalogueItem(
-      this.setCatalougeInfo(this.catalogueId)
-    );
-    this.productImage = this.catalogueInfo.imageLink;
-    this.productTitle = this.catalogueInfo.Title;
+    this.stockInfo = null;
+    this.catalogueInfo = null;
+    this.init();
   }
 
-  /*
+  async init() {
+    await this.setStockInfo(this.stockId);
+    await this.setCatalougeInfo(this.catalogueId);
 
-   DEV NOTE ----------------------------------------------------------------------------------------------------------------
-
-    Hvis jeg lave product-site til en klasse... kan jeg kalde en instance OG genbruge prisudregningen... jeg kal self. også bare importere 
-    funktionen som gør det... 
-
-    PRIS UDREGNING... kan man gå tilbage og ændre på det? hvis det nu VAR det samme objekt/ klasse... så ja? 
-
-    ------------------------------------------------------------------------------------------------------------------------
-   */
+    this.productName = this.stockInfo.name;
+    this.productColour = this.stockInfo.colour;
+    this.productMaterial = this.stockInfo.material;
+    this.productImage = this.catalogueInfo.imageLink;
+    this.productTitle = this.catalogueInfo.title;
+  }
 
   getPrice() {}
 
@@ -150,7 +120,7 @@ class productOrder {
       `
     <article>
     <h3>${this.productTitle}</h3>
-     <img src="../images/${this.productImage}" alt="Produktbillede ${this.productTitle}"/>
+     <img src="../../../images/${this.productImage}" alt="Produktbillede ${this.productTitle}"/>
     <p>catalogueId - ${this.catalogueId}</p>
     <p>stockId - ${this.stockId}</p>
     <p>Farve: ${this.productColour} Egenskab: ${this.productName}</p>
@@ -169,24 +139,38 @@ class productOrder {
   }
 
   async setStockInfo(id) {
-    const stockItemData = await this.getStockData(id);
+    const stockItemData = await this.fetchStockData(id);
     console.log("the data: ", stockItemData);
+
     const stockItemClass = this.setStockClass(stockItemData);
     console.log("the class: ", stockItemClass);
-    return stockItemClass;
+
+    this.stockInfo = stockItemClass;
   }
 
-  async setCatalougeInfo(id) {
-    this.catalogueInfo = await getCatalougeItemById(id);
-  }
-
-  async getStockData(id) {
+  async fetchStockData(id) {
     const stockData = await getStockItemById(id);
     return stockData;
   }
 
   setStockClass(stockItemData) {
     const newDataInstance = new stockMaterial(stockItemData);
+    return newDataInstance;
+  }
+
+  async setCatalougeInfo(id) {
+    const catalougeItemData = await this.fetchCatalogueData(id);
+    const catalogueItemClass = this.setCatalougeClass(catalougeItemData);
+    this.catalogueInfo = catalogueItemClass;
+  }
+
+  async fetchCatalogueData(id) {
+    const catalogueData = await getCatalougeItemById(id);
+    return catalogueData;
+  }
+
+  setCatalougeClass(catalogueItemData) {
+    const newDataInstance = new catalogueItem(catalogueItemData);
     return newDataInstance;
   }
 

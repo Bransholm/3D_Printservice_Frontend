@@ -41,9 +41,13 @@ async function getAllData() {
 }
 
 function showCatalougeToCustomers(catalougeItemObjects) {
+
   const classList = createCatalogClasses(catalougeItemObjects, catalogueItem);
+  
   console.log("Der er et fetch");
   callRenderMethod(classList, "product_catalogue");
+
+
 }
 
 function activateCustomerEventListeners() {
