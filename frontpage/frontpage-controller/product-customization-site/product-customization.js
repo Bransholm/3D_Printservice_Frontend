@@ -6,11 +6,24 @@ let catalogueId;
 let size = 15;
 let amount;
 // Used to calculate the set price...
-let materialPrice = 155;
+let materialPrice = 155.0;
 let stockInStorage;
 let price;
 let stockId;
 let singleProductPrice;
+
+// class productCreator {
+//   constructor(catalogueId, stockId, size, amount, singleProductPrice) {
+//     this.catalogueId = catalogueId;
+//     this.stockId = stockId;
+//     this.productSize = size;
+//     this.productAmount = amount;
+//     this.productPrice = singleProductPrice;
+//     this.stockInfo = null;
+//     this.catalogueInfo = null;
+//     this.init();
+//   }
+// }
 
 export async function viewButtonClicked(instance) {
   console.log("view button clicked: ", instance.id);
@@ -80,7 +93,7 @@ function showCustomizeProductSite(instance) {
                
     </div>
 
-    <p id="productPrice"> Udrgenede vægt pr. produkt: XXXX gram </p>
+    <p id="productWeight"> Udrgenede vægt pr. produkt: XXXX gram </p>
     <p id="produktMaterialName"> Produktet bliver printet i: PLA</p>
     
     </form>
@@ -249,7 +262,7 @@ function setProductSizeInfo() {
 
 function setCompleteProductPrice() {
   const tax = 1.25;
-  const shipping = 39;
+  console.log("pice is calculated!");
 
   document.querySelector("#productPrice").innerHTML = "";
   // console.log(
@@ -259,19 +272,25 @@ function setCompleteProductPrice() {
   setSingleProductPrice();
   const bundlePrice = setBundleProductPrice();
 
-  price = bundlePrice * tax + shipping;
+  price = bundlePrice * tax;
+  console.log("Total price is: ", price);
   // run op!
   document.querySelector(
     "#productPrice"
-  ).innerHTML = `Samlet Pris: ${Math.round(price)} DKK`;
+  ).innerHTML = `Samlet Pris: ${price} DKK`;
 }
 
 function setSingleProductPrice() {
+  // calculates price pr. individual item
   singleProductPrice = (materialPrice / 1000) * (size * 1.8);
+  // limits the decimal to 2
+  singleProductPrice = singleProductPrice.toFixed(2);
 }
 
+// calculates the price for all items selected
 function setBundleProductPrice() {
-  return productPrice * amount;
+  console.log("bundle price: ", singleProductPrice);
+  return singleProductPrice * amount;
 }
 
 function incrementProductAmount(event) {
@@ -296,5 +315,3 @@ function showSelectedAmount() {
 
   setCompleteProductPrice();
 }
-
-export { setSingleProductPrice, setBundleProductPrice };
