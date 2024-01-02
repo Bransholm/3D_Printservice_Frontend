@@ -5,12 +5,12 @@ export class stockMaterial {
     this.material = stockObject.Material;
     this.colour = stockObject.Colour;
     this.gramInStock = stockObject.GramInStock;
-    this.minAmountReached = stockObject.MinAmountReached;
+    this.active = stockObject.Active;
     this.salesPrice = stockObject.SalesPrice;
   }
 
   showStockAvailability() {
-    if (this.minAmountReached == 0) {
+    if (this.active == 0) {
       return "På Lager";
     } else {
       return "Udsolgt";
