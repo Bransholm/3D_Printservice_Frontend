@@ -18,36 +18,28 @@ export class catalogueItem {
       /*html*/
       `
     <article>
-    <img src="../images/${this.imageLink}" alt="Produktbillede ${this.title}"/>
-    <h3>Produkt Navn: ${this.title}</h3>
-    <p>Kategori: ${this.category}</p>
-    <p>Standard Størrelse: ${this.standardSize} cm</p>
-    <p>Standard Vægt: ${this.standardWeight} gram</p>
-    <p>Produkt Beskrivelse: ${this.itemDescription} </p>
+    ${this.renderBasicInformation()}
     <button class="btn-view-product" >Se Produkt</button>
     </article>
     `;
     return catalogueHTML;
   }
 
-  adminRender() {
-    const adminCatalogueHTML =
+  renderBasicInformation() {
+    const basicInformationHTML =
       /*html*/
-      `
-    <article>
-    <h3>Produkt Navn: ${this.title}</h3>
-    <img src="../images/${this.imageLink}" alt="Produktbillede ${this.title}"/>
-    <p>Kategori: ${this.category}</p>
-    <p>Standard Størrelse: ${this.standardSize} cm</p>
-    <p>Standard Vægt: ${this.standardWeight} gram</p>
-    <p>Produkt Beskrivelse: ${this.itemDescription} </p>
-    <button class="btn_update_product" >Update</button>
-    <button class="btn_delete_product" >Delete</button>
+      `<div>
+        <img
+          src="../images/${this.imageLink}"
+          alt="Produktbillede ${this.title}"
+        />
+        <h3>Produkt Navn: ${this.title}</h3>
+        <p>Kategori: ${this.category}</p>
+        <p>Standard Størrelse: ${this.standardSize} cm</p>
+        <p>Standard Vægt: ${this.standardWeight} gram</p>
+        <p>Produkt Beskrivelse: ${this.itemDescription} </p>
+      </div>`;
 
-    </article>
-    `;
-    return adminCatalogueHTML;
+    return basicInformationHTML;
   }
-
-  // Vi skal have en metode til at kunne ændre i samtlige Attirbutter og opdatere databasen der efter - Lukas.
 }
