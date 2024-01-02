@@ -17,6 +17,11 @@ import { callRenderMethod } from "./render-controller.js";
 
 import { filterContent, searchContent } from "./catalogue-filter-search.js";
 
+// test-function that runs the post-order-API
+import { testMakeOrder } from "../frontpage-model/rest-api/make-order.js";
+// test-function that creates a new order!
+import { testOrderSite } from "./order-site.js";
+
 window.addEventListener("load", start);
 
 function start() {
@@ -25,6 +30,14 @@ function start() {
   console.log("Hello Team10");
   // Tester om man kan hente data - Lukas
   getAllData();
+  // testMakeOrder();
+  testStartNewOrder();
+}
+
+function testStartNewOrder() {
+  document
+    .querySelector("#btn_place_order")
+    .addEventListener("click", testOrderSite);
 }
 
 // Dette er en test funktion der skal se om vi kan hente data:
@@ -38,13 +51,10 @@ async function getAllData() {
 }
 
 function showCatalougeToCustomers(catalougeItemObjects) {
-
   const classList = createCatalogClasses(catalougeItemObjects, catalogueItem);
-  
+
   console.log("Der er et fetch");
   callRenderMethod(classList, "product_catalogue");
-
-
 }
 
 function activateCustomerEventListeners() {
