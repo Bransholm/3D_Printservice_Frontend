@@ -184,7 +184,7 @@ class productOrder {
 }
 
 function showItemsInCart() {
-  document.querySelector("#special_products").innerHTML = "";
+  document.querySelector("#shopping_cart_view").innerHTML = "";
 
   for (let i = 0; i < shoppingCart.length; i++) {
     const product = shoppingCart[i];
@@ -193,25 +193,25 @@ function showItemsInCart() {
 
     // --------------- NEW HTML ID/ PAGE NEEDED!!! --------------------------------------------- OBS!!!!!
     document
-      .querySelector("#special_products")
+      .querySelector("#shopping_cart_view")
       .insertAdjacentHTML("beforeend", productOrderHTML);
 
     // Eventlisteners!
     document
       .querySelector(
-        "#special_products article:last-child .btn_increment_amount"
+        "#shopping_cart_view article:last-child .btn_increment_amount"
       )
       .addEventListener("click", () => incrementCartProductAmount(product));
 
     document
       .querySelector(
-        "#special_products article:last-child .btn_derement_amount"
+        "#shopping_cart_view article:last-child .btn_derement_amount"
       )
       .addEventListener("click", () => decrementcartProductAmount(product));
 
     document
       .querySelector(
-        "#special_products article:last-child .btn_remove_cart_item"
+        "#shopping_cart_view article:last-child .btn_remove_cart_item"
       )
       .addEventListener("click", () => removeProductFromCart(i));
   }
@@ -241,3 +241,5 @@ function setSingleProductPrice() {
 function setBundleProductPrice() {
   return productPrice * amount;
 }
+
+export { shoppingCart };
