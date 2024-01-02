@@ -25,10 +25,16 @@ import {
 
 function startAdmin() {
   console.log("Admin site is working");
+
+  startEvendListernes();
+
+  getDataController();
+}
+
+function startEvendListernes() {
   document
     .querySelector("#addToCatalogueForm")
     .addEventListener("submit", createNewCatalogueItem);
-  getDataController();
 
   // submit update...
   document
