@@ -5,6 +5,14 @@ import {
 
 const endpoint = "https://3dprintservice.azurewebsites.net/";
 
+const localEndpoint = "http://localhost:4811/";
+
+async function fetchCustomerByEmail(input) {
+  const response = await fetch(`${localEndpoint}/customer?email=${input}`);
+  const customerData = await response.json();
+  return customerData;
+}
+
 // fetching catalogue data
 async function getCatalogueData() {
   const response = await fetch(
@@ -48,4 +56,5 @@ export {
   getAvailableStockData,
   getCatalougeItemById,
   getStockItemById,
+  fetchCustomerByEmail
 };
