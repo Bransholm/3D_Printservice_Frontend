@@ -12,6 +12,21 @@ let price;
 let stockId;
 let singleProductPrice;
 
+// CREATE TABLE Order_Lines
+// (
+//     Id           INT AUTO_INCREMENT PRIMARY KEY,
+//     Orders_ID    INT,
+//     FOREIGN KEY (Orders_ID) REFERENCES Orders (Id),
+//     Catalogue_ID INT,
+//     FOREIGN KEY (Catalogue_ID) REFERENCES Catalogue (Id),
+//     Amount       INTEGER(10),
+//     ProductSize  INTEGER(10),
+//     ItemPrice    DECIMAL(5,2),
+//     ItemTax      DECIMAL(5,2),
+//     Stock_ID     INT,
+//     FOREIGN KEY (Stock_ID) REFERENCES Stock (Id)
+// );
+
 // class productCreator {
 //   constructor(catalogueId, stockId, size, amount, singleProductPrice) {
 //     this.catalogueId = catalogueId;
@@ -218,6 +233,7 @@ function setDefaultMaterialId(id) {
 // Stores the price value of the selected material
 function setProductMaterialPrice(newPrice) {
   materialPrice = newPrice;
+  setCompleteProductPrice();
 }
 
 //  --- Functions that set the product material and colour
@@ -273,6 +289,8 @@ function setCompleteProductPrice() {
   const bundlePrice = setBundleProductPrice();
 
   price = bundlePrice * tax;
+  // price the decimal to 2
+  price = price.toFixed(2);
   console.log("Total price is: ", price);
   // run op!
   document.querySelector(
@@ -283,8 +301,7 @@ function setCompleteProductPrice() {
 function setSingleProductPrice() {
   // calculates price pr. individual item
   singleProductPrice = (materialPrice / 1000) * (size * 1.8);
-  // limits the decimal to 2
-  singleProductPrice = singleProductPrice.toFixed(2);
+
 }
 
 // calculates the price for all items selected
