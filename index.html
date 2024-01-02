@@ -51,9 +51,138 @@
         
         <!-- Section special products -->
         <section id="special_products" class="view-content">
+          <div id="shopping_cart_view"></div>
+          <button id="btn_place_order">Til Kassen</button>
             Specialprodukter
-            <button id="btn_place_order">Til Kassen</button>
-        </section>
+
+            <!-- cutsomer -->
+            <div id="exsiting_search">
+              <form id="retriveCustomerByEmail">
+                <label for="retriveCustomerByEmailInput">Email</label>
+                   <input
+                     type="email"
+                     id="retriveCustomerByEmailInput"
+                     name="email"
+                     placeholder="eksempel@mail.dk"
+                     required
+                  />
+                     
+    <button id="btn_retrieve_customer_by_email" type="submit">Bekræft</button>
+  </form>
+            </div>
+            <div id="insert_orderinfo">
+           
+    <form id="order_details_form">
+ <h3> Oprettelses formen </h3>
+ <h4> Kunden </h4>               
+<!-- kunden -->
+  <label for="firstNameInput">Fornavn</label>
+                <input
+                  type="text"
+                  id="firstNameInput"
+                  name="firstName"
+                  placeholder="Fornavn"
+                  required
+                  />
+
+  <label for="lastNameInput">Efternavn</label>
+                <input
+                  type="text"
+                  id="lastNameNameInput"
+                  name="lastName"
+                  placeholder="Efternavn"
+                  required
+                  />                  
+
+
+  <label for="emailInput">Email</label>
+                <input
+                  type="email"
+                  id="emailInput"
+                  name="email"
+                  placeholder="eksempel@mail.dk"
+                  required
+                  />     
+
+  <h3> Adresse </h3>
+  <label for="adressInput">Adresse</label>
+                <input
+                  type="text"
+                  id="adressInput"
+                  name="adress"
+                  placeholder="Adresse"
+                  required
+                  />
+                  
+   <label for="zipCodeInput">Postnummer</label>
+                <input
+                  type="text"
+                  id="zipCodeInput"
+                  name="zipCode"
+                  placeholder="0000"
+                  pattern="[0-9]{4}"
+                  required
+                  />    
+
+   <label for="cityInput">By</label>
+                <input
+                  type="text"
+                  id="cityInput"
+                  name="city"
+                  placeholder="Bynavn"
+                  required
+                  />  
+
+  <h4> Leverings information</h4>
+  <!-- VI SKAL FINDE EN MÅDE AT TILSLUTTE EN KUNDE -->
+  <!-- 
+    <label for="customerIdInput">Kunde Nummer</label>
+                  <input
+                    type="text"
+                    id="customerIdInput"
+                    name="customer_id"
+                    placeholder="id"
+                    required
+                    />
+  -->
+
+
+  <h3> Leverings Adresse </h3>
+  <label for="deliveryAdressInput">Adresse</label>
+                <input
+                  type="text"
+                  id="deliveryAdressInput"
+                  name="deliveryAdress"
+                  placeholder="Adresse"
+                  required
+                  />
+                  
+   <label for="deliveryZipCodeInput">Postnummer</label>
+                <input
+                  type="text"
+                  id="deliveryZipCodeInput"
+                  name="deliveryZipCode"
+                  placeholder="0000"
+                  pattern="[0-9]{4}"
+                  required
+                  />    
+
+   <label for="deliveryCityInput">By/label>
+                <input
+                  type="text"
+                  id="deliveryCityInput"
+                  name="deliveryCity"
+                  placeholder="Bynavn"
+                  required
+                  />    
+
+
+        <button id="btn_submit_order_details" type="submit">Gå til betaling</button>          
+  </form>
+
+            </div>
+            
+          </section>
         
         <!-- Section view order -->
         <section id="view_order" class="view-content">
@@ -72,7 +201,9 @@
         </section>
 
     </main>
-    
+
+
+
     <!-- Footer -->
     <footer>
       <span id="faq-link" class="change_cursor_to_a_pointer_on_hover">FAQ</span>
