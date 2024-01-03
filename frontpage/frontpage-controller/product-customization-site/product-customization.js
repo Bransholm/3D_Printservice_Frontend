@@ -2,12 +2,24 @@
 import { getAvailableStockData } from "../../frontpage-model/fetch-data.js";
 import { addProductToBasket } from "./shopping-cart.js";
 
+// imports the get-api routes
+import {
+  getCatalougeItemById,
+  getStockItemById,
+} from "../../frontpage-model/fetch-data.js";
+
+// imports the existing classes for stock-materials and catalouge-items
+import { stockMaterial } from "../../frontpage-view/view-render-classes/stock-class.js";
+import { catalogueItem } from "../../frontpage-view/view-render-classes/catalogue-class.js";
+
+// all the materials that are set as active
+let stockInStorage;
+
 let catalogueId;
 let size = 15;
 let amount;
 // Used to calculate the set price...
 let materialPrice = 155.0;
-let stockInStorage;
 let price;
 let stockId;
 let singleProductPrice;
@@ -27,53 +39,61 @@ let singleProductPrice;
 //     FOREIGN KEY (Stock_ID) REFERENCES Stock (Id)
 // );
 
-// class productCreator {
-//   constructor(catalogueId, stockId, size, amount, singleProductPrice) {
-//     this.catalogueId = catalogueId;
-//     this.stockId = stockId;
-//     this.productSize = size;
-//     this.productAmount = amount;
-//     this.productPrice = singleProductPrice;
-//     this.stockInfo = null;
-//     this.catalogueInfo = null;
-//     this.init();
-//   }
-// }
+// Is this unnecessarily complex as per usual?!
 
-export async function viewButtonClicked(instance) {
-  console.log("view button clicked: ", instance.id);
+class product {
+  // There needs to be an order id as well down the line...
+  constructor(catalogueId) {
+    this.catalogue_ID = catalogueId;
+    // html from the catalouge item;
+    // this.renderCatalougeHTML = "test";
+    this.catalogueInfo = null;
+    // this.initCatalogueItem();
+  }
 
-  // Sets the id for the chosen catalogue item
-  catalogueId = instance.id;
+  async initCatalogueItem() {
+    await this.setCatalougeInfo(this.catalogue_ID);
 
-  document.querySelector("#product_id").innerHTML = "";
+    this.productImage = this.catalogueInfo.imageLink;
+    this.productTitle = this.catalogueInfo.title;
 
-  // Fetches all the stock materials that are not sold out
-  stockInStorage = await getAvailableStockData();
-  // console.log("The available stock", stockInStorage);
+    this.renderCatalougeHTML = this.catalogueInfo.renderBasicInformation();
+    console.log(this.renderCatalougeHTML);
+  }
 
-  // Sets the product DOM with information from the chosen catalogue item
-  showCustomizeProductSite(instance);
+  async setCatalougeInfo(id) {
+    const catalougeItemData = await this.fetchCatalogueData(id);
+    console.log("catalouge data: ", catalougeItemData);
+    const catalogueItemClass = this.setCatalougeClass(catalougeItemData);
 
-  // set values for the product before custumization starts
-  setDefaultProduct(instance.standardSize);
-}
+    console.log("catalouge calss: ", catalogueItemClass);
+    this.catalogueInfo = catalogueItemClass;
+  }
 
-function showCustomizeProductSite(instance) {
-  // NB: Vi skal lave et fetch som tjekker om en side er løbet tør for noget bestemt...
-  const html =
-    /*html*/
-    `
-<article>
+  async fetchCatalogueData(id) {
+    const catalogueData = await getCatalougeItemById(id);
+    return catalogueData;
+  }
+
+  setCatalougeClass(catalogueItemData) {
+    const newDataInstance = new catalogueItem(catalogueItemData);
+    return newDataInstance;
+  }
+
+  renderCustomizationSite() {
+    // const oldHTML = this.renderCatalougeHTML;
+    console.log("whats old html: ", this.catalogueInfo);
+
+    const productCustomizationSiteHTML =
+      /*html*/
+      `
+
     <article>
-    <h3>Produkt Navn: ${instance.title}</h3>
-    <img src="./images/${instance.imageLink}" alt="Produktbillede ${instance.title}"/>
-    <p>Kategori: ${instance.category}</p>
-    <p>Produkt Beskrivelse: ${instance.itemDescription}</p>
-    <p>Standard Størrelse: ${instance.standardSize} cm</p>
-    <p>Standard vægt: ${instance.standardWeight} gram</p>
-        
+    <!-- Here the HTML from the render method of the catalogue item class is inserted -->
+    ${this.renderCatalougeHTML}
 
+
+  
     <h3 id="productPrice"> Samlet Pris: XXX.XX DKK</h3>
     <form>
 
@@ -117,12 +137,46 @@ function showCustomizeProductSite(instance) {
         <button class="btn-return-" >Forstæt shopping</button>
 
     
-    </article>
+
 
 </article>
 `;
 
-  document.querySelector("#product_id").insertAdjacentHTML("beforeend", html);
+    return productCustomizationSiteHTML;
+  }
+}
+
+export async function viewButtonClicked(instance) {
+  console.log("view button clicked: ", instance.id);
+
+  // Sets the id for the chosen catalogue item
+  catalogueId = instance.id;
+
+  document.querySelector("#product_id").innerHTML = "";
+
+  // Fetches all the stock materials that are not sold out
+  stockInStorage = await getAvailableStockData();
+  // console.log("The available stock", stockInStorage);
+
+  // creates an instance of the product-class
+  const customizedProduct = new product(instance.id);
+  // calls the method that creates an instance of the catalouge-item-class inside the product-class
+  await customizedProduct.initCatalogueItem();
+
+  // Sets the product DOM with information from the chosen catalogue item
+  showCustomizeProductSite(customizedProduct);
+
+  // set values for the product before custumization starts
+  setDefaultProduct(instance.standardSize);
+}
+
+function showCustomizeProductSite(instance) {
+  const customizationSiteHTML = instance.renderCustomizationSite();
+
+  document
+    .querySelector("#product_id")
+    .insertAdjacentHTML("beforeend", customizationSiteHTML);
+
   // Activates all eventlisternes used on the product customization site
   addProductSiteEventListeners();
 }
@@ -277,9 +331,6 @@ function setProductSizeInfo() {
 }
 
 function setCompleteProductPrice() {
-  const tax = 1.25;
-  console.log("pice is calculated!");
-
   document.querySelector("#productPrice").innerHTML = "";
   // console.log(
   //   `Samlet pris = materiale ${materialPrice}, størrelse${size}, antal${amount}`
@@ -288,7 +339,7 @@ function setCompleteProductPrice() {
   setSingleProductPrice();
   const bundlePrice = setBundleProductPrice();
 
-  price = bundlePrice * tax;
+  price = bundlePrice;
   // price the decimal to 2
   price = price.toFixed(2);
   console.log("Total price is: ", price);
@@ -299,9 +350,9 @@ function setCompleteProductPrice() {
 }
 
 function setSingleProductPrice() {
+  const tax = 1.25;
   // calculates price pr. individual item
-  singleProductPrice = (materialPrice / 1000) * (size * 1.8);
-
+  singleProductPrice = (materialPrice / 1000) * (size * 1.8) * tax;
 }
 
 // calculates the price for all items selected
@@ -310,19 +361,7 @@ function setBundleProductPrice() {
   return singleProductPrice * amount;
 }
 
-function incrementProductAmount(event) {
-  event.preventDefault();
-  amount += 1;
-  showSelectedAmount();
-}
 
-function decrementProductAmount(event) {
-  event.preventDefault();
-  if (amount > 1) {
-    amount -= 1;
-    showSelectedAmount();
-  }
-}
 
 function showSelectedAmount() {
   document.querySelector("#selectProductAmount").innerHTML = "";
