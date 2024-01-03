@@ -16,13 +16,15 @@ import { catalogueItem } from "../../frontpage-view/view-render-classes/catalogu
 let stockInStorage;
 
 let catalogueId;
-let size = 15;
-let amount;
+// let size = 15;
+// let amount;
 // Used to calculate the set price...
 let materialPrice = 155.0;
-let price;
+// let price;
 let stockId;
-let singleProductPrice;
+// let singleProductPrice;
+// the product class
+let customizedProduct;
 
 // CREATE TABLE Order_Lines
 // (
@@ -41,6 +43,9 @@ let singleProductPrice;
 
 // Is this unnecessarily complex as per usual?!
 
+// price = bundleprice;
+// singleProductPrice;
+
 class product {
   // There needs to be an order id as well down the line...
   constructor(catalogueId) {
@@ -49,6 +54,10 @@ class product {
     // this.renderCatalougeHTML = "test";
     this.catalogueInfo = null;
     // this.initCatalogueItem();
+    this.size;
+    this.amount = 1;
+    this.totalPrice;
+    this.itemPrice;
   }
 
   async initCatalogueItem() {
@@ -144,6 +153,89 @@ class product {
 
     return productCustomizationSiteHTML;
   }
+
+  incrementProductAmount() {
+    this.amount += 1;
+    this.showSelectedAmount();
+  }
+
+  decrementProductAmount() {
+    if (this.amount > 1) {
+      this.amount -= 1;
+      this.showSelectedAmount();
+    }
+  }
+
+  showSelectedAmount() {
+    document.querySelector("#selectProductAmount").innerHTML = "";
+    document.querySelector(
+      "#selectProductAmount"
+    ).innerHTML = `Antal ${this.amount} stk`;
+
+    this.setCompleteProductPrice();
+  }
+
+  setCompleteProductPrice() {
+    document.querySelector("#productPrice").innerHTML = "";
+    // console.log(
+    //   `Samlet pris = materiale ${materialPrice}, størrelse${size}, antal${amount}`
+    // );
+    //der mangler en vloume udregning på baggrund af vægt i forhold til størrelsen.
+    this.setSingleProductPrice();
+    this.totalPrice = this.setBundleProductPrice();
+    // price the decimal to 2
+    this.totalPrice = this.totalPrice.toFixed(2);
+    console.log("Total price is: ", this.totalPrice);
+    // run op!
+    document.querySelector(
+      "#productPrice"
+    ).innerHTML = `Samlet Pris: ${this.totalPrice} DKK`;
+  }
+
+  setSingleProductPrice() {
+    const tax = 1.25;
+    // calculates price pr. individual item
+    this.itemPrice = (materialPrice / 1000) * (this.size * 1.8) * tax;
+  }
+
+  // calculates the price for all items selected
+  setBundleProductPrice() {
+    console.log("bundle price: ", this.itemPrice);
+    return this.itemPrice * this.amount;
+  }
+
+  // Alteres the size information showed to the customer
+  setProductSizeInfo() {
+    document.querySelector("#showSliderSize").innerHTML = "";
+    // console.log("The size is ", event.target.value, " CM");
+    document.querySelector(
+      "#showSliderSize"
+    ).innerHTML = `Valgte højde ${this.size} cm`;
+  }
+
+  setProductSize(sizeInput) {
+    this.size = sizeInput;
+    this.setProductSizeInfo();
+    this.setCompleteProductPrice();
+  }
+
+  // Set all the standard product values
+  setDefaultProduct() {
+    console.log("Set all events");
+
+    // Sets the chosen amount to 1
+    // resetProductAmount();
+    // Set the item size to fit the item.standardSize
+    this.size = this.catalogueInfo.standardSize;
+    // Set the size-slider value to the default size
+    document.querySelector("#productSizeSlider").value = this.size;
+    // Set the size information shown to the product customization site
+    this.setProductSizeInfo();
+    // Show the default material type and colour - set the first available as chosen
+    refreshColourSelector(stockInStorage[0].Name.toLowerCase());
+    // Set the default
+    this.setCompleteProductPrice();
+  }
 }
 
 export async function viewButtonClicked(instance) {
@@ -154,12 +246,13 @@ export async function viewButtonClicked(instance) {
 
   document.querySelector("#product_id").innerHTML = "";
 
+  // ------------------- DEV NOTE: skal vi fetche hver gang man trykker på knappen? Ja? ---------------------
   // Fetches all the stock materials that are not sold out
   stockInStorage = await getAvailableStockData();
   // console.log("The available stock", stockInStorage);
 
   // creates an instance of the product-class
-  const customizedProduct = new product(instance.id);
+  customizedProduct = new product(instance.id);
   // calls the method that creates an instance of the catalouge-item-class inside the product-class
   await customizedProduct.initCatalogueItem();
 
@@ -167,7 +260,7 @@ export async function viewButtonClicked(instance) {
   showCustomizeProductSite(customizedProduct);
 
   // set values for the product before custumization starts
-  setDefaultProduct(instance.standardSize);
+  customizedProduct.setDefaultProduct();
 }
 
 function showCustomizeProductSite(instance) {
@@ -178,20 +271,20 @@ function showCustomizeProductSite(instance) {
     .insertAdjacentHTML("beforeend", customizationSiteHTML);
 
   // Activates all eventlisternes used on the product customization site
-  addProductSiteEventListeners();
+  addProductSiteEventListeners(customizedProduct);
 }
 
-function addProductSiteEventListeners() {
+function addProductSiteEventListeners(instance) {
   document
     .querySelector("#selectProductSize")
-    .addEventListener("change", setProductSize);
+    .addEventListener("change", productSizeSliderActivated);
 
   document
     .querySelector(".btn_increment_amount")
-    .addEventListener("click", incrementProductAmount);
+    .addEventListener("click", incrementProductAmountClick);
   document
     .querySelector(".btn_decrement_amount")
-    .addEventListener("click", decrementProductAmount);
+    .addEventListener("click", decrementProductAmountClick);
 
   document
     .querySelector("#chosenMaterial")
@@ -208,27 +301,38 @@ function addProductSiteEventListeners() {
     );
 }
 
-// Set all the standard product values
-function setDefaultProduct(defaultSize) {
-  console.log("Set all events");
-
-  // Sets the chosen amount to 1
-  resetProductAmount();
-  // Set the item size to fit the item.standardSize
-  size = defaultSize;
-  // Set the size-slider value to the default size
-  document.querySelector("#productSizeSlider").value = size;
-  // Set the size information shown to the product customization site
-  setProductSizeInfo();
-  // Show the default material type and colour - set the first available as chosen
-  refreshColourSelector(stockInStorage[0].Name.toLowerCase());
-  // Set the default
-  setCompleteProductPrice();
+function incrementProductAmountClick(event) {
+  event.preventDefault();
+  customizedProduct.incrementProductAmount();
 }
 
+function decrementProductAmountClick(event) {
+  event.preventDefault();
+  customizedProduct.decrementProductAmount();
+}
+
+// // Set all the standard product values
+// function setDefaultProduct(defaultSize) {
+//   console.log("Set all events");
+
+//   // Sets the chosen amount to 1
+//   // resetProductAmount();
+//   // Set the item size to fit the item.standardSize
+//   size = defaultSize;
+//   // Set the size-slider value to the default size
+//   document.querySelector("#productSizeSlider").value = size;
+//   // Set the size information shown to the product customization site
+//   customizedProduct.setProductSizeInfo();
+//   // Show the default material type and colour - set the first available as chosen
+//   refreshColourSelector(stockInStorage[0].Name.toLowerCase());
+//   // Set the default
+//   customizedProduct.setCompleteProductPrice();
+// }
+
+// Sets the chosen amount to 1
 export function resetProductAmount() {
   amount = 1;
-  showSelectedAmount();
+  customizedProduct.showSelectedAmount();
 }
 
 // Sets the material to the type selected in the "chooseMaterial" drop down
@@ -287,7 +391,7 @@ function setDefaultMaterialId(id) {
 // Stores the price value of the selected material
 function setProductMaterialPrice(newPrice) {
   materialPrice = newPrice;
-  setCompleteProductPrice();
+  customizedProduct.setCompleteProductPrice();
 }
 
 //  --- Functions that set the product material and colour
@@ -315,59 +419,72 @@ function setProductColour(event) {
   setDefaultMaterialId(chosenMaterialAndColour);
 }
 
-function setProductSize(event) {
-  size = Number(event.target.value);
-  setProductSizeInfo();
-  setCompleteProductPrice();
+//setProductSize;
+
+function productSizeSliderActivated(event) {
+  const sliderInputValue = Number(event.target.value);
+  customizedProduct.setProductSize(sliderInputValue);
 }
 
-// Alteres the size information showed to the customer
-function setProductSizeInfo() {
-  document.querySelector("#showSliderSize").innerHTML = "";
-  // console.log("The size is ", event.target.value, " CM");
-  document.querySelector(
-    "#showSliderSize"
-  ).innerHTML = `Valgte højde ${size} cm`;
-}
+// // Alteres the size information showed to the customer
+// function setProductSizeInfo() {
+//   document.querySelector("#showSliderSize").innerHTML = "";
+//   // console.log("The size is ", event.target.value, " CM");
+//   document.querySelector(
+//     "#showSliderSize"
+//   ).innerHTML = `Valgte højde ${size} cm`;
+// }
 
-function setCompleteProductPrice() {
-  document.querySelector("#productPrice").innerHTML = "";
-  // console.log(
-  //   `Samlet pris = materiale ${materialPrice}, størrelse${size}, antal${amount}`
-  // );
-  //der mangler en vloume udregning på baggrund af vægt i forhold til størrelsen.
-  setSingleProductPrice();
-  const bundlePrice = setBundleProductPrice();
+// function setCompleteProductPrice() {
+//   document.querySelector("#productPrice").innerHTML = "";
+//   // console.log(
+//   //   `Samlet pris = materiale ${materialPrice}, størrelse${size}, antal${amount}`
+//   // );
+//   //der mangler en vloume udregning på baggrund af vægt i forhold til størrelsen.
+//   setSingleProductPrice();
+//   const bundlePrice = setBundleProductPrice();
 
-  price = bundlePrice;
-  // price the decimal to 2
-  price = price.toFixed(2);
-  console.log("Total price is: ", price);
-  // run op!
-  document.querySelector(
-    "#productPrice"
-  ).innerHTML = `Samlet Pris: ${price} DKK`;
-}
+//   price = bundlePrice;
+//   // price the decimal to 2
+//   price = price.toFixed(2);
+//   console.log("Total price is: ", price);
+//   // run op!
+//   document.querySelector(
+//     "#productPrice"
+//   ).innerHTML = `Samlet Pris: ${price} DKK`;
+// }
 
-function setSingleProductPrice() {
-  const tax = 1.25;
-  // calculates price pr. individual item
-  singleProductPrice = (materialPrice / 1000) * (size * 1.8) * tax;
-}
+// function setSingleProductPrice() {
+//   const tax = 1.25;
+//   // calculates price pr. individual item
+//   singleProductPrice = (materialPrice / 1000) * (size * 1.8) * tax;
+// }
 
-// calculates the price for all items selected
-function setBundleProductPrice() {
-  console.log("bundle price: ", singleProductPrice);
-  return singleProductPrice * amount;
-}
+// // calculates the price for all items selected
+// function setBundleProductPrice() {
+//   console.log("bundle price: ", singleProductPrice);
+//   return singleProductPrice * amount;
+// }
 
+// function incrementProductAmount(event) {
+//   event.preventDefault();
+//   amount += 1;
+//   showSelectedAmount();
+// }
 
+// function decrementProductAmount(event) {
+//   event.preventDefault();
+//   if (amount > 1) {
+//     amount -= 1;
+//     showSelectedAmount();
+//   }
+// }
 
-function showSelectedAmount() {
-  document.querySelector("#selectProductAmount").innerHTML = "";
-  document.querySelector(
-    "#selectProductAmount"
-  ).innerHTML = `Antal ${amount} stk`;
+// function showSelectedAmount() {
+//   document.querySelector("#selectProductAmount").innerHTML = "";
+//   document.querySelector(
+//     "#selectProductAmount"
+//   ).innerHTML = `Antal ${amount} stk`;
 
-  setCompleteProductPrice();
-}
+//   setCompleteProductPrice();
+// }
