@@ -2,7 +2,7 @@
 import { getAvailableStockData } from "../../frontpage-model/fetch-data.js";
 import { addProductToBasket } from "./shopping-cart.js";
 
-import { product } from "./productCustomizationCalss.js";
+import { product } from "./product-customization-calss.js";
 
 // all the materials that are set as active
 let stockInStorage;

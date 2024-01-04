@@ -10,7 +10,6 @@
 
 // Contains all products added to the cart
 const shoppingCart = [];
-let currentProduct;
 
 // Cheks if an product instance has a doublicate in the system
 function checkForDoublets(newProduct) {
@@ -58,21 +57,21 @@ function pushProduct(selectedProduct) {
 }
 
 export async function addProductToBasket(productInstance) {
-  currentProduct = productInstance;
+ 
 
   console.log("item to push: ", productInstance);
   checkForDoublets(productInstance);
   console.log("cart items ", shoppingCart);
-  showItemsInCart(productInstance);
+  showItemsInCart();
 }
 
-function showItemsInCart(productInstance) {
+function showItemsInCart() {
   document.querySelector("#shopping_cart_view").innerHTML = "";
 
   for (let i = 0; i < shoppingCart.length; i++) {
     const product = shoppingCart[i];
     console.log("shopping card index ", i, " is ", product);
-    const productOrderHTML = productInstance.renderShoppingcartInfo();
+    const productOrderHTML = product.renderShoppingcartInfo();
 
     // --------------- NEW HTML ID/ PAGE NEEDED!!! --------------------------------------------- OBS!!!!!
     document
@@ -84,29 +83,28 @@ function showItemsInCart(productInstance) {
       .querySelector(
         "#shopping_cart_view article:last-child .btn_increment_amount"
       )
-      .addEventListener("click", incrementProductAmountClicked);
+      .addEventListener("click", () => incrementProductAmountClicked(product));
 
     document
       .querySelector(
         "#shopping_cart_view article:last-child .btn_decrement_amount"
       )
-      .addEventListener("click", decrementProductAmountClicked);
+      .addEventListener("click", () => decrementProductAmountClicked(product));
 
-    // document
-    //   .querySelector(
-    //     "#shopping_cart_view article:last-child .btn_remove_cart_item"
-    //   )
-    //   .addEventListener("click", () => removeProductFromCart(i));
+    document
+      .querySelector(
+        "#shopping_cart_view article:last-child .btn_remove_cart_item"
+      )
+      .addEventListener("click", () => removeProductFromCart(i));
   }
 }
 
-function incrementProductAmountClicked() {
-  currentProduct.incrementProductAmount();
+function incrementProductAmountClicked(productInstance) {
+  productInstance.incrementProductAmount();
 }
 
-function decrementProductAmountClicked(event) {
-  event.preventDefault();
-  currentProduct.decrementProductAmount();
+function decrementProductAmountClicked(productInstance) {
+ productInstance.decrementProductAmount();
 }
 
 function removeProductFromCart(i) {
