@@ -91,9 +91,9 @@ function addProductSiteEventListeners() {
     .addEventListener("click", addProductToBasketBtnClicked);
 }
 
-function addProductToBasketBtnClicked() {
+async function addProductToBasketBtnClicked() {
   // adds the product instance to the shopping cart
-  customizedProduct.initStockMaterial();
+  await customizedProduct.initStockMaterial();
   addProductToBasket(customizedProduct);
   // -------------------------------------------------- set the stockInfo...
   // viewButtonClicked(selectedCatalougeItem);

@@ -59,8 +59,9 @@ export class product {
   async initStockMaterial() {
     await this.setStockInfo(this.stock_ID);
 
+    console.log("the stock class: ", this.stockInfo);
     this.colour = this.stockInfo.colour;
-    this.porperty = this.catalogueInfo.name;
+    this.name = this.stockInfo.name;
     this.matieral = this.catalogueInfo.material;
     // this.renderCatalougeHTML = this.catalogueInfo.renderBasicInformation();
   }
@@ -160,6 +161,10 @@ export class product {
     return productCustomizationSiteHTML;
   }
 
+  // this.colour = this.stockInfo.colour;
+  // this.porperty = this.catalogueInfo.name;
+  // this.matieral = this.catalogueInfo.material;
+
   renderShoppingcartInfo() {
     const shoppingcartHTML =
       /*html*/
@@ -168,7 +173,7 @@ export class product {
       ${this.renderCatalougeHTML}
       <p> Ønskede størrelse: ${this.productSize} cm</p>
       <p> Farve: ${this.colour}</p>
-      <p> Materale beskrivele: ${this.porperty}</p>
+      <p> Materale beskrivele: ${this.name}</p>
       <p> Platsik type: ${this.material}</p>
       ${this.renderPriceView()}
       ${this.renderAmountSelectionSection()}
