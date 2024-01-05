@@ -93,11 +93,11 @@ function showItemsInCart() {
         decrementProductAmountClicked(product)
       );
 
-    // document
-    //   .querySelector(
-    //     "#shopping_cart_view article:last-child .btn_remove_cart_item"
-    //   )
-    //   .addEventListener("click", () => removeProductFromCart(i));
+    document
+      .querySelector(
+        "#shopping_cart_view article:last-child .btn_remove_cart_item"
+      )
+      .addEventListener("click", () => removeProductFromCart(i));
   }
 }
 

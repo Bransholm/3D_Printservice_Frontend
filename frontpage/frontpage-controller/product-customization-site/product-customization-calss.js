@@ -177,6 +177,7 @@ export class product {
       <p> Platsik type: ${this.material}</p>
       ${this.renderPriceView()}
       ${this.renderAmountSelectionSection()}
+      <button class="btn_remove_cart_item">Fjern</button>
       </article>
   `;
     return shoppingcartHTML;
