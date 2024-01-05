@@ -32,7 +32,6 @@ let selectedCatalougeItem;
 // singleProductPrice;
 
 export async function viewButtonClicked(catalougeItem) {
-  console.log("view button clicked: ", catalougeItem.id);
   selectedCatalougeItem = catalougeItem;
   // Sets the id for the chosen catalogue item
   // const catalogueId = instance.id;
@@ -94,6 +93,7 @@ function addProductSiteEventListeners() {
 
 function addProductToBasketBtnClicked() {
   // adds the product instance to the shopping cart
+  customizedProduct.initStockMaterial();
   addProductToBasket(customizedProduct);
   // -------------------------------------------------- set the stockInfo...
   // viewButtonClicked(selectedCatalougeItem);

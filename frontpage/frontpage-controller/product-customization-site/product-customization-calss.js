@@ -10,10 +10,6 @@ import { catalogueItem } from "../../frontpage-view/view-render-classes/catalogu
 
 import { stockInStorage } from "./product-customization.js";
 
-
-
-
-
 export class product {
   // There needs to be an order id as well down the line...
   constructor(catalogueId) {
@@ -22,6 +18,7 @@ export class product {
     // html from the catalouge item;
     // this.renderCatalougeHTML = "test";
     this.catalogueInfo = null;
+    this.stockInfo = null;
     // this.initCatalogueItem();
     this.productSize;
     this.amount = 1;
@@ -39,15 +36,12 @@ export class product {
     this.productTitle = this.catalogueInfo.title;
 
     this.renderCatalougeHTML = this.catalogueInfo.renderBasicInformation();
-    console.log(this.renderCatalougeHTML);
   }
 
   async setCatalougeInfo(id) {
     const catalougeItemData = await this.fetchCatalogueData(id);
-    console.log("catalouge data: ", catalougeItemData);
     const catalogueItemClass = this.setCatalougeClass(catalougeItemData);
 
-    console.log("catalouge calss: ", catalogueItemClass);
     this.catalogueInfo = catalogueItemClass;
   }
 
@@ -61,6 +55,33 @@ export class product {
     return newDataInstance;
   }
 
+  // stocks
+  async initStockMaterial() {
+    await this.setStockInfo(this.stock_ID);
+
+    this.colour = this.stockInfo.colour;
+    this.porperty = this.catalogueInfo.name;
+    this.matieral = this.catalogueInfo.material;
+    // this.renderCatalougeHTML = this.catalogueInfo.renderBasicInformation();
+  }
+
+  async setStockInfo(id) {
+    const stockData = await this.fetchStockData(id);
+    const stockClass = this.setStockClass(stockData);
+
+    this.stockInfo = stockClass;
+  }
+
+  async fetchStockData(id) {
+    const stockData = await getStockItemById(id);
+    return stockData;
+  }
+
+  setStockClass(stockMaterialData) {
+    const newDataInstance = new stockMaterial(stockMaterialData);
+    return newDataInstance;
+  }
+  //-------------------------------------------------------------
   renderAmountSelectionSection() {
     const amountSelectionHTML = /*html*/ `
     <div id="selectAmount">
@@ -72,9 +93,17 @@ export class product {
     return amountSelectionHTML;
   }
 
+  renderPriceView() {
+    const priceHTML =
+      /*html*/
+      `
+   <h3 id="productPrice"> Samlet Pris: ${this.bundlePrice} DKK</h3>
+   `;
+    return priceHTML;
+  }
+
   renderCustomizationSite() {
     // const oldHTML = this.renderCatalougeHTML;
-    console.log("whats old html: ", this.catalogueInfo);
 
     const productCustomizationSiteHTML =
       /*html*/
@@ -85,8 +114,8 @@ export class product {
     ${this.renderCatalougeHTML}
 
 
-  
-    <h3 id="productPrice"> Samlet Pris: XXX.XX DKK</h3>
+    ${this.renderPriceView()}
+   
 
     ${this.renderAmountSelectionSection()}
 
@@ -137,9 +166,11 @@ export class product {
       `
       <article>
       ${this.renderCatalougeHTML}
-      <p>Printes i :${this.material}</p>
-      <p>Farve - Hårdhed</p>
-      <p>Total pris: ${this.itemPrice}</p>
+      <p> Ønskede størrelse: ${this.productSize} cm</p>
+      <p> Farve: ${this.colour}</p>
+      <p> Materale beskrivele: ${this.porperty}</p>
+      <p> Platsik type: ${this.material}</p>
+      ${this.renderPriceView()}
       ${this.renderAmountSelectionSection()}
       </article>
   `;
@@ -177,7 +208,6 @@ export class product {
     this.bundlePrice = this.setBundleProductPrice();
     // price the decimal to 2
     this.bundlePrice = this.bundlePrice.toFixed(2);
-    console.log("Total price is: ", this.bundlePrice);
     // run op!
     document.querySelector(
       "#productPrice"
@@ -187,8 +217,11 @@ export class product {
   setSingleProductPrice() {
     const tax = 1.25;
     // calculates price pr. individual item
-    this.itemPrice =
-      ((this.materialPrice / 1000) * (this.productSize * 1.8) * tax).toFixed(2);
+    this.itemPrice = (
+      (this.materialPrice / 1000) *
+      (this.productSize * 1.8) *
+      tax
+    ).toFixed(2);
     this.setSingleProductTax();
   }
 
@@ -198,7 +231,6 @@ export class product {
 
   // calculates the price for all items selected
   setBundleProductPrice() {
-    console.log("bundle price: ", this.itemPrice);
     return this.itemPrice * this.amount;
   }
 
@@ -220,7 +252,6 @@ export class product {
   // Changes the selected maetrial id to the material shown in the "choosenMaterial" drop down with the first available colour in the "choosenColour" drop down
   setDefaultMaterialId(id) {
     this.stock_ID = id;
-    console.log("New defaut stockID ", this.stock_ID);
   }
 
   // Sets the default material including type, colour and price
@@ -260,7 +291,6 @@ export class product {
     const newColourOption = document.createElement("option");
     newColourOption.value = id;
     newColourOption.text = colour;
-    // console.log(newColourOption);
     document.querySelector("#chosenColour").add(newColourOption);
   }
 
@@ -295,8 +325,6 @@ export class product {
 
   // Set all the standard product values
   setDefaultProduct() {
-    console.log("Set all events");
-
     // Sets the chosen amount to 1
     // resetProductAmount();
     // Set the item size to fit the item.standardSize

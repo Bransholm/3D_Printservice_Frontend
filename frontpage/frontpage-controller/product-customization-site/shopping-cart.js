@@ -57,8 +57,6 @@ function pushProduct(selectedProduct) {
 }
 
 export async function addProductToBasket(productInstance) {
- 
-
   console.log("item to push: ", productInstance);
   checkForDoublets(productInstance);
   console.log("cart items ", shoppingCart);
@@ -83,29 +81,38 @@ function showItemsInCart() {
       .querySelector(
         "#shopping_cart_view article:last-child .btn_increment_amount"
       )
-      .addEventListener("click", () => incrementProductAmountClicked(product));
+      .addEventListener("click", () =>
+        incrementProductAmountClicked(product)
+      );
 
     document
       .querySelector(
         "#shopping_cart_view article:last-child .btn_decrement_amount"
       )
-      .addEventListener("click", () => decrementProductAmountClicked(product));
+      .addEventListener("click", () =>
+        decrementProductAmountClicked(product)
+      );
 
-    document
-      .querySelector(
-        "#shopping_cart_view article:last-child .btn_remove_cart_item"
-      )
-      .addEventListener("click", () => removeProductFromCart(i));
+    // document
+    //   .querySelector(
+    //     "#shopping_cart_view article:last-child .btn_remove_cart_item"
+    //   )
+    //   .addEventListener("click", () => removeProductFromCart(i));
   }
 }
 
 function incrementProductAmountClicked(productInstance) {
+  console.log("youre activating: ", productInstance);
   productInstance.incrementProductAmount();
+  showItemsInCart();
 }
 
 function decrementProductAmountClicked(productInstance) {
- productInstance.decrementProductAmount();
+  console.log("youre activating: ", productInstance);
+  productInstance.decrementProductAmount();
+  showItemsInCart();
 }
+
 
 function removeProductFromCart(i) {
   shoppingCart.splice(shoppingCart[i], 1);
@@ -142,29 +149,29 @@ function removeProductFromCart(i) {
 //   // Get the material and colour...
 //   // WE NEVER CALCULATE THE GRAM!
 
-//   render() {
-//     const productOrderHTML =
-//       /*html*/
-//       `
-//     <article>
-//     <h3>${this.productTitle}</h3>
-//      <img src="../../../images/${this.productImage}" alt="Produktbillede ${this.productTitle}"/>
-//     <p>catalogueId - ${this.catalogueId}</p>
-//     <p>stockId - ${this.stockId}</p>
-//     <p>Farve: ${this.productColour} Egenskab: ${this.productName}</p>
-//     <p>Printes i: ${this.productMaterial}</p>
-//     <p>Valgt størrelse: ${this.productSize} cm</p>
-//     <button class="btn_increment_amount">+</button>
-//     <p>Antal: ${this.productAmount}</p>
-//     <button class="btn_derement_amount">-</button>
-//     <p>CALCULATE PRICE</p>
-//     <p>Pris: ${this.productPrice} DKK</p>
-//     <button class="btn_remove_cart_item">Fjern</button>
-//     </article>
-//     `;
+  // render() {
+  //   const productOrderHTML =
+  //     /*html*/
+  //     `
+  //   <article>
+  //   <h3>${this.productTitle}</h3>
+  //    <img src="../../../images/${this.productImage}" alt="Produktbillede ${this.productTitle}"/>
+  //   <p>catalogueId - ${this.catalogueId}</p>
+  //   <p>stockId - ${this.stockId}</p>
+  //   <p>Farve: ${this.productColour} Egenskab: ${this.productName}</p>
+  //   <p>Printes i: ${this.productMaterial}</p>
+  //   <p>Valgt størrelse: ${this.productSize} cm</p>
+  //   <button class="btn_increment_amount">+</button>
+  //   <p>Antal: ${this.productAmount}</p>
+  //   <button class="btn_derement_amount">-</button>
+  //   <p>CALCULATE PRICE</p>
+  //   <p>Pris: ${this.productPrice} DKK</p>
+  //   <button class="btn_remove_cart_item">Fjern</button>
+  //   </article>
+  //   `;
 
-//     return productOrderHTML;
-//   }
+  //   return productOrderHTML;
+  // }
 
 //   async setStockInfo(id) {
 //     const stockItemData = await this.fetchStockData(id);
