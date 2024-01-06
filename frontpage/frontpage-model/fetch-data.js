@@ -13,6 +13,12 @@ async function fetchCustomerByEmail(input) {
   return customerData;
 }
 
+async function fetchCustomerEmailData() {
+  const response = await fetch(`${localEndpoint}/customer`);
+  const emailData = await response.json();
+  return emailData;
+}
+
 // fetching catalogue data
 async function getCatalogueData() {
   const response = await fetch(
@@ -56,5 +62,6 @@ export {
   getAvailableStockData,
   getCatalougeItemById,
   getStockItemById,
-  fetchCustomerByEmail
+  fetchCustomerByEmail,
+  fetchCustomerEmailData,
 };

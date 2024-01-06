@@ -1,85 +1,90 @@
 /* Body & HTML */
 body,
 html {
-    height: 100%;
-    padding: 0;
-    margin: 0;
+  height: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 /* Body */
 body {
-    background-color:white;
-    font-size: 16px;
+  background-color: white;
+  font-size: 16px;
 }
 
 /* Header */
 header {
-    background-color: blue;
-    color: white;
-    height: 40px;
-    font-size: 40px;
+  background-color: blue;
+  color: white;
+  height: 40px;
+  font-size: 40px;
 }
 
 /* Nav bar */
 nav {
-    display: flex;
-    gap: 30px;
-    background-color: black;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+  display: flex;
+  gap: 30px;
+  background-color: black;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 /* Main */
 main {
-    background-color: white;
-    color: black;
-    min-height: 76%;
-    padding: 20px;
+  background-color: white;
+  color: black;
+  min-height: 76%;
+  padding: 20px;
 }
 
 #about_us_h2 {
-    margin-top: 0px;
+  margin-top: 0px;
 }
 
 /* Fotter */
 footer {
-    display: flex;
-    gap: 50px;
-    background-color: black;
-    color: white;
-    justify-content: center;
-    padding: 8px;
+  display: flex;
+  gap: 50px;
+  background-color: black;
+  color: white;
+  justify-content: center;
+  padding: 8px;
 }
 
- .view-content {
-    display: none;
+.view-content {
+  display: none;
 }
- 
+
 .view-content.active {
-    display: block;
+  display: block;
 }
 
 .view-link {
-    color: white;
-    text-decoration: none;
+  color: white;
+  text-decoration: none;
 }
 
 .view-link:hover {
-    color: orange;
-    text-decoration: none;
+  color: orange;
+  text-decoration: none;
 }
 
 .grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 50px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 50px;
 }
 
 /* Change cursor to a pointer class */
 .change_cursor_to_a_pointer_on_hover:hover {
-    cursor: pointer;
+  cursor: pointer;
+}
+
+/*toggles elements hidden*/
+.hidden {
+  display: none;
 }
 
 /* grid */
@@ -107,6 +112,3 @@ footer {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 }  */
-
-
-

@@ -55,8 +55,15 @@
           <button id="btn_place_order">Til Kassen</button>
             Specialprodukter
 
+
+            <div id="choose_customer_type">
+              <button id="btn_is_new_customer">Ny kunde</button>
+              <button id="btn_is_existing_customer">Allerede Kunde</button>
+            </div>
+
             <!-- cutsomer -->
-            <div id="exsiting_search">
+            <div id="search_existing_customer_by_email" class="hidden">
+              <h3>Tidligere kunde</h3>           
               <form id="retriveCustomerByEmail">
                 <label for="retriveCustomerByEmailInput">Email</label>
                    <input
@@ -67,8 +74,8 @@
                      required
                   />
                      
-    <button id="btn_retrieve_customer_by_email" type="submit">Bekræft</button>
-  </form>
+                <button id="btn_retrieve_customer_by_email" type="submit">Bekræft</button>
+                </form>
             </div>
             <div id="insert_orderinfo">
            
@@ -167,7 +174,7 @@
                   required
                   />    
 
-   <label for="deliveryCityInput">By/label>
+   <label for="deliveryCityInput">By </label>
                 <input
                   type="text"
                   id="deliveryCityInput"

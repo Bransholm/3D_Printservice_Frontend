@@ -1,4 +1,3 @@
-
 // local host endpoint for testing...
 const endpoint = "http://localhost:4811/";
 
@@ -37,11 +36,13 @@ function testMakeOrder() {
         itemPrice: 100.0,
         itemTax: 22.0,
         stock_ID: 12,
-      }
-    ]
+      },
+    ],
   };
   postCompleteOrder(data);
 }
+
+// REST PRINCIPERNE: SKAL VI IKKE HAVE 2 ROTUES SÅ ELLERS - HVAD SÅ MED VORES REST API??!
 
 async function postCompleteOrder(data) {
   console.log("POSTING: ", data);
