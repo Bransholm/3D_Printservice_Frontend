@@ -14,7 +14,7 @@ async function fetchCustomerByEmail(input) {
 }
 
 async function fetchCustomerEmailData() {
-  const response = await fetch(`${localEndpoint}/customer`);
+  const response = await fetch(`${endpoint}/customers`);
   const emailData = await response.json();
   return emailData;
 }

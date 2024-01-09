@@ -1,8 +1,7 @@
+const endpoint = "https://3dprintservice.azurewebsites.net/";
+
 // the fetch route for cutsomer by email
-import {
-  fetchCustomerByEmail,
-  fetchCustomerEmailData,
-} from "../frontpage-model/fetch-data.js";
+import { fetchCustomerEmailData } from "../frontpage-model/fetch-data.js";
 // the shopping cart!
 import { shoppingCart } from "./product-customization-site/shopping-cart.js";
 // ...
@@ -95,6 +94,7 @@ let customer_ID;
 
 // set if the customer confirms theat they are in the database already
 let customerIsNew = true;
+let totalPriceToPay;
 
 // function selectCustomerTypeRouter() {
 //   document.querySelector("#choose_customer_type").classList.add("hidden");
@@ -112,12 +112,14 @@ function hideFindExistingCustomerSearchbar() {
     .classList.add("hidden");
 }
 
-function testOrderSite() {
+let customerEmialList;
+
+async function testOrderSite() {
   console.log("testing-the-order-site!");
   setOrderSiteEventListeners();
   // remove the shoppingcart list
-  // const customerEmialList = await fetchCustomerEmailData();
-  // console.log("all emails: ", customerEmialList);
+  customerEmialList = await fetchCustomerEmailData();
+  console.log("all emails: ", customerEmialList);
   clearShoppingCartHTML();
   searchForExistingCustomerInfo();
   orderInformation();
@@ -155,40 +157,47 @@ async function findCustomerByEmail(event) {
 
   // DUMMY CODE finds the email in question
   let match = false;
-  for (const email of testEmails) {
-    if (input === email) {
-      match = true;
-      const customer = retrieveCustomerInformation(email);
-      autofillCustomerInformation(customer);
-    }
-  }
-  if ((match = true)) {
-    console.log("macth found");
-  } else {
-    console.log("No match found");
-  }
-}
-
-function retrieveCustomerInformation(customerEmail) {
-  for (const customer of testCustomers) {
-    if (customer.email === customerEmail) {
-      return customer;
+  for (const customer of customerEmialList) {
+    console.log(`input: ${input} === email: ${customer.Email}`);
+    if (input == customer.Email) {
+      // match = true;
+      console.log("macth found");
+      const customerData = await retrieveCustomerInformation(input);
+      console.log("customer by email data: ", customerData);
+      autofillCustomerInformation(customerData);
     }
   }
 }
 
-function autofillCustomerInformation(customer) {
+async function retrieveCustomerInformation(customerEmail) {
+  console.log("retrieveCustomerInformation");
+  const promise = await fetch(`${endpoint}/customers/${customerEmail}`);
+  const data = await promise.json();
+  return data;
+
+  // for (const customer of testCustomers) {
+  //   if (customer.email === customerEmail) {
+  //     return customer;
+  //   }
+  // }
+}
+
+function autofillCustomerInformation(retrievedCustomer) {
+  const customer = retrievedCustomer[0];
   console.log("Here is the customer: ", customer);
   // here we need to set the information in the customer automatically based on the retrived customer
   const form = document.querySelector("#order_details_form");
   // DISSE VÆRDIER FRA CUSTOMER BLIVER MED STORT FORBOGSTAV NÅR VI FETCHER FRA DATABASEN!
-  customer_ID = customer.id;
-  form.firstName.value = customer.firstName;
-  form.lastName.value = customer.lastName;
-  form.adress.value = customer.adress;
-  form.zipCode.value = customer.zipCode;
-  form.city.value = customer.city;
-  form.email.value = customer.email;
+  customer_ID = customer.Id;
+  form.firstName.value = customer.FirstName;
+  form.lastName.value = customer.LastName;
+  form.adress.value = customer.Adress;
+  form.zipCode.value = customer.ZipCode;
+  form.city.value = customer.City;
+  form.email.value = customer.Email;
+  form.deliveryAdress.value = customer.Adress;
+  form.deliveryZipCode.value = customer.ZipCode;
+  form.deliveryCity.value = customer.City;
 }
 
 function orderInformation() {
@@ -196,6 +205,10 @@ function orderInformation() {
     .querySelector("#order_details_form")
     .addEventListener("submit", test);
 }
+
+// all
+let accumulatedItemTax = 0.0;
+let accumulatedItemPrices = 0.0;
 
 function test(event) {
   event.preventDefault();
@@ -216,6 +229,28 @@ function test(event) {
   const deliveryZipCode = form.deliveryZipCode.value;
   const deliveryCity = form.deliveryCity.value;
 
+  // list for all products linked to the order
+  const Order_Lines = [];
+
+  console.log(shoppingCart);
+  for (const product of shoppingCart) {
+    console.log(product);
+    const newOrderLine = {
+      catalogue_ID: product.catalogue_ID,
+      amount: product.amount,
+      productSize: product.productSize,
+      itemPrice: product.itemPrice,
+      itemTax: product.itemTax,
+      stock_ID: product.stock_ID,
+    };
+    Order_Lines.push(newOrderLine);
+
+    // I need the bundel versions as well - including the bundled tax. I need to show the end cusomer both? Or just be able to calculate them - when ever???
+    console.log("the order line is: ", newOrderLine);
+    calcualteTotalOrderPrice(Number(product.bundlePrice));
+    calcualteTotalOrderTax(Number(product.bundleTax));
+  }
+
   //--- the object is with a capital
   const CustomerInfo = {
     id,
@@ -226,37 +261,37 @@ function test(event) {
     city,
   };
 
+  function calcualteTotalOrderPrice(bundlePrice) {
+    accumulatedItemPrices += bundlePrice;
+    console.log("the calculated price: ", accumulatedItemPrices);
+  }
+
+  function calcualteTotalOrderTax(bundleTax) {
+    accumulatedItemTax += bundleTax;
+    console.log("calcualted tax: ", accumulatedItemTax);
+  }
+
   // consitant typo all the way to the back-end
+
   const OdrderInfo = {
     stauts: "ordered",
     deliveryAdress,
     deliveryZipCode,
     deliveryCity,
-    totalTax: 10.0,
-    totalPrice: 80.0,
+    totalTax: accumulatedItemTax,
+    totalPrice: accumulatedItemPrices,
+    // skal indlæses fra databasen
     shippingPrice: 40.0,
   };
-
-  const Order_Lines = [];
-  console.log(shoppingCart);
-  for (const product of shoppingCart) {
-    console.log(product);
-    const newOrderLine = {
-      catalogue_ID: product.catalogue_ID,
-      amount: product.amount,
-      productSize: product.productSize,
-      itemPrice: 400.0,
-      itemTax: 45.0,
-      stock_ID: product.stock_ID,
-    };
-    Order_Lines.push(newOrderLine);
-  }
 
   const order = {
     CustomerInfo,
     OdrderInfo,
     Order_Lines,
   };
+
+  // sets the price to be payed
+  totalPriceToPay = OdrderInfo.totalPrice;
 
   processCompleteOrder(order);
 }
@@ -269,8 +304,6 @@ function processCompleteOrder(order) {
     exsitingCustomerOrder(order);
   }
 }
-
-const endpoint = "https://3dprintservice.azurewebsites.net/";
 
 async function newCustomerOrder(data) {
   console.log(
@@ -300,6 +333,7 @@ async function newCustomerOrder(data) {
   //   // Handle errors here
   //   console.error("Error:", error);
   // }
+  showPaymentScreen();
 }
 
 async function exsitingCustomerOrder(data) {
@@ -329,6 +363,48 @@ async function exsitingCustomerOrder(data) {
   //   // Handle errors here
   //   console.error("Error:", error);
   // }
+  showPaymentScreen();
+}
+
+function showPaymentScreen() {
+  console.log("you have completed the order process and must now pay!");
+  document.querySelector("#payment_details_screen").innerHTML = "";
+  const number = fecthMobilePaymenyNo();
+  const messageHTML =
+    /*html*/
+    `
+  <p> Din ordre er nu booket! For at færdiggøre din bestilling skal du overføre ${totalPriceToPay} DKK, til 3dprintservice mobilepay på nummeret: ${number}</p>
+  <button id="btn_finish_payment">Til forsiden</button>
+  `;
+
+  document
+    .querySelector("#payment_details_screen")
+    .insertAdjacentHTML("beforeend", messageHTML);
+  // add eventlistener for the paymeny-completed screen!
+  document
+    .querySelector("#btn_finish_payment")
+    .addEventListener("click", showFinishPaymentScreen);
+}
+
+function fecthMobilePaymenyNo() {
+  /* ----------------------------------------------------- INSERT FETCH-FUNCTION HERE! */
+  const testNo = "70121416";
+  return testNo;
+}
+
+function showFinishPaymentScreen() {
+  console.log("Complete the payment process!");
+  document.querySelector("#payment_details_screen").innerHTML = "";
+
+  const html = /*html*/ `<p>
+      Tak for din bestilling. Pengene vil først blive overført når odren er
+      produceret og afsendt. Du modtager en mail når odren sendes. Tak fordi du
+      valgte at handle hos 3dPrinstServicce.
+    </p>`;
+
+  document
+    .querySelector("#payment_details_screen")
+    .insertAdjacentHTML("beforeend", html);
 }
 
 // function createNewCustomter() {

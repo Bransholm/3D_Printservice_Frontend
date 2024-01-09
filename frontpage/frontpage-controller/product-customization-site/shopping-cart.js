@@ -101,13 +101,13 @@ function showItemsInCart() {
 }
 
 function incrementProductAmountClicked(productInstance) {
-  console.log("youre activating: ", productInstance);
+  // console.log("youre activating: ", productInstance);
   productInstance.incrementProductAmount();
   showItemsInCart();
 }
 
 function decrementProductAmountClicked(productInstance) {
-  console.log("youre activating: ", productInstance);
+  // console.log("youre activating: ", productInstance);
   productInstance.decrementProductAmount();
   showItemsInCart();
 }
