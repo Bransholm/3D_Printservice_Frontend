@@ -45,6 +45,10 @@ main {
   width: 110px;
 }
 
+.view-order-form-input {
+  width: 200px;
+}
+
 #about_us_h2 {
     margin-top: 0px;
 }
