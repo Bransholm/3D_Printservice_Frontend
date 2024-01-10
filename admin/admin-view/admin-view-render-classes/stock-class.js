@@ -10,7 +10,7 @@ export class stockMaterial {
   }
 
   showStockAvailability() {
-    if (this.active == 0) {
+    if (this.active == 1) {
       return "På Lager";
     } else {
       return "Udsolgt";

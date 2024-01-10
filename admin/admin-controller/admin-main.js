@@ -121,6 +121,71 @@ export function deleteCatalogueItemButtonClicked(instance) {
 export function updateCatalogueItemButtonClicked(instance) {
   console.log("Update Item Clicked:", instance.id);
   catalogueId = instance.id;
+  
 }
 
 // export { startAdmin as launchAdminFunctions };
+
+
+// function openModal(item) {
+// 	// Jeg henter den specifikke data
+// 	document.getElementById("title").value = item.title;
+// 	document.getElementById("standardSize").value = item.standardSize;
+// 	document.getElementById("standardWeight").value = item.standardWeight;
+// 	document.getElementById("description").value = item.description;
+// 	document.getElementById("image").value = item.imageLink;
+// 	document.getElementById("category").value = item.category;
+// 	document.getElementById("itemId").value = item.id;
+
+// 	// Dette gør modalen synlig
+// 	document.getElementById("updateItemModal").style.display = "block";
+// }
+
+// // Skridt 2 gør indholdet fra forms den opdaterede
+// async function updateCatalogueData(event) {
+// 	event.preventDefault();
+// 	const formData = new FormData(document.getElementById("updateCatalogueForm"));
+
+// 	const updatedData = {
+// 		title: formData.get("title"),
+// 		standardSize: formData.get("standardSize"),
+// 		standardWeight: formData.get("standardWeight"),
+// 		itemDescription: formData.get("description"),
+// 		imageLink: formData.get("image"),
+// 		category: formData.get("category"),
+// 	};
+
+// 	const itemId = formData.get("itemId"); 
+
+// 	try {
+// 		const response = await fetch(
+// 			`https://3dprintservice.azurewebsites.net/YOUR_ENDPOINT/${itemId}`,
+// 			{
+// 				method: "PUT",
+// 				headers: {
+// 					"Content-Type": "application/json",
+// 				},
+// 				body: JSON.stringify(updatedData),
+// 			}
+// 		);
+
+// 		if (!response.ok) {
+// 			throw new Error(`Error: ${response.status}`);
+// 		}
+
+// 		const responseData = await response.json();
+// 		console.log("Update successful:", responseData);
+// 		closeModal(); // Luk modal 
+		
+// 	} catch (error) {
+// 		console.error("Update failed:", error);
+// 	}
+// }
+
+
+// function closeModal() {
+// 	//Gem modalen
+// 	document.getElementById("updateItemModal").style.display = "none";
+// }
+
+// document.getElementById('updateCatalogueForm').addEventListener('submit', updateCatalogueData);

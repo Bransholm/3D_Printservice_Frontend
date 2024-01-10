@@ -30,12 +30,13 @@ function callRenderMethodeForCatalogueItems(listOfInstances, htmlId) {
 
   // delete the selected catalogue item
   function deleteCatalogueItemButtonClicked(instance) {
-    console.log("Delete Item Clicked:", instance.id);
-  }
+		console.log("Delete Item Clicked:", instance.id);
+	}
 
   // update the selected catalogue item
   function updateCatalogueItemButtonClicked(instance) {
     console.log("Update Item Clicked:", instance.id);
+    updateButtonClicked(instance)
   }
 }
 
