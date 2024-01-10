@@ -47,17 +47,17 @@ const testCustomers = [
 
 const orderExistingCustomer = {
   CustomerInfo: {
-    id: 2,
-    firstName: "Mikkel",
-    lastName: "Mikkelsen",
-    adress: "Bådhavnsvej 3",
+    id: 30,
+    firstName: "Jonas",
+    lastName: "Åberg",
+    adress: "Bådhavnsvej 13",
     zipCode: 3390,
     city: "Hundested",
-    email: "LL431@gmail.com",
+    email: "JoÅb@gmail.com",
   },
   OdrderInfo: {
     status: "ordered",
-    deliveryAdress: "Bådhavnsvej 3",
+    deliveryAdress: "Bådhavnsvej 13",
     deliveryZipCode: 3390,
     deliveryCity: "Hundested",
     totalTax: 260.0,
@@ -95,6 +95,8 @@ let customer_ID;
 // set if the customer confirms theat they are in the database already
 let customerIsNew = true;
 let totalPriceToPay;
+// let validationComplete = false;
+let emailValdiated = false;
 
 // list that stores all emails
 let customerEmialList;
@@ -179,7 +181,7 @@ function setOrderSiteEventListeners() {
 
   // activates the find customer by email sbumit event
   document
-    .querySelector("#retriveCustomerByEmail")
+    .querySelector("#retrive_customer_by_email")
     .addEventListener("submit", findCustomerByEmail);
 }
 
@@ -245,12 +247,12 @@ function newCustomerButtonClicked() {
 
 async function findCustomerByEmail(event) {
   event.preventDefault();
-  const input = event.target.email.value;
+  const input = event.target.existing_email.value;
   console.log("input email is: ", input);
 
   findCustomerByEmailErrorMessageReset();
   // set all the input-fields to blank
-  clearOrderForm();
+  // clearOrderForm();
   // DUMMY CODE finds the email in question
   let match = false;
   for (const customer of customerEmialList) {
@@ -300,7 +302,6 @@ async function retrieveCustomerInformation(customerEmail) {
 
 // set all the text inputs to blank
 function clearOrderForm() {
-  console.log("Here is the customer: ");
   const form = document.querySelector("#order_details_form");
 
   form.firstName.value = " ";
@@ -308,7 +309,7 @@ function clearOrderForm() {
   form.adress.value = " ";
   form.zipCode.value = " ";
   form.city.value = " ";
-  form.email.value = " ";
+  form.customer_email.value = " ";
   form.deliveryAdress.value = " ";
   form.deliveryZipCode.value = " ";
   form.deliveryCity.value = " ";
@@ -325,7 +326,7 @@ function autofillCustomerInformation(retrievedCustomer) {
   form.adress.value = customer.Adress;
   form.zipCode.value = customer.ZipCode;
   form.city.value = customer.City;
-  form.email.value = customer.Email;
+  form.customer_email.value = customer.Email;
   form.deliveryAdress.value = customer.Adress;
   form.deliveryZipCode.value = customer.ZipCode;
   form.deliveryCity.value = customer.City;
@@ -335,12 +336,39 @@ function autofillCustomerInformation(retrievedCustomer) {
 let accumulatedItemTax = 0.0;
 let accumulatedItemPrices = 0.0;
 
+// -------------------------------------------- Email validation --------------------------------------------------
+
+function validateCustomerEmail(emailInput) {
+  console.log("check customer email: ", emailInput);
+  if (customerIsNew === true) {
+    const emailIsUnique = customerEmialList.forEach(checkIfEmailIsUnique);
+    if (emailIsUnique != true) {
+      console.log("ERROR - email is already in system!");
+      emailValdiated = false;
+    } else {
+      emailValdiated = true;
+    }
+  } else if (customerIsNew === false) {
+    emailValdiated = true;
+  }
+
+  function checkIfEmailIsUnique(emailListElement) {
+    console.log("for each: ", emailListElement.Email, " === ", emailInput);
+    if (emailListElement.Email === emailInput) {
+      return true;
+    }
+  }
+  return emailInput;
+}
+
+// ----------------------------------------------------------------------------------------------------------------------------
+
 function submitOrderInformation(event) {
   event.preventDefault();
 
   /* --------------------------------------- at this point the customer form should be hidden from the user? There should be a return button! */
   // resets the form
-  clearOrderForm();
+  // clearOrderForm();
 
   const form = event.target;
 
@@ -348,11 +376,13 @@ function submitOrderInformation(event) {
   const id = customer_ID;
   const firstName = form.firstName.value;
   const lastName = form.lastName.value;
+  // ---------------------------------------------------- COPY PASTED!
+  const email = form.customer_email.value;
+  // const email = validateCustomerEmail(form.customerEmail.value);
+  console.log("customer email is: ", email);
   const adress = form.adress.value;
   const zipCode = form.zipCode.value;
   const city = form.city.value;
-  // order information
-  // delivery adress
   const deliveryAdress = form.deliveryAdress.value;
   const deliveryZipCode = form.deliveryZipCode.value;
   const deliveryCity = form.deliveryCity.value;
@@ -367,16 +397,16 @@ function submitOrderInformation(event) {
       catalogue_ID: product.catalogue_ID,
       amount: product.amount,
       productSize: product.productSize,
-      itemPrice: product.itemPrice,
-      itemTax: product.itemTax,
+      itemPrice: Number(product.itemPrice),
+      itemTax: Number(product.itemTax),
       stock_ID: product.stock_ID,
     };
     Order_Lines.push(newOrderLine);
 
     // I need the bundel versions as well - including the bundled tax. I need to show the end cusomer both? Or just be able to calculate them - when ever???
     console.log("the order line is: ", newOrderLine);
-    calcualteTotalOrderPrice(Number(product.bundlePrice));
-    calcualteTotalOrderTax(Number(product.bundleTax));
+    calcualteTotalOrderPrice(product.bundlePrice);
+    calcualteTotalOrderTax(product.bundleTax);
   }
 
   //--- the object is with a capital
@@ -387,6 +417,7 @@ function submitOrderInformation(event) {
     adress,
     zipCode,
     city,
+    email,
   };
 
   function calcualteTotalOrderPrice(bundlePrice) {
@@ -406,8 +437,8 @@ function submitOrderInformation(event) {
     deliveryAdress,
     deliveryZipCode,
     deliveryCity,
-    totalTax: accumulatedItemTax,
-    totalPrice: accumulatedItemPrices,
+    totalTax: Number(accumulatedItemTax),
+    totalPrice: Number(accumulatedItemPrices),
     // skal indlæses fra databasen
     shippingPrice: 40.0,
   };
@@ -420,8 +451,22 @@ function submitOrderInformation(event) {
 
   // sets the price to be payed
   totalPriceToPay = OdrderInfo.totalPrice;
-
   processCompleteOrder(order);
+}
+//   const allOrderInformationIsValid = checkIfOrderInformationIsValid();
+//   if (allOrderInformationIsValid === true) {
+//     processCompleteOrder(order);
+//   } else {
+//     console.log("An error occured!");
+//   }
+// }
+
+function checkIfOrderInformationIsValid() {
+  if (emailValdiated === true) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function processCompleteOrder(order) {
@@ -429,40 +474,15 @@ function processCompleteOrder(order) {
   if (customerIsNew === true) {
     newCustomerOrder(order);
   } else {
-    exsitingCustomerOrder(order);
+    exsitingCustomerOrder(orderExistingCustomer);
   }
 }
 
-async function newCustomerOrder(data) {
-  console.log(
-    "new customer needs to be posted, then the order needs to be posted"
-  );
+async function newCustomerOrder(newCustomerData) {
+  console.log("new order will now be posed");
 
-  async function postNewCustomer() {
-    try {
-      const response = await fetch(`${endpoint}customers`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          // Add any additional headers if needed
-        },
-        body: JSON.stringify(data),
-      });
+  await postNewOrder(newCustomerData);
 
-      console.log(response);
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      } else {
-        const result = await response.json();
-        console.log(result);
-      }
-
-      return;
-    } catch (error) {
-      // Handle errors here
-      console.error("Error:", error);
-    }
-  }
   showPaymentScreen();
 }
 
@@ -471,15 +491,52 @@ async function exsitingCustomerOrder(data) {
     "existing customer needs to be updated, then the order needs to be posted"
   );
 
-  async function putExistingCustomer(id) {
+  const customerId = data.CustomerInfo.id;
+  console.log("customer id is: ", customerId);
+  console.log(data);
+
+  await putExistingCustomer(data);
+
+  async function putExistingCustomer(data) {
     try {
-      const response = await fetch(`${endpoint}customer/${id}`, {
-        method: "PUT",
+      const response = await fetch(
+        `${endpoint}customers/${data.CustomerInfo.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            // Add any additional headers if needed
+          },
+          body: JSON.stringify(data.CustomerInfo),
+        }
+      );
+
+      console.log(response);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      } else {
+        const result = await response.json();
+        console.log(result);
+      }
+
+      return;
+    } catch (error) {
+      // Handle errors here
+      console.error("Error:", error);
+    }
+  }
+
+  // await postOrderNoCustomer(data);
+
+  async function postOrderNoCustomer(existingCustomerData) {
+    try {
+      const response = await fetch(`${endpoint}makeOrder`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           // Add any additional headers if needed
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(existingCustomerData),
       });
 
       console.log(response);
@@ -496,18 +553,20 @@ async function exsitingCustomerOrder(data) {
       console.error("Error:", error);
     }
   }
+
   showPaymentScreen();
 }
 
-async function postNewOrder() {
+// rest api - adds a new customer, order and orderlines to the database.
+async function postNewOrder(newCustomerData) {
   try {
     const response = await fetch(`${endpoint}makeOrder`, {
-      method: "PUT",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         // Add any additional headers if needed
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(newCustomerData),
     });
 
     console.log(response);
@@ -580,44 +639,6 @@ function showFinishPaymentScreen() {
 
 // // local host endpoint for testing...
 // const endpoint = "http://localhost:4811/";
-
-// const data = {
-//   CustomerInfo: {
-//     firstName: "Kasper",
-//     lastName: "Bordal",
-//     adress: "Kildebakken 23",
-//     zipCode: 3390,
-//     city: "Hundested",
-//     email: "LL431@gmail.com",
-//   },
-//   OdrderInfo: {
-//     status: "ordered",
-//     deliveryAdress: "Kildebakken 23",
-//     deliveryZipCode: 3390,
-//     deliveryCity: "Hundested",
-//     totalTax: 260.0,
-//     totalPrice: 640.0,
-//     shippingPrice: 40.0,
-//   },
-//   Order_Lines: [
-//     {
-//       catalogue_ID: 1,
-//       amount: 3,
-//       productSize: 2,
-//       itemPrice: 400.0,
-//       itemTax: 45.0,
-//       stock_ID: 3,
-//     },
-//     {
-//       catalogue_ID: 12,
-//       amount: 1,
-//       productSize: 10,
-//       itemPrice: 100.0,
-//       itemTax: 22.0,
-//       stock_ID: 12,
-//     },
-//   ],
-// };
 
 // class orderInfo {
 //   constructor() {
