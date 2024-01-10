@@ -39,6 +39,12 @@ main {
     padding: 20px;
 }
 
+/* View order */
+.view-order-form-class {
+  display: inline-block;
+  width: 110px;
+}
+
 #about_us_h2 {
     margin-top: 0px;
 }
