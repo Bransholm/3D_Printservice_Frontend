@@ -43,10 +43,16 @@ main {
 .view-order-form-label {
   display: inline-block;
   width: 110px;
+  padding-bottom: 6px;
 }
 
 .view-order-form-input {
   width: 200px;
+}
+
+#view-order-button {
+  margin-left: 114px;
+  margin-top: 5px;
 }
 
 #about_us_h2 {
