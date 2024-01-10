@@ -96,78 +96,194 @@ let customer_ID;
 let customerIsNew = true;
 let totalPriceToPay;
 
-// function selectCustomerTypeRouter() {
-//   document.querySelector("#choose_customer_type").classList.add("hidden");
-// }
+// list that stores all emails
+let customerEmialList;
+
+// ----------- functions that controls the chek out flow -------------------------------------
+
+// disables the order-form input
+function disableCustomerOrderInput() {
+  // document.querySelector("#insert_orderinfo").prop("disabled", true);
+  document.querySelector("#first_name_input").disabled = true;
+  document.querySelector("#last_name_input").disabled = true;
+  document.querySelector("#email_input").disabled = true;
+  document.querySelector("#adress_input").disabled = true;
+  document.querySelector("#zip_code_input").disabled = true;
+  document.querySelector("#city_input").disabled = true;
+  document.querySelector("#delivery_adress_input").disabled = true;
+  document.querySelector("#delivery_zip_code_input").disabled = true;
+  document.querySelector("#delivery_city_input").disabled = true;
+  document.querySelector("#accept_payment_details_checkbox").disabled = true;
+}
+
+// enables the oder-form input
+function enableCustomerOrderInput() {
+  document.querySelector("#first_name_input").disabled = false;
+  document.querySelector("#last_name_input").disabled = false;
+  document.querySelector("#email_input").disabled = false;
+  document.querySelector("#adress_input").disabled = false;
+  document.querySelector("#zip_code_input").disabled = false;
+  document.querySelector("#city_input").disabled = false;
+  document.querySelector("#delivery_adress_input").disabled = false;
+  document.querySelector("#delivery_zip_code_input").disabled = false;
+  document.querySelector("#delivery_city_input").disabled = false;
+  document.querySelector("#accept_payment_details_checkbox").disabled = false;
+}
 
 function showFindExistingCustomerSearchbar() {
   document
     .querySelector("#search_existing_customer_by_email")
     .classList.remove("hidden");
+
+  // her skal vi deaktivere input
+  disableCustomerOrderInput();
 }
 
 function hideFindExistingCustomerSearchbar() {
   document
     .querySelector("#search_existing_customer_by_email")
     .classList.add("hidden");
-}
 
-let customerEmialList;
+  // her skal vi så aktivere input feltet
+  enableCustomerOrderInput();
+}
 
 async function testOrderSite() {
   console.log("testing-the-order-site!");
+  // activates the eventlisteners for the checkout-flow
   setOrderSiteEventListeners();
-  // remove the shoppingcart list
+  // disables the input-fields
+  disableCustomerOrderInput();
+  // fetches all customer emails
   customerEmialList = await fetchCustomerEmailData();
   console.log("all emails: ", customerEmialList);
+  // removes the displayed shopping cart
   clearShoppingCartHTML();
-  searchForExistingCustomerInfo();
-  orderInformation();
+
+  resetChekOutSite();
 }
 
 function setOrderSiteEventListeners() {
+  // activates the new-customer and existing-customer buttons
   document
     .querySelector("#btn_is_new_customer")
     .addEventListener("click", newCustomerButtonClicked);
   document
     .querySelector("#btn_is_existing_customer")
     .addEventListener("click", exsitingCustomerButtonClicked);
-}
 
-function exsitingCustomerButtonClicked() {
-  showFindExistingCustomerSearchbar();
-  customerIsNew = false;
-}
+  // adds the order information submit event
+  document
+    .querySelector("#order_details_form")
+    .addEventListener("submit", submitOrderInformation);
 
-function newCustomerButtonClicked() {
-  hideFindExistingCustomerSearchbar();
-  customerIsNew = true;
-}
-
-function searchForExistingCustomerInfo() {
+  // activates the find customer by email sbumit event
   document
     .querySelector("#retriveCustomerByEmail")
     .addEventListener("submit", findCustomerByEmail);
 }
+
+function resetChekOutSite() {
+  newCustomerButtonClicked();
+}
+
+function toggleFindCustomerSearchbar() {
+  if (customerIsNew === true) {
+    hideFindExistingCustomerSearchbar();
+    newCustomerBtnIsActive();
+  } else {
+    showFindExistingCustomerSearchbar();
+    existingCustomerBtnIsActive();
+  }
+}
+
+function removeCustomerBtnClasses() {
+  document
+    .querySelector("#btn_is_new_customer")
+    .classList.remove("btn-selected");
+  document
+    .querySelector("#btn_is_new_customer")
+    .classList.remove("btn-deselected");
+  document
+    .querySelector("#btn_is_existing_customer")
+    .classList.remove("btn-selected");
+  document
+    .querySelector("#btn_is_existing_customer")
+    .classList.remove("btn-deselected");
+}
+
+function newCustomerBtnIsActive() {
+  removeCustomerBtnClasses();
+  document.querySelector("#btn_is_new_customer").classList.add("btn-selected");
+  document
+    .querySelector("#btn_is_existing_customer")
+    .classList.add("btn-deselected");
+}
+
+function existingCustomerBtnIsActive() {
+  removeCustomerBtnClasses();
+
+  document
+    .querySelector("#btn_is_new_customer")
+    .classList.add("btn-deselected");
+  document
+    .querySelector("#btn_is_existing_customer")
+    .classList.add("btn-selected");
+}
+
+function exsitingCustomerButtonClicked() {
+  customerIsNew = false;
+  toggleFindCustomerSearchbar();
+}
+
+function newCustomerButtonClicked() {
+  customerIsNew = true;
+  toggleFindCustomerSearchbar();
+}
+
+// --------------------------------------------------------------------------------------------------------------
 
 async function findCustomerByEmail(event) {
   event.preventDefault();
   const input = event.target.email.value;
   console.log("input email is: ", input);
 
+  findCustomerByEmailErrorMessageReset();
+  // set all the input-fields to blank
+  clearOrderForm();
   // DUMMY CODE finds the email in question
   let match = false;
   for (const customer of customerEmialList) {
-    console.log(`input: ${input} === email: ${customer.Email}`);
+    // console.log(`input: ${input} === email: ${customer.Email}`);
     if (input == customer.Email) {
-      // match = true;
+      match = true;
       console.log("macth found");
       const customerData = await retrieveCustomerInformation(input);
       console.log("customer by email data: ", customerData);
       autofillCustomerInformation(customerData);
+      // activates the order form input
+      enableCustomerOrderInput();
     }
   }
+  if (match === false) {
+    console.log("No match");
+    findCustomerByEmailErrorMessage();
+  }
 }
+
+function findCustomerByEmailErrorMessageReset() {
+  document.querySelector(
+    "#search_existing_customer_by_email_error_message"
+  ).innerHTML = " ";
+}
+
+function findCustomerByEmailErrorMessage() {
+  document.querySelector(
+    "#search_existing_customer_by_email_error_message"
+  ).innerHTML = "<p> Denne email kunne ikke findes i systemet. </p>";
+}
+
+// search_existing_customer_by_email_error_message
 
 async function retrieveCustomerInformation(customerEmail) {
   console.log("retrieveCustomerInformation");
@@ -182,12 +298,27 @@ async function retrieveCustomerInformation(customerEmail) {
   // }
 }
 
+// set all the text inputs to blank
+function clearOrderForm() {
+  console.log("Here is the customer: ");
+  const form = document.querySelector("#order_details_form");
+
+  form.firstName.value = " ";
+  form.lastName.value = " ";
+  form.adress.value = " ";
+  form.zipCode.value = " ";
+  form.city.value = " ";
+  form.email.value = " ";
+  form.deliveryAdress.value = " ";
+  form.deliveryZipCode.value = " ";
+  form.deliveryCity.value = " ";
+}
+
 function autofillCustomerInformation(retrievedCustomer) {
   const customer = retrievedCustomer[0];
   console.log("Here is the customer: ", customer);
   // here we need to set the information in the customer automatically based on the retrived customer
   const form = document.querySelector("#order_details_form");
-  // DISSE VÆRDIER FRA CUSTOMER BLIVER MED STORT FORBOGSTAV NÅR VI FETCHER FRA DATABASEN!
   customer_ID = customer.Id;
   form.firstName.value = customer.FirstName;
   form.lastName.value = customer.LastName;
@@ -200,19 +331,16 @@ function autofillCustomerInformation(retrievedCustomer) {
   form.deliveryCity.value = customer.City;
 }
 
-function orderInformation() {
-  document
-    .querySelector("#order_details_form")
-    .addEventListener("submit", test);
-}
-
 // all
 let accumulatedItemTax = 0.0;
 let accumulatedItemPrices = 0.0;
 
-function test(event) {
+function submitOrderInformation(event) {
   event.preventDefault();
-  console.log("test!");
+
+  /* --------------------------------------- at this point the customer form should be hidden from the user? There should be a return button! */
+  // resets the form
+  clearOrderForm();
 
   const form = event.target;
 
@@ -310,29 +438,31 @@ async function newCustomerOrder(data) {
     "new customer needs to be posted, then the order needs to be posted"
   );
 
-  // try {
-  //   const response = await fetch(`${endpoint}makeOrder`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       // Add any additional headers if needed
-  //     },
-  //     body: JSON.stringify(data),
-  //   });
+  async function postNewCustomer() {
+    try {
+      const response = await fetch(`${endpoint}customers`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // Add any additional headers if needed
+        },
+        body: JSON.stringify(data),
+      });
 
-  //   console.log(response);
-  //   if (!response.ok) {
-  //     throw new Error(`HTTP error! Status: ${response.status}`);
-  //   } else {
-  //     const result = await response.json();
-  //     console.log(result);
-  //   }
+      console.log(response);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      } else {
+        const result = await response.json();
+        console.log(result);
+      }
 
-  //   return;
-  // } catch (error) {
-  //   // Handle errors here
-  //   console.error("Error:", error);
-  // }
+      return;
+    } catch (error) {
+      // Handle errors here
+      console.error("Error:", error);
+    }
+  }
   showPaymentScreen();
 }
 
@@ -340,30 +470,59 @@ async function exsitingCustomerOrder(data) {
   console.log(
     "existing customer needs to be updated, then the order needs to be posted"
   );
-  // try {
-  //   const response = await fetch(`${endpoint}makeOrder`, {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       // Add any additional headers if needed
-  //     },
-  //     body: JSON.stringify(data),
-  //   });
 
-  //   console.log(response);
-  //   if (!response.ok) {
-  //     throw new Error(`HTTP error! Status: ${response.status}`);
-  //   } else {
-  //     const result = await response.json();
-  //     console.log(result);
-  //   }
+  async function putExistingCustomer(id) {
+    try {
+      const response = await fetch(`${endpoint}customer/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          // Add any additional headers if needed
+        },
+        body: JSON.stringify(data),
+      });
 
-  //   return;
-  // } catch (error) {
-  //   // Handle errors here
-  //   console.error("Error:", error);
-  // }
+      console.log(response);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      } else {
+        const result = await response.json();
+        console.log(result);
+      }
+
+      return;
+    } catch (error) {
+      // Handle errors here
+      console.error("Error:", error);
+    }
+  }
   showPaymentScreen();
+}
+
+async function postNewOrder() {
+  try {
+    const response = await fetch(`${endpoint}makeOrder`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        // Add any additional headers if needed
+      },
+      body: JSON.stringify(data),
+    });
+
+    console.log(response);
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    } else {
+      const result = await response.json();
+      console.log(result);
+    }
+
+    return;
+  } catch (error) {
+    // Handle errors here
+    console.error("Error:", error);
+  }
 }
 
 function showPaymentScreen() {

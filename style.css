@@ -82,9 +82,18 @@ footer {
   cursor: pointer;
 }
 
-/*toggles elements hidden*/
+/* toggles elements hidden*/
 .hidden {
   display: none;
+}
+
+/* informs the user that this button is selected */
+.btn-selected {
+  color: green;
+}
+
+.btn-deselected {
+  color: orangered;
 }
 
 /* grid */

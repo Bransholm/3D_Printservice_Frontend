@@ -63,7 +63,8 @@
 
             <!-- cutsomer -->
             <div id="search_existing_customer_by_email" class="hidden">
-              <h3>Tidligere kunde</h3>           
+              <h3>Tidligere kunde</h3> 
+              <div id="search_existing_customer_by_email_error_message"></div>          
               <form id="retriveCustomerByEmail">
                 <label for="retriveCustomerByEmailInput">Email</label>
                    <input
@@ -77,64 +78,67 @@
                 <button id="btn_retrieve_customer_by_email" type="submit">Bekræft</button>
                 </form>
             </div>
+
+
+
             <div id="insert_orderinfo">
            
     <form id="order_details_form">
  <h3> Oprettelses formen </h3>
  <h4> Kunden </h4>               
 <!-- kunden -->
-  <label for="firstNameInput">Fornavn</label>
+  <label for="first_name_input">Fornavn</label>
                 <input
                   type="text"
-                  id="firstNameInput"
+                  id="first_name_input"
                   name="firstName"
                   placeholder="Fornavn"
                   required
                   />
 
-  <label for="lastNameInput">Efternavn</label>
+  <label for="last_name_input">Efternavn</label>
                 <input
                   type="text"
-                  id="lastNameNameInput"
+                  id="last_name_input"
                   name="lastName"
                   placeholder="Efternavn"
                   required
                   />                  
 
 
-  <label for="emailInput">Email</label>
+  <label for="email_input">Email</label>
                 <input
                   type="email"
-                  id="emailInput"
+                  id="email_input"
                   name="email"
                   placeholder="eksempel@mail.dk"
                   required
                   />     
 
   <h3> Adresse </h3>
-  <label for="adressInput">Adresse</label>
+  <label for="adress_input">Adresse</label>
                 <input
                   type="text"
-                  id="adressInput"
+                  id="adress_input"
                   name="adress"
                   placeholder="Adresse"
                   required
                   />
                   
-   <label for="zipCodeInput">Postnummer</label>
+   <label for="zip_code_input">Postnummer</label>
                 <input
                   type="text"
-                  id="zipCodeInput"
+                  id="zip_code_input"
                   name="zipCode"
                   placeholder="0000"
                   pattern="[0-9]{4}"
                   required
                   />    
 
-   <label for="cityInput">By</label>
+   <label for="city_input">By</label>
                 <input
                   type="text"
-                  id="cityInput"
+                  id="city_input"
                   name="city"
                   placeholder="Bynavn"
                   required
@@ -155,38 +159,40 @@
 
 
   <h3> Leverings Adresse </h3>
-  <label for="deliveryAdressInput">Adresse</label>
+  <label for="delivery_adress_input">Adresse</label>
                 <input
                   type="text"
-                  id="deliveryAdressInput"
+                  id="delivery_adress_input"
                   name="deliveryAdress"
                   placeholder="Adresse"
                   required
                   />
                   
-   <label for="deliveryZipCodeInput">Postnummer</label>
+   <label for="delivery_zip_code_input">Postnummer</label>
                 <input
                   type="text"
-                  id="deliveryZipCodeInput"
+                  id="delivery_zip_code_input"
                   name="deliveryZipCode"
                   placeholder="0000"
                   pattern="[0-9]{4}"
                   required
                   />    
 
-   <label for="deliveryCityInput">By </label>
+   <label for="delivery_city_input">By </label>
                 <input
                   type="text"
-                  id="deliveryCityInput"
+                  id="delivery_city_input"
                   name="deliveryCity"
                   placeholder="Bynavn"
                   required
                   />    
 
-        <h3>PAYMENY DETAILS...? Accepter købs beetingelserne</h3>
-        <input type="checkbox"
-        id="acceptPaymentDetailsCheckbox"
-        required/>          
+                  <div id="accept_terms_and_conditions">                    
+                    <label for="accept_payment_details_checkbox">Bekræft at du er underforstået med Handelsbetingelserne</label>
+                    <input type="checkbox"
+                    id="accept_payment_details_checkbox"
+                    required/>          
+                  </div>
 
         <button id="btn_submit_order_details" type="submit">Gå til betaling</button>          
   </form>
