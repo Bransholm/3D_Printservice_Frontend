@@ -48,17 +48,17 @@ const testCustomers = [
 const orderExistingCustomer = {
   CustomerInfo: {
     id: 30,
-    firstName: "Jonas",
-    lastName: "Åberg",
-    adress: "Bådhavnsvej 13",
-    zipCode: 3390,
+    firstName: "Ali",
+    lastName: "Mohammed",
+    adress: "Rentemestervej 7",
+    zipCode: 3300,
     city: "Hundested",
-    email: "JoÅb@gmail.com",
+    email: "AliMohammedAntaKazab@gmail.com",
   },
   OdrderInfo: {
     status: "ordered",
-    deliveryAdress: "Bådhavnsvej 13",
-    deliveryZipCode: 3390,
+    deliveryAdress: "Rentemestervej 7",
+    deliveryZipCode: 3300,
     deliveryCity: "Hundested",
     totalTax: 260.0,
     totalPrice: 640.0,
@@ -474,14 +474,14 @@ function processCompleteOrder(order) {
   if (customerIsNew === true) {
     newCustomerOrder(order);
   } else {
-    exsitingCustomerOrder(orderExistingCustomer);
+    exsitingCustomerOrder(order);
   }
 }
 
 async function newCustomerOrder(newCustomerData) {
   console.log("new order will now be posed");
 
-  await postNewOrder(newCustomerData);
+  await postOrderCustomerIsNew(newCustomerData);
 
   showPaymentScreen();
 }
@@ -495,7 +495,15 @@ async function exsitingCustomerOrder(data) {
   console.log("customer id is: ", customerId);
   console.log(data);
 
-  await putExistingCustomer(data);
+  const putResponse = await putExistingCustomer(data);
+  if (putResponse.ok) {
+    await postOrderCustomerIsExisting(data);
+  } else {
+    console.log(
+      "ERROR - Could not update customer infromation. Response: ",
+      putResponse.status
+    );
+  }
 
   async function putExistingCustomer(data) {
     try {
@@ -519,18 +527,17 @@ async function exsitingCustomerOrder(data) {
         console.log(result);
       }
 
-      return;
+      return response;
     } catch (error) {
       // Handle errors here
       console.error("Error:", error);
+      throw error;
     }
   }
 
-  // await postOrderNoCustomer(data);
-
-  async function postOrderNoCustomer(existingCustomerData) {
+  async function postOrderCustomerIsExisting(existingCustomerData) {
     try {
-      const response = await fetch(`${endpoint}makeOrder`, {
+      const response = await fetch(`${endpoint}makeOrderExistingCustomer`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -558,7 +565,7 @@ async function exsitingCustomerOrder(data) {
 }
 
 // rest api - adds a new customer, order and orderlines to the database.
-async function postNewOrder(newCustomerData) {
+async function postOrderCustomerIsNew(newCustomerData) {
   try {
     const response = await fetch(`${endpoint}makeOrder`, {
       method: "POST",
