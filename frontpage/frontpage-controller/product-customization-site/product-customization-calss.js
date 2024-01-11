@@ -211,50 +211,68 @@ export class product {
   }
 
   setCompleteProductPrice() {
+    const tax = 1.25;
+
     document.querySelector("#productPrice").innerHTML = "";
+
+    this.setItemBasePrice(tax);
+
     // console.log(
     //   `Samlet pris = materiale ${materialPrice}, størrelse${size}, antal${amount}`
     // );
     //der mangler en vloume udregning på baggrund af vægt i forhold til størrelsen.
-    this.setSingleProductPrice();
+    // this.setSingleProductPrice();
     // calculates the tax pr. item
-    this.setSingleProductTax();
-    // calculates the price depending on amount of items
-    this.setBundleProductPrice();
-    // calcualtes the tax for the entire bundle.
-    this.calculateBudleTax();
+    // this.setSingleProductTax();
+    // // calculates the price depending on amount of items
+    // this.setBundleProductPrice();
+    // // calcualtes the tax for the entire bundle.
+    // this.calculateBudleTax();
     // run op!
+
     document.querySelector(
       "#productPrice"
     ).innerHTML = `Samlet Pris: ${this.bundlePrice} DKK`;
   }
 
-  setBundlePrice;
+  setItemBasePrice(tax) {
+    this.itemPriceWithoutTax =
+      (this.materialPrice / 1000) * (this.productSize * 1.8);
+    this.setItemPrice(tax);
+  }
 
-  setSingleProductPrice() {
-    const tax = 1.25;
+  setItemPrice(tax) {
     // calculates price pr. individual item
-    this.itemPriceWithoutTax = (
-      (this.materialPrice / 1000) *
-      (this.productSize * 1.8)
-    ).toFixed(2);
     this.itemPrice = this.itemPriceWithoutTax * tax;
+    this.setSingleProductTax();
   }
-
-  calculateBudleTax() {
-        this.bundleTax = this.itemTax * this.amount;
-  }
-  // first of we calculate the price without tax.
-  // then we calculate the price with the tax - then subtract to know what the tax is.
 
   setSingleProductTax() {
-    this.itemTax = (this.itemPrice - this.itemPriceWithoutTax).toFixed(2);
+    this.itemTax = this.itemPrice - this.itemPriceWithoutTax;
+    this.setBundleProductPrice();
   }
 
   // calculates the price for all items selected
   setBundleProductPrice() {
-    this.bundlePrice = (this.itemPrice * this.amount).toFixed(2);
+    this.bundlePrice = this.itemPrice * this.amount;
+    this.calculateBudleTax();
   }
+
+  calculateBudleTax() {
+    this.bundleTax = this.itemTax * this.amount;
+  }
+  /* WILL THIS WORK.................................................................*/
+  // limitDecimals(numb) {
+  //   numb = numb.toFixed(2);
+  //   notString(numb);
+  // }
+
+  // notString(numb) {
+  //  numb = Number(numb);
+  // }
+
+  // first of we calculate the price without tax.
+  // then we calculate the price with the tax - then subtract to know what the tax is.
 
   // Alteres the size information showed to the customer
   setProductSizeInfo() {
@@ -266,7 +284,7 @@ export class product {
   }
 
   setProductSize(sizeInput) {
-    this.productSize = sizeInput;
+    this.productSize = Number(sizeInput);
     this.setProductSizeInfo();
     this.setCompleteProductPrice();
   }
@@ -288,7 +306,7 @@ export class product {
 
   // Stores the price value of the selected material
   setProductMaterialPrice(newPrice) {
-    this.materialPrice = newPrice;
+    this.materialPrice = Number(newPrice);
     this.setCompleteProductPrice();
   }
 
