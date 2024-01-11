@@ -4,8 +4,8 @@ export class catalogueItem {
   constructor(catalogueObject) {
     this.id = catalogueObject.Id;
     this.title = catalogueObject.Title;
-    this.standardSize = catalogueObject.StandardSize;
-    this.standardWeight = catalogueObject.StandardWeight;
+    this.standardSize = Number(catalogueObject.StandardSize);
+    this.standardWeight = Number(catalogueObject.StandardWeight);
     this.itemDescription = catalogueObject.ItemDescription;
     this.imageLink = catalogueObject.ImageLink;
     this.category = catalogueObject.Category;
