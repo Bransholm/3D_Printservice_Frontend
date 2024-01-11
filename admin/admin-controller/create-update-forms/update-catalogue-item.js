@@ -32,7 +32,18 @@ function updateCatalogueClicked(event) {
   event.preventDefault();
   console.log("Nu updateres et katalog objekt");
 
-  const form = 
+  const form = document.getElementById("#updateCatalogueForm");
+
+  const title = form.elements.title.value;
+  const standardSize = form.elements.standardSize.value;
+  const standardWeight = form.elements.standardWeight.value;
+  const itemDescription = form.elements.itemDescription.value;
+  const imageLink = form.elements.imageLink.value;
+  const category = form.elements
+
+  const id = form.getAttribute("data-id")
+
+  updateCatalogueClicked(id, title, standardSize, standardSize, standardWeight, itemDescription, imageLink, category)
 }
 // export function openModal(item) {
 // 	// Jeg henter den specifikke data
