@@ -26,7 +26,7 @@ window.addEventListener("load", start);
 
 function start() {
   startViews();
-  activateCustomerEventListeners();
+  activateEventListeners();
   console.log("Hello Team10");
   // Tester om man kan hente data - Lukas
   getAllData();
@@ -57,7 +57,7 @@ function showCatalougeToCustomers(catalougeItemObjects) {
   callRenderMethod(classList, "product_catalogue");
 }
 
-function activateCustomerEventListeners() {
+function activateEventListeners() {
   document.querySelector("#faq-link").addEventListener("click", showDialogFaq);
   document
     .querySelector("#tradeing-terms-link")
@@ -71,6 +71,9 @@ function activateCustomerEventListeners() {
   document
     .querySelector("#search-button")
     .addEventListener("click", searchContent);
+  document
+    .querySelector("#view-order-form")
+    .addEventListener("submit", viewOrderData);
 }
 
 function showDialogFaq() {
@@ -84,5 +87,15 @@ function showDialogTradeingTerms() {
 function showDialogDataPolicyLink() {
   document.querySelector("#dialog-data-policy").showModal();
 }
+
+function viewOrderData(event) {
+  event.preventDefault();
+  const form = document.querySelector("#view-order-form");
+  const orderNumberValue = form.ordernumber.value;
+  const emailValue = form.email.value;
+  console.log(orderNumberValue, emailValue)
+}
+
+
 
 export { showCatalougeToCustomers };
