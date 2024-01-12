@@ -63,14 +63,17 @@
 
             <!-- cutsomer -->
             <div id="search_existing_customer_by_email" class="hidden">
+              
               <h3>Tidligere kunde</h3> 
+
               <div id="search_existing_customer_by_email_error_message"></div>          
-              <form id="retriveCustomerByEmail">
-                <label for="retriveCustomerByEmailInput">Email</label>
+              
+              <form id="retrive_customer_by_email">
+                <label for="retrive_customer_by_email_input">Email</label>
                    <input
                      type="email"
-                     id="retriveCustomerByEmailInput"
-                     name="email"
+                     id="retrive_customer_by_email_input"
+                     name="existing_email"
                      placeholder="eksempel@mail.dk"
                      required
                   />
@@ -83,37 +86,40 @@
 
             <div id="insert_orderinfo">
            
-    <form id="order_details_form">
- <h3> Oprettelses formen </h3>
- <h4> Kunden </h4>               
-<!-- kunden -->
-  <label for="first_name_input">Fornavn</label>
-                <input
-                  type="text"
-                  id="first_name_input"
-                  name="firstName"
-                  placeholder="Fornavn"
-                  required
+              <form id="order_details_form">
+                <h3> Oprettelses formen </h3>
+                <h4> Kunden </h4>     
+
+                <!-- kunden -->
+                <label for="first_name_input">Fornavn</label>
+                   <input
+                     type="text"
+                     id="first_name_input"
+                     name="firstName"
+                     placeholder="Fornavn"
+                     required
+                    />
+
+                <label for="last_name_input">Efternavn</label>
+                  <input
+                    type="text"
+                    id="last_name_input"
+                    name="lastName"
+                    placeholder="Efternavn"
+                    required
                   />
 
-  <label for="last_name_input">Efternavn</label>
-                <input
-                  type="text"
-                  id="last_name_input"
-                  name="lastName"
-                  placeholder="Efternavn"
-                  required
-                  />                  
-
-
-  <label for="email_input">Email</label>
-                <input
-                  type="email"
-                  id="email_input"
-                  name="email"
-                  placeholder="eksempel@mail.dk"
-                  required
+                                                                                     <!-- CURSED EMAIL -->
+                <label for="email_input">Email</label>
+                  <input
+                   type="text"
+                   id="email_input"
+                   name="customer_email"
+                   placeholder="eksempel@mail.dk"
+                   required
                   />     
+
+  
 
   <h3> Adresse </h3>
   <label for="adress_input">Adresse</label>
@@ -158,15 +164,15 @@
   -->
 
 
-  <h3> Leverings Adresse </h3>
-  <label for="delivery_adress_input">Adresse</label>
-                <input
-                  type="text"
-                  id="delivery_adress_input"
-                  name="deliveryAdress"
-                  placeholder="Adresse"
-                  required
-                  />
+               <h3> Leverings Adresse </h3>
+                  <label for="delivery_adress_input">Adresse</label>
+                    <input
+                     type="text"
+                      id="delivery_adress_input"
+                      name="deliveryAdress"
+                      placeholder="Adresse"
+                      required
+                    />
                   
    <label for="delivery_zip_code_input">Postnummer</label>
                 <input
@@ -194,15 +200,13 @@
                     required/>          
                   </div>
 
-        <button id="btn_submit_order_details" type="submit">Gå til betaling</button>          
-  </form>
+            <button id="btn_submit_order_details" type="submit">Gå til betaling</button>          
+              </form>
 
             </div>
             
 
-          <div id="payment_details_screen">
-          
-          </div>
+            <div id="payment_details_screen"></div>
 
 
 
