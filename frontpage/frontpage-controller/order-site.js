@@ -9,6 +9,8 @@ import { shoppingCart } from "./product-customization-site/shopping-cart.js";
 
 import { clearShoppingCartHTML } from "./product-customization-site/shopping-cart.js";
 
+const shippingCosts = 39.5;
+
 const testEmails = [
   "mikkelHansen@gmail.com",
   "lineKM@live.dk",
@@ -47,26 +49,26 @@ const testCustomers = [
 
 const orderExistingCustomer = {
   CustomerInfo: {
-    id: 30,
-    firstName: "Ali",
-    lastName: "Mohammed",
-    adress: "Rentemestervej 7",
-    zipCode: 3300,
-    city: "Hundested",
+    id: undefined,
+    firstName: "Gilberto jr.",
+    lastName: "Gill",
+    adress: "Tysklandsgade 7 4tv",
+    zipCode: "2200",
+    city: "KBH S",
     email: "AliMohammedAntaKazab@gmail.com",
   },
   OdrderInfo: {
     status: "ordered",
     deliveryAdress: "Rentemestervej 7",
-    deliveryZipCode: 3300,
-    deliveryCity: "Hundested",
+    deliveryZipCode: "3300",
+    deliveryCity: "KBH S",
     totalTax: 260.0,
     totalPrice: 640.0,
     shippingPrice: 40.0,
   },
   Order_Lines: [
     {
-      catalogue_ID: 1,
+      catalogue_ID: 11,
       amount: 3,
       productSize: 2,
       itemPrice: 400.0,
@@ -74,12 +76,43 @@ const orderExistingCustomer = {
       stock_ID: 3,
     },
     {
-      catalogue_ID: 12,
+      catalogue_ID: 1,
       amount: 1,
       productSize: 10,
       itemPrice: 100.0,
       itemTax: 22.0,
       stock_ID: 12,
+    },
+  ],
+};
+
+const testDataBugFixing = {
+  CustomerInfo: {
+    adress: "Fankrigsgade 41",
+    city: "Kbh S",
+    email: "brietznitz88@cechmail.cz",
+    firstName: "Lukaz",
+    id: undefined,
+    lastName: "Pachovski",
+    zipCode: 2200,
+  },
+  OdrderInfo: {
+    deliveryAdress: "Fankrigsgade 41",
+    deliveryCity: "Kbh S",
+    deliveryZipCode: 2200,
+    shippingPrice: 40.1,
+    stauts: "ordered",
+    totalPrice: 15.3,
+    totalTax: 3.05,
+  },
+  Order_Lines: [
+    {
+      amount: 5,
+      catalogue_ID: 1,
+      itemPrice: 3.06,
+      itemTax: 0.61,
+      productSize: 8,
+      stock_ID: 1,
     },
   ],
 };
@@ -94,7 +127,7 @@ let customer_ID;
 
 // set if the customer confirms theat they are in the database already
 let customerIsNew = true;
-let totalPriceToPay;
+let displayedTotalPrice;
 // let validationComplete = false;
 let emailValdiated = false;
 
@@ -370,29 +403,26 @@ function submitOrderInformation(event) {
   // resets the form
   // clearOrderForm();
 
+  // list for all products linked to the order
+  const Order_Lines = [];
+
   const form = event.target;
 
-  // new customer information
+  // customer information
   const id = customer_ID;
   const firstName = form.firstName.value;
   const lastName = form.lastName.value;
-  // ---------------------------------------------------- COPY PASTED!
   const email = form.customer_email.value;
-  // const email = validateCustomerEmail(form.customerEmail.value);
-  console.log("customer email is: ", email);
   const adress = form.adress.value;
   const zipCode = form.zipCode.value;
   const city = form.city.value;
+  // delivery information
   const deliveryAdress = form.deliveryAdress.value;
   const deliveryZipCode = form.deliveryZipCode.value;
   const deliveryCity = form.deliveryCity.value;
 
-  // list for all products linked to the order
-  const Order_Lines = [];
-
   console.log(shoppingCart);
   for (const product of shoppingCart) {
-    console.log(product);
     const newOrderLine = {
       catalogue_ID: product.catalogue_ID,
       amount: product.amount,
@@ -405,8 +435,10 @@ function submitOrderInformation(event) {
 
     // I need the bundel versions as well - including the bundled tax. I need to show the end cusomer both? Or just be able to calculate them - when ever???
     console.log("the order line is: ", newOrderLine);
-    calcualteTotalOrderPrice(product.bundlePrice);
-    calcualteTotalOrderTax(product.bundleTax);
+    const totalPrice = Number(product.bundlePrice);
+    calcualteTotalOrderPrice(totalPrice);
+    const totalTax = Number(product.bundleTax);
+    calcualteTotalOrderTax(totalTax);
   }
 
   //--- the object is with a capital
@@ -433,14 +465,13 @@ function submitOrderInformation(event) {
   // consitant typo all the way to the back-end
 
   const OdrderInfo = {
-    stauts: "ordered",
+    status: "ordered",
     deliveryAdress,
     deliveryZipCode,
     deliveryCity,
     totalTax: Number(accumulatedItemTax),
     totalPrice: Number(accumulatedItemPrices),
-    // skal indlæses fra databasen
-    shippingPrice: 40.0,
+    shippingPrice: shippingCosts,
   };
 
   const order = {
@@ -450,7 +481,7 @@ function submitOrderInformation(event) {
   };
 
   // sets the price to be payed
-  totalPriceToPay = OdrderInfo.totalPrice;
+  displayedTotalPrice = OdrderInfo.totalPrice + shippingCosts;
   processCompleteOrder(order);
 }
 //   const allOrderInformationIsValid = checkIfOrderInformationIsValid();
@@ -481,9 +512,10 @@ function processCompleteOrder(order) {
 async function newCustomerOrder(newCustomerData) {
   console.log("new order will now be posed");
 
-  await postOrderCustomerIsNew(newCustomerData);
-
-  showPaymentScreen();
+  const postOrderResponse = await postOrderCustomerIsNew(newCustomerData);
+  if (postOrderResponse.ok) {
+    showPaymentScreen();
+  }
 }
 
 async function exsitingCustomerOrder(data) {
@@ -497,7 +529,15 @@ async function exsitingCustomerOrder(data) {
 
   const putResponse = await putExistingCustomer(data);
   if (putResponse.ok) {
-    await postOrderCustomerIsExisting(data);
+    const postResponse = await postOrderCustomerIsExisting(data);
+    if (!postResponse.ok) {
+      console.log(
+        "ERROR - Could not post order. Response: ",
+        postResponse.status
+      );
+    } else {
+      showPaymentScreen();
+    }
   } else {
     console.log(
       "ERROR - Could not update customer infromation. Response: ",
@@ -554,14 +594,13 @@ async function exsitingCustomerOrder(data) {
         console.log(result);
       }
 
-      return;
+      return response;
     } catch (error) {
       // Handle errors here
       console.error("Error:", error);
+      throw error;
     }
   }
-
-  showPaymentScreen();
 }
 
 // rest api - adds a new customer, order and orderlines to the database.
@@ -584,10 +623,11 @@ async function postOrderCustomerIsNew(newCustomerData) {
       console.log(result);
     }
 
-    return;
+    return response;
   } catch (error) {
     // Handle errors here
     console.error("Error:", error);
+    throw error;
   }
 }
 
@@ -598,7 +638,7 @@ function showPaymentScreen() {
   const messageHTML =
     /*html*/
     `
-  <p> Din ordre er nu booket! For at færdiggøre din bestilling skal du overføre ${totalPriceToPay} DKK, til 3dprintservice mobilepay på nummeret: ${number}</p>
+  <p> Din ordre er nu booket! For at færdiggøre din bestilling skal du overføre ${displayedTotalPrice} DKK, til 3dprintservice mobilepay på nummeret: ${number}</p>
   <button id="btn_finish_payment">Til forsiden</button>
   `;
 
