@@ -5,7 +5,7 @@ export class stockMaterial {
     this.material = stockObject.Material;
     this.colour = stockObject.Colour;
     this.gramInStock = stockObject.GramInStock;
-    this.minAmountReached = stockObject.MinAmountReached;
+    this.active = stockObject.Active;
     this.salesPrice = stockObject.SalesPrice;
   }
 
