@@ -4,13 +4,18 @@ const endpoint = "https://3dprintservice.azurewebsites.net/";
 import { fetchCustomerEmailData } from "../frontpage-model/fetch-data.js";
 // the shopping cart!
 import { shoppingCart } from "./product-customization-site/shopping-cart.js";
-// ...
-// import { postCompleteOrder } from "../frontpage-model/rest-api/make-order.js";
 
 import { clearShoppingCartHTML } from "./product-customization-site/shopping-cart.js";
 
 // imports the function that calculates total tax and price
 import { calculateTotalPrice } from "./product-customization-site/price-calculation.js";
+
+// import the rest-api from the model folder
+import {
+  postOrderCustomerIsExisting,
+  postOrderCustomerIsNew,
+} from "../frontpage-model/rest-api/make-order.js";
+import { putExistingCustomer } from "../frontpage-model/rest-api/customer.js";
 
 const shippingCosts = 39.5;
 
@@ -19,8 +24,6 @@ let customer_ID;
 // set if the customer confirms theat they are in the database already
 let customerIsNew = true;
 let displayedTotalPrice;
-// let validationComplete = false;
-// let emailValdiated = false;
 
 let emailValue;
 
@@ -64,6 +67,7 @@ function disableCustomerOrderInput() {
   document.querySelector("#delivery_zip_code_input").disabled = true;
   document.querySelector("#delivery_city_input").disabled = true;
   document.querySelector("#accept_payment_details_checkbox").disabled = true;
+  document.querySelector("#btn_submit_order_details").disabled = true;
 }
 
 // enables the oder-form input
@@ -77,6 +81,7 @@ function enableCustomerOrderInput() {
   document.querySelector("#delivery_zip_code_input").disabled = false;
   document.querySelector("#delivery_city_input").disabled = false;
   document.querySelector("#accept_payment_details_checkbox").disabled = false;
+  document.querySelector("#btn_submit_order_details").disabled = false;
 }
 
 function hideFindExistingCustomerSearchbar() {
@@ -257,16 +262,6 @@ function submitOrderInformation(event) {
     email,
   };
 
-  function calcualteTotalOrderPrice(bundlePrice) {
-    accumulatedItemPrices += bundlePrice;
-    console.log("the calculated price: ", accumulatedItemPrices);
-  }
-
-  function calcualteTotalOrderTax(bundleTax) {
-    accumulatedItemTax += bundleTax;
-    console.log("calcualted tax: ", accumulatedItemTax);
-  }
-
   // consitant typo all the way to the back-end
 
   const totals = calculateTotalPrice();
@@ -309,15 +304,6 @@ function processCompleteOrder(order) {
   }
 }
 
-async function newCustomerOrder(newCustomerData) {
-  console.log("new order will now be posed");
-
-  const postOrderResponse = await postOrderCustomerIsNew(newCustomerData);
-  if (postOrderResponse.ok) {
-    showPaymentScreen();
-  }
-}
-
 async function exsitingCustomerOrder(data) {
   console.log(
     "existing customer needs to be updated, then the order needs to be posted"
@@ -344,94 +330,19 @@ async function exsitingCustomerOrder(data) {
       putResponse.status
     );
   }
-
-  async function putExistingCustomer(data) {
-    try {
-      const response = await fetch(
-        `${endpoint}customers/${data.CustomerInfo.id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            // Add any additional headers if needed
-          },
-          body: JSON.stringify(data.CustomerInfo),
-        }
-      );
-
-      console.log(response);
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      } else {
-        const result = await response.json();
-        console.log(result);
-      }
-
-      return response;
-    } catch (error) {
-      // Handle errors here
-      console.error("Error:", error);
-      throw error;
-    }
-  }
-
-  async function postOrderCustomerIsExisting(existingCustomerData) {
-    try {
-      const response = await fetch(`${endpoint}makeOrderExistingCustomer`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          // Add any additional headers if needed
-        },
-        body: JSON.stringify(existingCustomerData),
-      });
-
-      console.log(response);
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      } else {
-        const result = await response.json();
-        console.log(result);
-      }
-
-      return response;
-    } catch (error) {
-      // Handle errors here
-      console.error("Error:", error);
-      throw error;
-    }
-  }
 }
 
-// rest api - adds a new customer, order and orderlines to the database.
-async function postOrderCustomerIsNew(newCustomerData) {
-  try {
-    const response = await fetch(`${endpoint}makeOrder`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        // Add any additional headers if needed
-      },
-      body: JSON.stringify(newCustomerData),
-    });
+async function newCustomerOrder(newCustomerData) {
+  console.log("new order will now be posed");
 
-    console.log(response);
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    } else {
-      const result = await response.json();
-      console.log(result);
-    }
-
-    return response;
-  } catch (error) {
-    // Handle errors here
-    console.error("Error:", error);
-    throw error;
+  const postOrderResponse = await postOrderCustomerIsNew(newCustomerData);
+  if (postOrderResponse.ok) {
+    showPaymentScreen();
   }
 }
 
 function showPaymentScreen() {
+  disableCustomerOrderInput();
   console.log("you have completed the order process and must now pay!");
   document.querySelector("#payment_details_screen").innerHTML = "";
   const number = fecthMobilePaymenyNo();
