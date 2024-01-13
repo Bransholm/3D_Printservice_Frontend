@@ -51,20 +51,32 @@
         
         <!-- Section special products -->
         <section id="special_products" class="view-content">
-          <div id="shopping_cart_view"></div>
-          <button id="btn_place_order">Til Kassen</button>
+          
+          <container id="shopping_cart_site">
+            <div id="shopping_cart_view"></div>
+
+
+            <div id="shopping_cart_price_iformation">
+
+            </div>
+            
+            <button id="btn_place_order">Til Kassen</button>
+          </container>
+      
             Specialprodukter
 
 
+            <!--
             <div id="choose_customer_type">
               <button id="btn_is_new_customer">Ny kunde</button>
               <button id="btn_is_existing_customer">Allerede Kunde</button>
             </div>
+            -->
 
             <!-- cutsomer -->
-            <div id="search_existing_customer_by_email" class="hidden">
+            <div id="search_existing_customer_by_email">
               
-              <h3>Tidligere kunde</h3> 
+              <h3>Indtast email</h3> 
 
               <div id="search_existing_customer_by_email_error_message"></div>          
               
@@ -108,16 +120,6 @@
                     placeholder="Efternavn"
                     required
                   />
-
-                                                                                     <!-- CURSED EMAIL -->
-                <label for="email_input">Email</label>
-                  <input
-                   type="text"
-                   id="email_input"
-                   name="customer_email"
-                   placeholder="eksempel@mail.dk"
-                   required
-                  />     
 
   
 
