@@ -11,25 +11,6 @@ let stockInStorage;
 let customizedProduct;
 let selectedCatalougeItem;
 
-// CREATE TABLE Order_Lines
-// (
-//     Id           INT AUTO_INCREMENT PRIMARY KEY,
-//     Orders_ID    INT,
-//     FOREIGN KEY (Orders_ID) REFERENCES Orders (Id),
-//     Catalogue_ID INT,
-//     FOREIGN KEY (Catalogue_ID) REFERENCES Catalogue (Id),
-//     Amount       INTEGER(10),
-//     ProductSize  INTEGER(10),
-//     ItemPrice    DECIMAL(5,2),
-//     ItemTax      DECIMAL(5,2),
-//     Stock_ID     INT,
-//     FOREIGN KEY (Stock_ID) REFERENCES Stock (Id)
-// );
-
-// Is this unnecessarily complex as per usual?!
-
-// price = bundleprice;
-// singleProductPrice;
 
 export async function viewButtonClicked(catalougeItem) {
   selectedCatalougeItem = catalougeItem;
@@ -113,12 +94,6 @@ function decrementProductAmountClicked(event) {
   event.preventDefault();
   customizedProduct.decrementProductAmount();
 }
-
-// // Sets the chosen amount to 1
-// export function resetProductAmount() {
-//   amount = 1;
-//   customizedProduct.showSelectedAmount();
-// }
 
 // Sets the material to the type selected in the "chooseMaterial" drop down
 function resetProductMaterialSelector(event) {
