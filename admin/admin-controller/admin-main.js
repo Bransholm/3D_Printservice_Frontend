@@ -19,8 +19,8 @@ import { createCatalogClasses } from "./instance-creator-admin.js";
 import { callRenderMethodeForCatalogueItems } from "./render-controller-admin.js";
 // update-button clicked: Send data to stock-update-form
 import {
-  extractStockDataForUpdate,
-  updateStockDataThroughForm,
+  updateStockDataAtofill,
+  stockUpdateInputData,
 } from "./create-update-forms/update-stock-item.js";
 
 function startAdmin() {
@@ -62,10 +62,10 @@ function showCatalouge(catalougeItemObjects) {
   callRenderMethodeForCatalogueItems(catalougueClassList, "productOverview");
 }
 
+let stockClassList;
 // showing all materials
 function showStockMaterials(stockMaterialData) {
-  const stockClassList = createCatalogClasses(stockMaterialData, stockMaterial);
-  //4callRenderMethod(stockClassList, "stockMaterialOveriew");
+  stockClassList = createCatalogClasses(stockMaterialData, stockMaterial);
   renderStocks(stockClassList, "adminStockTableBody");
 }
 
@@ -93,22 +93,34 @@ function eventListenerForStockUpdateButton(htmlId, classInstance) {
   document
     .querySelector(`#${htmlId} tr:last-child .btn_update_stock`)
     .addEventListener("click", () => updateStockButtonClicked(classInstance));
-  stockItemToUpdate = classInstance;
 }
 
 // The function that update the selected stock material while pussing the update button
 function updateStockButtonClicked(instance) {
   console.log("Update your materials! ", instance);
-  extractStockDataForUpdate(instance);
+
+  stockItemToUpdate = instance;
+
+  // autofills the stock-update-form
+  updateStockDataAtofill(instance);
 }
 
-// update the selected stock
-function submitStockUpdate(event) {
+// completes the update process
+async function submitStockUpdate(event) {
   event.preventDefault();
-  console.log("update data:  ", stockItemToUpdate);
-  const data = updateStockDataThroughForm(stockItemToUpdate);
-  console.log("the update: ", data);
-  stockUpdateRoute(data);
+
+  console.log("update data id:  ", stockItemToUpdate.id);
+  const data = stockUpdateInputData();
+  const id = stockItemToUpdate.id;
+
+  // console.log("the update: ", data);
+  const updateResponse = await stockUpdateRoute(data, id);
+
+  if (updateResponse.ok) {
+    console.log("things are okay!");
+    // hent dataen og hvis det hele en gang til!
+    getDataController();
+  }
 }
 
 // the function that is triggered after clicking the delete button on a catalogue item
