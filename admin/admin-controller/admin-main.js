@@ -13,12 +13,16 @@ import {
 import { catalogueItem } from "../admin-view/admin-view-render-classes/catalogue-class.js";
 import { createCatalogClasses } from "./instance-creator-admin.js";
 import { callRenderMethodeForCatalogueItems } from "./render-controller-admin.js";
-// update-button clicked: Send data to stock-update-form
-"./create-update-forms/update-stock-item.js";
 
+// update-button clicked: Send data to stock-update-form
+
+import { showStockMaterials } from "./show-stock-materials.js";
 import {
-  closeUpdateCompleteWindow,
-} from "../admin-view/stock-update-dialog.js";
+  updateStockButtonClicked,
+  submitStockUpdate,
+} from "./update-stock-materials.js";
+
+import { closeUpdateCompleteWindow } from "../admin-view/stock-update-dialog.js";
 
 function startAdmin() {
   console.log("Admin site is working");
@@ -62,12 +66,6 @@ function showCatalouge(catalougeItemObjects) {
   console.log("Der er et fetch");
   callRenderMethodeForCatalogueItems(catalougueClassList, "productOverview");
 }
-
-import { showStockMaterials } from "./show-stock-materials.js";
-import {
-  updateStockButtonClicked,
-  submitStockUpdate,
-} from "./update-stock-materials.js";
 
 // the function that is triggered after clicking the delete button on a catalogue item
 export function deleteCatalogueItemButtonClicked(instance) {
