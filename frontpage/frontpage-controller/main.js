@@ -17,10 +17,9 @@ import { callRenderMethod } from "./render-controller.js";
 
 import { filterContent, searchContent } from "./catalogue-filter-search.js";
 
-// test-function that runs the post-order-API
-import { testMakeOrder } from "../frontpage-model/rest-api/make-order.js";
 // test-function that creates a new order!
 import { launchOrderSite } from "./order-site.js";
+
 
 window.addEventListener("load", start);
 
