@@ -98,6 +98,7 @@ function showItemsInCart() {
       )
       .addEventListener("click", () => removeProductFromCart(i));
   }
+  calculateTotalPrice();
 }
 
 function incrementProductAmountClicked(productInstance) {
@@ -117,6 +118,37 @@ function removeProductFromCart(i) {
   shoppingCart.splice(i, 1);
   showItemsInCart();
 }
+
+// Price Calculation Sections --------------------------------------------------------------------------------------
+
+function calculateTotalPrice() {
+  let accumulatedTax = 0;
+  let accumulatedPrice = 0;
+
+  for (const item of shoppingCart) {
+    accumulatedPrice += Number(item.bundlePrice);
+    accumulatedTax += Number(item.bundleTax);
+  }
+
+  showItemCartPriceSection();
+
+  function showItemCartPriceSection() {
+    document.querySelector("#shopping_cart_price_iformation").innerHTML = " ";
+
+    const shoppingCartPriceSectionHTML =
+      /*html*/
+      `
+   <h3>Total Pris: ${accumulatedPrice.toFixed(2)}</h3>
+   <h4>Her af moms: ${accumulatedTax.toFixed(2)}</h4>
+   `;
+
+    document
+      .querySelector("#shopping_cart_price_iformation")
+      .insertAdjacentHTML("beforeend", shoppingCartPriceSectionHTML);
+  }
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
 
 // class productOrder {
 //   constructor(catalogueId, stockId, size, amount, singleProductPrice) {
