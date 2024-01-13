@@ -5,24 +5,18 @@ let catalogueId;
 const endpoint = "https://3dprintservice.azurewebsites.net/";
 
 // Imports the update route for strockMaterials
-import { stockUpdateRoute } from "../admin-model/backend-routes/stock-put.js";
 import { createNewCatalogueItem } from "./create-update-forms/create-new-catelogue-item.js";
 import {
   getCatalogueData,
   getStockData,
 } from "../admin-model/fetch-data-admin.js";
-import { stockMaterial } from "../admin-view/admin-view-render-classes/stock-class.js";
 import { catalogueItem } from "../admin-view/admin-view-render-classes/catalogue-class.js";
 import { createCatalogClasses } from "./instance-creator-admin.js";
 import { callRenderMethodeForCatalogueItems } from "./render-controller-admin.js";
 // update-button clicked: Send data to stock-update-form
-import {
-  updateStockDataAtofill,
-  stockUpdateInputData,
-} from "./create-update-forms/update-stock-item.js";
+"./create-update-forms/update-stock-item.js";
 
 import {
-  showSuccessfullUpdate,
   closeUpdateCompleteWindow,
 } from "../admin-view/stock-update-dialog.js";
 
