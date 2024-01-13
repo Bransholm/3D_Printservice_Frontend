@@ -1,8 +1,6 @@
 "use strict";
 window.addEventListener("load", startAdmin);
 
-// stores the item to be updated!
-let stockItemToUpdate;
 let catalogueId;
 const endpoint = "https://3dprintservice.azurewebsites.net/";
 
@@ -22,6 +20,11 @@ import {
   updateStockDataAtofill,
   stockUpdateInputData,
 } from "./create-update-forms/update-stock-item.js";
+
+import {
+  showSuccessfullUpdate,
+  closeUpdateCompleteWindow,
+} from "../admin-view/stock-update-dialog.js";
 
 function startAdmin() {
   console.log("Admin site is working");
@@ -66,104 +69,11 @@ function showCatalouge(catalougeItemObjects) {
   callRenderMethodeForCatalogueItems(catalougueClassList, "productOverview");
 }
 
-let stockClassList;
-// showing all materials
-function showStockMaterials(stockMaterialData) {
-  stockClassList = createCatalogClasses(stockMaterialData, stockMaterial);
-  renderStocks(stockClassList, "adminStockTableBody");
-}
-
-// Create instances of the stock material class
-function renderStocks(listOfInstances, htmlId) {
-  console.log("No3. CallRenderMethod");
-  document.querySelector(`#${htmlId}`).innerHTML = "";
-
-  for (const stockInstance of listOfInstances) {
-    const stockHTML = stockInstance.render();
-
-    document
-      .querySelector(`#${htmlId}`)
-      .insertAdjacentHTML("beforeend", stockHTML);
-
-    //Fit the eventlistener first
-    eventListenerForStockUpdateButton(htmlId, stockInstance);
-  }
-}
-
-// function triggered by the eventListener for stock update button.
-function eventListenerForStockUpdateButton(htmlId, classInstance) {
-  // what eventlisteners to add for a given instance needs to go here...
-
-  document
-    .querySelector(`#${htmlId} tr:last-child .btn_update_stock`)
-    .addEventListener("click", () => updateStockButtonClicked(classInstance));
-}
-
-// The function that update the selected stock material while pussing the update button
-function updateStockButtonClicked(instance) {
-  console.log("Update your materials! ", instance);
-
-  stockItemToUpdate = instance;
-
-  // autofills the stock-update-form
-  updateStockDataAtofill(instance);
-}
-
-// completes the update process
-async function submitStockUpdate(event) {
-  event.preventDefault();
-
-  console.log("update data id:  ", stockItemToUpdate.id);
-  const updateInputData = stockUpdateInputData();
-  const id = stockItemToUpdate.id;
-
-  // console.log("the update: ", data);
-  const updateResponse = await stockUpdateRoute(updateInputData, id);
-
-  if (updateResponse.ok) {
-    console.log("things are okay!");
-
-    /* You chanced x from z to y */
-    // hent dataen og hvis det hele en gang til!
-    showSuccessfullUpdate(updateInputData);
-    getDataController();
-  }
-}
-
-function showSuccessfullUpdate(stockItem) {
-  document.querySelector("#successfull-stock-update-div").innerHTML = " ";
-
-  const dialogHTML =
-    /*html*/
-    `
-  <div>
-  <p>Materiale sat til: ${stockItem.material}</p>
-  <p>Beskrivelse sat til: ${stockItem.name}</p>
-  <p>Farve sat til: ${stockItem.colour}</p>
-  <p>Lager beholdning sat til ${stockItem.gramInStock} gram</p>
-  <p>Salgs status sat til: ${showStockActiveStatus(stockItem.active)}</p>
-  <p>Salgspris sat til: ${stockItem.salesPrice} </p>
-  </div>
-  `;
-
-  document
-    .querySelector("#successfull-stock-update-div")
-    .insertAdjacentHTML("beforeend", dialogHTML);
-
-  document.querySelector("#successfull-stock-update-dialog").showModal();
-}
-
-function showStockActiveStatus(status) {
-  if (status === 1) {
-    return "På lager";
-  } else {
-    return "Udsolgt";
-  }
-}
-
-function closeUpdateCompleteWindow() {
-  document.querySelector("#successfull-stock-update-dialog").close();
-}
+import { showStockMaterials } from "./show-stock-materials.js";
+import {
+  updateStockButtonClicked,
+  submitStockUpdate,
+} from "./update-stock-materials.js";
 
 // the function that is triggered after clicking the delete button on a catalogue item
 export function deleteCatalogueItemButtonClicked(instance) {
@@ -177,4 +87,5 @@ export function updateCatalogueItemButtonClicked(instance) {
   catalogueId = instance.id;
 }
 
+export { updateStockButtonClicked, getDataController };
 // export { startAdmin as launchAdminFunctions };
