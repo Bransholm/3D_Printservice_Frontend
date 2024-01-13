@@ -104,7 +104,7 @@ export class product {
     const priceHTML =
       /*html*/
       `
-   <h3 id="productPrice"> Samlet Pris: ${this.bundlePrice} DKK</h3>
+   <h3 id="productPrice"> Pris: ${this.bundlePrice} DKK</h3>
    `;
     return priceHTML;
   }
@@ -247,7 +247,7 @@ export class product {
   showPriceToPay() {
     document.querySelector(
       "#productPrice"
-    ).innerHTML = `Samlet Pris: ${this.bundlePrice} DKK`;
+    ).innerHTML = `Pris: ${this.bundlePrice} DKK`;
   }
 
   /* WILL THIS WORK.................................................................*/
