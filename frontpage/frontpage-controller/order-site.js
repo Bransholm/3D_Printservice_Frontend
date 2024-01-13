@@ -9,6 +9,9 @@ import { shoppingCart } from "./product-customization-site/shopping-cart.js";
 
 import { clearShoppingCartHTML } from "./product-customization-site/shopping-cart.js";
 
+// imports the function that calculates total tax and price
+import { calculateTotalPrice } from "./product-customization-site/price-calculation.js";
+
 const shippingCosts = 39.5;
 
 let customer_ID;
@@ -33,7 +36,6 @@ async function launchOrderSite() {
 
   // her skal vi deaktivere input
   disableCustomerOrderInput();
-
 
   // fetches all customer emails
   customerEmialList = await fetchCustomerEmailData();
@@ -168,34 +170,34 @@ function autofillCustomerInformation(retrievedCustomer) {
   form.deliveryCity.value = customer.City;
 }
 
-// all
-let accumulatedItemTax = 0.0;
-let accumulatedItemPrices = 0.0;
+// // all
+// let accumulatedItemTax = 0.0;
+// let accumulatedItemPrices = 0.0;
 
 // -------------------------------------------- Email validation --------------------------------------------------
 
-function validateCustomerEmail(emailInput) {
-  console.log("check customer email: ", emailInput);
-  if (customerIsNew === true) {
-    const emailIsUnique = customerEmialList.forEach(checkIfEmailIsUnique);
-    if (emailIsUnique != true) {
-      console.log("ERROR - email is already in system!");
-      emailValdiated = false;
-    } else {
-      emailValdiated = true;
-    }
-  } else if (customerIsNew === false) {
-    emailValdiated = true;
-  }
+// function validateCustomerEmail(emailInput) {
+//   console.log("check customer email: ", emailInput);
+//   if (customerIsNew === true) {
+//     const emailIsUnique = customerEmialList.forEach(checkIfEmailIsUnique);
+//     if (emailIsUnique != true) {
+//       console.log("ERROR - email is already in system!");
+//       emailValdiated = false;
+//     } else {
+//       emailValdiated = true;
+//     }
+//   } else if (customerIsNew === false) {
+//     emailValdiated = true;
+//   }
 
-  function checkIfEmailIsUnique(emailListElement) {
-    console.log("for each: ", emailListElement.Email, " === ", emailInput);
-    if (emailListElement.Email === emailInput) {
-      return true;
-    }
-  }
-  return emailInput;
-}
+//   function checkIfEmailIsUnique(emailListElement) {
+//     console.log("for each: ", emailListElement.Email, " === ", emailInput);
+//     if (emailListElement.Email === emailInput) {
+//       return true;
+//     }
+//   }
+//   return emailInput;
+// }
 
 // ----------------------------------------------------------------------------------------------------------------------------
 
@@ -238,10 +240,10 @@ function submitOrderInformation(event) {
 
     // I need the bundel versions as well - including the bundled tax. I need to show the end cusomer both? Or just be able to calculate them - when ever???
     console.log("the order line is: ", newOrderLine);
-    const totalPrice = Number(product.bundlePrice);
-    calcualteTotalOrderPrice(totalPrice);
-    const totalTax = Number(product.bundleTax);
-    calcualteTotalOrderTax(totalTax);
+    // const totalPrice = Number(product.bundlePrice);
+    // calcualteTotalOrderPrice(totalPrice);
+    // const totalTax = Number(product.bundleTax);
+    // calcualteTotalOrderTax(totalTax);
   }
 
   //--- the object is with a capital
@@ -267,13 +269,15 @@ function submitOrderInformation(event) {
 
   // consitant typo all the way to the back-end
 
+  const totals = calculateTotalPrice();
+
   const OdrderInfo = {
     status: "ordered",
     deliveryAdress,
     deliveryZipCode,
     deliveryCity,
-    totalTax: Number(accumulatedItemTax),
-    totalPrice: Number(accumulatedItemPrices),
+    totalPrice: Number(totals.totalPrice) + shippingCosts,
+    totalTax: Number(totals.totalTax),
     shippingPrice: shippingCosts,
   };
 
