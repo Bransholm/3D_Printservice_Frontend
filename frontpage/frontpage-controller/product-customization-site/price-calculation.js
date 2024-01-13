@@ -31,8 +31,4 @@ function calculateTotalOrderPrice(product){
 }
 
 
-export {
-  setCompleteProductPrice,
-  setSingleProductPrice,
-  setBundleProductPrice,
-};
+
