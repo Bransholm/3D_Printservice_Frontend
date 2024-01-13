@@ -40,6 +40,10 @@ function startEvendListernes() {
   document
     .querySelector("#updateMaterialForm")
     .addEventListener("submit", submitStockUpdate);
+
+  document
+    .querySelector("#btn-close-update-dialog")
+    .addEventListener("click", closeUpdateCompleteWindow);
 }
 
 // fetching genereal data
@@ -110,17 +114,55 @@ async function submitStockUpdate(event) {
   event.preventDefault();
 
   console.log("update data id:  ", stockItemToUpdate.id);
-  const data = stockUpdateInputData();
+  const updateInputData = stockUpdateInputData();
   const id = stockItemToUpdate.id;
 
   // console.log("the update: ", data);
-  const updateResponse = await stockUpdateRoute(data, id);
+  const updateResponse = await stockUpdateRoute(updateInputData, id);
 
   if (updateResponse.ok) {
     console.log("things are okay!");
+
+    /* You chanced x from z to y */
     // hent dataen og hvis det hele en gang til!
+    showSuccessfullUpdate(updateInputData);
     getDataController();
   }
+}
+
+function showSuccessfullUpdate(stockItem) {
+  document.querySelector("#successfull-stock-update-div").innerHTML = " ";
+
+  const dialogHTML =
+    /*html*/
+    `
+  <div>
+  <p>Materiale sat til: ${stockItem.material}</p>
+  <p>Beskrivelse sat til: ${stockItem.name}</p>
+  <p>Farve sat til: ${stockItem.colour}</p>
+  <p>Lager beholdning sat til ${stockItem.gramInStock} gram</p>
+  <p>Salgs status sat til: ${showStockActiveStatus(stockItem.active)}</p>
+  <p>Salgspris sat til: ${stockItem.salesPrice} </p>
+  </div>
+  `;
+
+  document
+    .querySelector("#successfull-stock-update-div")
+    .insertAdjacentHTML("beforeend", dialogHTML);
+
+  document.querySelector("#successfull-stock-update-dialog").showModal();
+}
+
+function showStockActiveStatus(status) {
+  if (status === 1) {
+    return "På lager";
+  } else {
+    return "Udsolgt";
+  }
+}
+
+function closeUpdateCompleteWindow() {
+  document.querySelector("#successfull-stock-update-dialog").close();
 }
 
 // the function that is triggered after clicking the delete button on a catalogue item
