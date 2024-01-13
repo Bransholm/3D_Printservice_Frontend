@@ -11,137 +11,50 @@ import { clearShoppingCartHTML } from "./product-customization-site/shopping-car
 
 const shippingCosts = 39.5;
 
-const testEmails = [
-  "mikkelHansen@gmail.com",
-  "lineKM@live.dk",
-  "ulrik@hotmail.se",
-];
-
-const testCustomers = [
-  {
-    id: 1,
-    firstName: "Mikkel",
-    lastName: "Mikkelsen",
-    adress: "Blåvej 213",
-    zipCode: 3390,
-    city: "Hundested",
-    email: "mikkelHansen@gmail.com",
-  },
-  {
-    id: 2,
-    firstName: "Line",
-    lastName: "Linesen",
-    adress: "Rødgade 92",
-    zipCode: 3370,
-    city: "Melby",
-    email: "lineKM@live.dk",
-  },
-  {
-    id: 3,
-    firstName: "Ulrik",
-    lastName: "Thomsen",
-    adress: "Møllevænget 41",
-    zipCode: 3300,
-    city: "Frederiksværk",
-    email: "ulrik@hotmail.se",
-  },
-];
-
-const orderExistingCustomer = {
-  CustomerInfo: {
-    id: undefined,
-    firstName: "Gilberto jr.",
-    lastName: "Gill",
-    adress: "Tysklandsgade 7 4tv",
-    zipCode: "2200",
-    city: "KBH S",
-    email: "AliMohammedAntaKazab@gmail.com",
-  },
-  OdrderInfo: {
-    status: "ordered",
-    deliveryAdress: "Rentemestervej 7",
-    deliveryZipCode: "3300",
-    deliveryCity: "KBH S",
-    totalTax: 260.0,
-    totalPrice: 640.0,
-    shippingPrice: 40.0,
-  },
-  Order_Lines: [
-    {
-      catalogue_ID: 11,
-      amount: 3,
-      productSize: 2,
-      itemPrice: 400.0,
-      itemTax: 45.0,
-      stock_ID: 3,
-    },
-    {
-      catalogue_ID: 1,
-      amount: 1,
-      productSize: 10,
-      itemPrice: 100.0,
-      itemTax: 22.0,
-      stock_ID: 12,
-    },
-  ],
-};
-
-const testDataBugFixing = {
-  CustomerInfo: {
-    adress: "Fankrigsgade 41",
-    city: "Kbh S",
-    email: "brietznitz88@cechmail.cz",
-    firstName: "Lukaz",
-    id: undefined,
-    lastName: "Pachovski",
-    zipCode: 2200,
-  },
-  OdrderInfo: {
-    deliveryAdress: "Fankrigsgade 41",
-    deliveryCity: "Kbh S",
-    deliveryZipCode: 2200,
-    shippingPrice: 40.1,
-    stauts: "ordered",
-    totalPrice: 15.3,
-    totalTax: 3.05,
-  },
-  Order_Lines: [
-    {
-      amount: 5,
-      catalogue_ID: 1,
-      itemPrice: 3.06,
-      itemTax: 0.61,
-      productSize: 8,
-      stock_ID: 1,
-    },
-  ],
-};
-
 let customer_ID;
-
-// CHECK IF EMAIL IS USED - WHEN UPDATING OR CREATING!
-// SEND INFO DEPENDING ON ITS NEW OR EXISTING CUSTOMER
-// SHOW THE PAYMENT PAGE - FETCH THE PHONE NO.
-// HAVE AN UPDATE BUTTON FOR ORDERS ON ADMIN
-// FIX STOCK UPDTE ON ADMIN...
 
 // set if the customer confirms theat they are in the database already
 let customerIsNew = true;
 let displayedTotalPrice;
 // let validationComplete = false;
-let emailValdiated = false;
+// let emailValdiated = false;
+
+let emailValue;
 
 // list that stores all emails
 let customerEmialList;
 
 // ----------- functions that controls the chek out flow -------------------------------------
 
+async function launchOrderSite() {
+  console.log("testing-the-order-site!");
+  // activates the eventlisteners for the checkout-flow
+  setOrderSiteEventListeners();
+
+  // her skal vi deaktivere input
+  disableCustomerOrderInput();
+
+
+  // fetches all customer emails
+  customerEmialList = await fetchCustomerEmailData();
+  console.log("all emails: ", customerEmialList);
+  // removes the displayed shopping cart
+  hideShoppingCartSite();
+
+  // resetChekOutSite();
+}
+
+function hideShoppingCartSite() {
+  clearShoppingCartHTML();
+  // hides the shopping cart container including the to-chek-out-butten
+  document.querySelector("#shopping_cart_site").classList.add("hidden");
+}
+
 // disables the order-form input
 function disableCustomerOrderInput() {
   // document.querySelector("#insert_orderinfo").prop("disabled", true);
   document.querySelector("#first_name_input").disabled = true;
   document.querySelector("#last_name_input").disabled = true;
-  document.querySelector("#email_input").disabled = true;
   document.querySelector("#adress_input").disabled = true;
   document.querySelector("#zip_code_input").disabled = true;
   document.querySelector("#city_input").disabled = true;
@@ -155,7 +68,6 @@ function disableCustomerOrderInput() {
 function enableCustomerOrderInput() {
   document.querySelector("#first_name_input").disabled = false;
   document.querySelector("#last_name_input").disabled = false;
-  document.querySelector("#email_input").disabled = false;
   document.querySelector("#adress_input").disabled = false;
   document.querySelector("#zip_code_input").disabled = false;
   document.querySelector("#city_input").disabled = false;
@@ -163,15 +75,6 @@ function enableCustomerOrderInput() {
   document.querySelector("#delivery_zip_code_input").disabled = false;
   document.querySelector("#delivery_city_input").disabled = false;
   document.querySelector("#accept_payment_details_checkbox").disabled = false;
-}
-
-function showFindExistingCustomerSearchbar() {
-  document
-    .querySelector("#search_existing_customer_by_email")
-    .classList.remove("hidden");
-
-  // her skal vi deaktivere input
-  disableCustomerOrderInput();
 }
 
 function hideFindExistingCustomerSearchbar() {
@@ -183,29 +86,8 @@ function hideFindExistingCustomerSearchbar() {
   enableCustomerOrderInput();
 }
 
-async function testOrderSite() {
-  console.log("testing-the-order-site!");
-  // activates the eventlisteners for the checkout-flow
-  setOrderSiteEventListeners();
-  // disables the input-fields
-  disableCustomerOrderInput();
-  // fetches all customer emails
-  customerEmialList = await fetchCustomerEmailData();
-  console.log("all emails: ", customerEmialList);
-  // removes the displayed shopping cart
-  clearShoppingCartHTML();
-
-  resetChekOutSite();
-}
-
 function setOrderSiteEventListeners() {
   // activates the new-customer and existing-customer buttons
-  document
-    .querySelector("#btn_is_new_customer")
-    .addEventListener("click", newCustomerButtonClicked);
-  document
-    .querySelector("#btn_is_existing_customer")
-    .addEventListener("click", exsitingCustomerButtonClicked);
 
   // adds the order information submit event
   document
@@ -218,104 +100,33 @@ function setOrderSiteEventListeners() {
     .addEventListener("submit", findCustomerByEmail);
 }
 
-function resetChekOutSite() {
-  newCustomerButtonClicked();
-}
-
-function toggleFindCustomerSearchbar() {
-  if (customerIsNew === true) {
-    hideFindExistingCustomerSearchbar();
-    newCustomerBtnIsActive();
-  } else {
-    showFindExistingCustomerSearchbar();
-    existingCustomerBtnIsActive();
-  }
-}
-
-function removeCustomerBtnClasses() {
-  document
-    .querySelector("#btn_is_new_customer")
-    .classList.remove("btn-selected");
-  document
-    .querySelector("#btn_is_new_customer")
-    .classList.remove("btn-deselected");
-  document
-    .querySelector("#btn_is_existing_customer")
-    .classList.remove("btn-selected");
-  document
-    .querySelector("#btn_is_existing_customer")
-    .classList.remove("btn-deselected");
-}
-
-function newCustomerBtnIsActive() {
-  removeCustomerBtnClasses();
-  document.querySelector("#btn_is_new_customer").classList.add("btn-selected");
-  document
-    .querySelector("#btn_is_existing_customer")
-    .classList.add("btn-deselected");
-}
-
-function existingCustomerBtnIsActive() {
-  removeCustomerBtnClasses();
-
-  document
-    .querySelector("#btn_is_new_customer")
-    .classList.add("btn-deselected");
-  document
-    .querySelector("#btn_is_existing_customer")
-    .classList.add("btn-selected");
-}
-
-function exsitingCustomerButtonClicked() {
-  customerIsNew = false;
-  toggleFindCustomerSearchbar();
-}
-
-function newCustomerButtonClicked() {
-  customerIsNew = true;
-  toggleFindCustomerSearchbar();
-}
-
 // --------------------------------------------------------------------------------------------------------------
 
 async function findCustomerByEmail(event) {
   event.preventDefault();
-  const input = event.target.existing_email.value;
-  console.log("input email is: ", input);
+  emailValue = event.target.existing_email.value;
 
-  findCustomerByEmailErrorMessageReset();
-  // set all the input-fields to blank
-  // clearOrderForm();
-  // DUMMY CODE finds the email in question
+  console.log("input email is: ", emailValue);
+
   let match = false;
+
   for (const customer of customerEmialList) {
-    // console.log(`input: ${input} === email: ${customer.Email}`);
-    if (input == customer.Email) {
+    if (emailValue == customer.Email) {
       match = true;
-      console.log("macth found");
-      const customerData = await retrieveCustomerInformation(input);
+      customerIsNew = false;
+      const customerData = await retrieveCustomerInformation(emailValue);
       console.log("customer by email data: ", customerData);
       autofillCustomerInformation(customerData);
-      // activates the order form input
-      enableCustomerOrderInput();
     }
   }
   if (match === false) {
-    console.log("No match");
-    findCustomerByEmailErrorMessage();
+    customerIsNew = true;
+    // findCustomerByEmailErrorMessage();
   }
-}
 
-function findCustomerByEmailErrorMessageReset() {
-  document.querySelector(
-    "#search_existing_customer_by_email_error_message"
-  ).innerHTML = " ";
-}
-
-function findCustomerByEmailErrorMessage() {
-  document.querySelector(
-    "#search_existing_customer_by_email_error_message"
-  ).innerHTML = "<p> Denne email kunne ikke findes i systemet. </p>";
+  // her skal vi så aktivere input feltet
+  console.log("customer is new = ", customerIsNew);
+  enableCustomerOrderInput();
 }
 
 // search_existing_customer_by_email_error_message
@@ -325,12 +136,6 @@ async function retrieveCustomerInformation(customerEmail) {
   const promise = await fetch(`${endpoint}/customers/${customerEmail}`);
   const data = await promise.json();
   return data;
-
-  // for (const customer of testCustomers) {
-  //   if (customer.email === customerEmail) {
-  //     return customer;
-  //   }
-  // }
 }
 
 // set all the text inputs to blank
@@ -342,7 +147,6 @@ function clearOrderForm() {
   form.adress.value = " ";
   form.zipCode.value = " ";
   form.city.value = " ";
-  form.customer_email.value = " ";
   form.deliveryAdress.value = " ";
   form.deliveryZipCode.value = " ";
   form.deliveryCity.value = " ";
@@ -359,7 +163,6 @@ function autofillCustomerInformation(retrievedCustomer) {
   form.adress.value = customer.Adress;
   form.zipCode.value = customer.ZipCode;
   form.city.value = customer.City;
-  form.customer_email.value = customer.Email;
   form.deliveryAdress.value = customer.Adress;
   form.deliveryZipCode.value = customer.ZipCode;
   form.deliveryCity.value = customer.City;
@@ -412,7 +215,7 @@ function submitOrderInformation(event) {
   const id = customer_ID;
   const firstName = form.firstName.value;
   const lastName = form.lastName.value;
-  const email = form.customer_email.value;
+  const email = emailValue;
   const adress = form.adress.value;
   const zipCode = form.zipCode.value;
   const city = form.city.value;
@@ -484,21 +287,14 @@ function submitOrderInformation(event) {
   displayedTotalPrice = OdrderInfo.totalPrice + shippingCosts;
   processCompleteOrder(order);
 }
-//   const allOrderInformationIsValid = checkIfOrderInformationIsValid();
-//   if (allOrderInformationIsValid === true) {
-//     processCompleteOrder(order);
+
+// function checkIfOrderInformationIsValid() {
+//   if (emailValdiated === true) {
+//     return true;
 //   } else {
-//     console.log("An error occured!");
+//     return false;
 //   }
 // }
-
-function checkIfOrderInformationIsValid() {
-  if (emailValdiated === true) {
-    return true;
-  } else {
-    return false;
-  }
-}
 
 function processCompleteOrder(order) {
   console.log("The complete order is: ", order);
@@ -672,61 +468,4 @@ function showFinishPaymentScreen() {
     .insertAdjacentHTML("beforeend", html);
 }
 
-// function createNewCustomter() {
-//   //...
-// }
-
-// function insertHtmlDom() {
-//   // Event listeners!
-// }
-
-// function toggleHiddenOnForms() {
-//   // add class
-// }
-
-// // local host endpoint for testing...
-// const endpoint = "http://localhost:4811/";
-
-// class orderInfo {
-//   constructor() {
-//     this.customer_ID;
-//     this.status;
-//     this.deliveryAdress;
-//     this.deliveryZipCode;
-//     this.deliveryCity;
-//     this.totalTax;
-//     this.totalPrice;
-//     this.shippingPrice;
-//     // SHOPPING CART
-//   }
-// }
-
-// class customerInfor {
-//   constructor() {
-//     this.firstName;
-//     this.lastName;
-//     this.adress;
-//     this.city;
-//     this.zipCode;
-//     this.email;
-//   }
-// }
-
-// function getOrderInput(event) {
-//   const orderForm = event.target.value;
-//   /*
-//     this.customer_ID;
-//     this.status;
-//     this.deliveryAdress;
-//     this.deliveryZipCode;
-//     this.deliveryCity;
-//     this.totalTax;
-//     this.totalPrice;
-//     this.shippingPrice;
-//   */
-//   const deliveryAdress = orderForm.deliveryAdress.value;
-//   const deliveryZipCode = orderForm.deliveryZipCode.value;
-//   const deliveryCity = orderForm.deliveryCity.value;
-// }
-
-export { testOrderSite };
+export { launchOrderSite };
