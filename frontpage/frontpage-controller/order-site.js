@@ -29,6 +29,12 @@ let emailValue;
 
 // list that stores all emails
 let customerEmialList;
+import { showPaymentScreen } from "../frontpage-view/display-checkout-site.js";
+// imports functions that makes it possible or impossible for the user to insert their input
+import {
+  disableCustomerOrderInput,
+  enableCustomerOrderInput,
+} from "../frontpage-view/toggle-customer-order-Input.js";
 
 // ----------- functions that controls the chek out flow -------------------------------------
 
@@ -55,43 +61,14 @@ function hideShoppingCartSite() {
   document.querySelector("#shopping_cart_site").classList.add("hidden");
 }
 
-// disables the order-form input
-function disableCustomerOrderInput() {
-  // document.querySelector("#insert_orderinfo").prop("disabled", true);
-  document.querySelector("#first_name_input").disabled = true;
-  document.querySelector("#last_name_input").disabled = true;
-  document.querySelector("#adress_input").disabled = true;
-  document.querySelector("#zip_code_input").disabled = true;
-  document.querySelector("#city_input").disabled = true;
-  document.querySelector("#delivery_adress_input").disabled = true;
-  document.querySelector("#delivery_zip_code_input").disabled = true;
-  document.querySelector("#delivery_city_input").disabled = true;
-  document.querySelector("#accept_payment_details_checkbox").disabled = true;
-  document.querySelector("#btn_submit_order_details").disabled = true;
-}
+// function hideFindExistingCustomerSearchbar() {
+//   document
+//     .querySelector("#search_existing_customer_by_email")
+//     .classList.add("hidden");
 
-// enables the oder-form input
-function enableCustomerOrderInput() {
-  document.querySelector("#first_name_input").disabled = false;
-  document.querySelector("#last_name_input").disabled = false;
-  document.querySelector("#adress_input").disabled = false;
-  document.querySelector("#zip_code_input").disabled = false;
-  document.querySelector("#city_input").disabled = false;
-  document.querySelector("#delivery_adress_input").disabled = false;
-  document.querySelector("#delivery_zip_code_input").disabled = false;
-  document.querySelector("#delivery_city_input").disabled = false;
-  document.querySelector("#accept_payment_details_checkbox").disabled = false;
-  document.querySelector("#btn_submit_order_details").disabled = false;
-}
-
-function hideFindExistingCustomerSearchbar() {
-  document
-    .querySelector("#search_existing_customer_by_email")
-    .classList.add("hidden");
-
-  // her skal vi så aktivere input feltet
-  enableCustomerOrderInput();
-}
+//   // her skal vi så aktivere input feltet
+//   enableCustomerOrderInput();
+// }
 
 function setOrderSiteEventListeners() {
   // activates the new-customer and existing-customer buttons
@@ -341,46 +318,4 @@ async function newCustomerOrder(newCustomerData) {
   }
 }
 
-function showPaymentScreen() {
-  disableCustomerOrderInput();
-  console.log("you have completed the order process and must now pay!");
-  document.querySelector("#payment_details_screen").innerHTML = "";
-  const number = fecthMobilePaymenyNo();
-  const messageHTML =
-    /*html*/
-    `
-  <p> Din ordre er nu booket! For at færdiggøre din bestilling skal du overføre ${displayedTotalPrice} DKK, til 3dprintservice mobilepay på nummeret: ${number}</p>
-  <button id="btn_finish_payment">Til forsiden</button>
-  `;
-
-  document
-    .querySelector("#payment_details_screen")
-    .insertAdjacentHTML("beforeend", messageHTML);
-  // add eventlistener for the paymeny-completed screen!
-  document
-    .querySelector("#btn_finish_payment")
-    .addEventListener("click", showFinishPaymentScreen);
-}
-
-function fecthMobilePaymenyNo() {
-  /* ----------------------------------------------------- INSERT FETCH-FUNCTION HERE! */
-  const testNo = "70121416";
-  return testNo;
-}
-
-function showFinishPaymentScreen() {
-  console.log("Complete the payment process!");
-  document.querySelector("#payment_details_screen").innerHTML = "";
-
-  const html = /*html*/ `<p>
-      Tak for din bestilling. Pengene vil først blive overført når odren er
-      produceret og afsendt. Du modtager en mail når odren sendes. Tak fordi du
-      valgte at handle hos 3dPrinstServicce.
-    </p>`;
-
-  document
-    .querySelector("#payment_details_screen")
-    .insertAdjacentHTML("beforeend", html);
-}
-
-export { launchOrderSite };
+export { launchOrderSite, disableCustomerOrderInput, displayedTotalPrice };

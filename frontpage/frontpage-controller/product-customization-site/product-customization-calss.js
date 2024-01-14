@@ -145,13 +145,12 @@ export class product {
 
     </div>
     <div id="selectProductSize">
-    <p id="showSliderSize">Valgte højde 15 cm</p>
+    <p id="showSliderSize">Valgte størrelse 15 cm</p>
        <label for="productSizeSlider">Størrelse</label>
                 <input type="range" min="1" max="30" value="15" name="size" id="productSizeSlider">
                
     </div>
 
-    <p id="productWeight"> Udrgenede vægt pr. produkt: XXXX gram </p>
     <p id="produktMaterialName"> Produktet bliver printet i: PLA</p>
     
     
@@ -269,7 +268,7 @@ export class product {
     // console.log("The size is ", event.target.value, " CM");
     document.querySelector(
       "#showSliderSize"
-    ).innerHTML = `Valgte højde ${this.productSize} cm`;
+    ).innerHTML = `Valgte størrelse ${this.productSize} cm`;
   }
 
   setProductSize(sizeInput) {
