@@ -4,31 +4,16 @@ const endpoint = "https://3dprintservice.azurewebsites.net/";
 import { fetchCustomerEmailData } from "../frontpage-model/fetch-data.js";
 // the shopping cart!
 import { shoppingCart } from "./product-customization-site/shopping-cart.js";
-
 import { clearShoppingCartHTML } from "./product-customization-site/shopping-cart.js";
-
 // imports the function that calculates total tax and price
 import { calculateTotalPrice } from "./product-customization-site/price-calculation.js";
-
 // import the rest-api from the model folder
 import {
   postOrderCustomerIsExisting,
   postOrderCustomerIsNew,
 } from "../frontpage-model/rest-api/make-order.js";
 import { putExistingCustomer } from "../frontpage-model/rest-api/customer.js";
-
-const shippingCosts = 39.5;
-
-let customer_ID;
-
-// set if the customer confirms theat they are in the database already
-let customerIsNew = true;
-let displayedTotalPrice;
-
-let emailValue;
-
-// list that stores all emails
-let customerEmialList;
+import { fetchSystemVariables } from "../frontpage-model/fetch-data.js";
 import { showPaymentScreen } from "../frontpage-view/display-checkout-site.js";
 // imports functions that makes it possible or impossible for the user to insert their input
 import {
@@ -36,23 +21,38 @@ import {
   enableCustomerOrderInput,
 } from "../frontpage-view/toggle-customer-order-Input.js";
 
+// list that stores all emails
+let customerEmialList;
+// stores the value for the shipping cost
+let shippingCosts;
+// stores the id fot the selected customer
+let customer_ID;
+// set if the customer confirms theat they are in the database already
+let customerIsNew = true;
+// stores the value for the calculated total price
+let displayedTotalPrice;
+// stores the customer email input
+let emailValue;
+
 // ----------- functions that controls the chek out flow -------------------------------------
 
 async function launchOrderSite() {
   console.log("testing-the-order-site!");
+
   // activates the eventlisteners for the checkout-flow
   setOrderSiteEventListeners();
 
   // her skal vi deaktivere input
   disableCustomerOrderInput();
 
+  const systemVariableData = await fetchSystemVariables();
+  shippingCosts = systemVariableData[0].ShippingPrice;
+
   // fetches all customer emails
   customerEmialList = await fetchCustomerEmailData();
   console.log("all emails: ", customerEmialList);
   // removes the displayed shopping cart
   hideShoppingCartSite();
-
-  // resetChekOutSite();
 }
 
 function hideShoppingCartSite() {
@@ -60,15 +60,6 @@ function hideShoppingCartSite() {
   // hides the shopping cart container including the to-chek-out-butten
   document.querySelector("#shopping_cart_site").classList.add("hidden");
 }
-
-// function hideFindExistingCustomerSearchbar() {
-//   document
-//     .querySelector("#search_existing_customer_by_email")
-//     .classList.add("hidden");
-
-//   // her skal vi så aktivere input feltet
-//   enableCustomerOrderInput();
-// }
 
 function setOrderSiteEventListeners() {
   // activates the new-customer and existing-customer buttons
@@ -83,8 +74,6 @@ function setOrderSiteEventListeners() {
     .querySelector("#retrive_customer_by_email")
     .addEventListener("submit", findCustomerByEmail);
 }
-
-// --------------------------------------------------------------------------------------------------------------
 
 async function findCustomerByEmail(event) {
   event.preventDefault();
@@ -105,7 +94,6 @@ async function findCustomerByEmail(event) {
   }
   if (match === false) {
     customerIsNew = true;
-    // findCustomerByEmailErrorMessage();
   }
 
   // her skal vi så aktivere input feltet
@@ -122,19 +110,19 @@ async function retrieveCustomerInformation(customerEmail) {
   return data;
 }
 
-// set all the text inputs to blank
-function clearOrderForm() {
-  const form = document.querySelector("#order_details_form");
+// // set all the text inputs to blank
+// function clearOrderForm() {
+//   const form = document.querySelector("#order_details_form");
 
-  form.firstName.value = " ";
-  form.lastName.value = " ";
-  form.adress.value = " ";
-  form.zipCode.value = " ";
-  form.city.value = " ";
-  form.deliveryAdress.value = " ";
-  form.deliveryZipCode.value = " ";
-  form.deliveryCity.value = " ";
-}
+//   form.firstName.value = " ";
+//   form.lastName.value = " ";
+//   form.adress.value = " ";
+//   form.zipCode.value = " ";
+//   form.city.value = " ";
+//   form.deliveryAdress.value = " ";
+//   form.deliveryZipCode.value = " ";
+//   form.deliveryCity.value = " ";
+// }
 
 function autofillCustomerInformation(retrievedCustomer) {
   const customer = retrievedCustomer[0];
@@ -152,43 +140,8 @@ function autofillCustomerInformation(retrievedCustomer) {
   form.deliveryCity.value = customer.City;
 }
 
-// // all
-// let accumulatedItemTax = 0.0;
-// let accumulatedItemPrices = 0.0;
-
-// -------------------------------------------- Email validation --------------------------------------------------
-
-// function validateCustomerEmail(emailInput) {
-//   console.log("check customer email: ", emailInput);
-//   if (customerIsNew === true) {
-//     const emailIsUnique = customerEmialList.forEach(checkIfEmailIsUnique);
-//     if (emailIsUnique != true) {
-//       console.log("ERROR - email is already in system!");
-//       emailValdiated = false;
-//     } else {
-//       emailValdiated = true;
-//     }
-//   } else if (customerIsNew === false) {
-//     emailValdiated = true;
-//   }
-
-//   function checkIfEmailIsUnique(emailListElement) {
-//     console.log("for each: ", emailListElement.Email, " === ", emailInput);
-//     if (emailListElement.Email === emailInput) {
-//       return true;
-//     }
-//   }
-//   return emailInput;
-// }
-
-// ----------------------------------------------------------------------------------------------------------------------------
-
 function submitOrderInformation(event) {
   event.preventDefault();
-
-  /* --------------------------------------- at this point the customer form should be hidden from the user? There should be a return button! */
-  // resets the form
-  // clearOrderForm();
 
   // list for all products linked to the order
   const Order_Lines = [];
@@ -220,12 +173,7 @@ function submitOrderInformation(event) {
     };
     Order_Lines.push(newOrderLine);
 
-    // I need the bundel versions as well - including the bundled tax. I need to show the end cusomer both? Or just be able to calculate them - when ever???
     console.log("the order line is: ", newOrderLine);
-    // const totalPrice = Number(product.bundlePrice);
-    // calcualteTotalOrderPrice(totalPrice);
-    // const totalTax = Number(product.bundleTax);
-    // calcualteTotalOrderTax(totalTax);
   }
 
   //--- the object is with a capital
@@ -263,14 +211,6 @@ function submitOrderInformation(event) {
   displayedTotalPrice = OdrderInfo.totalPrice + shippingCosts;
   processCompleteOrder(order);
 }
-
-// function checkIfOrderInformationIsValid() {
-//   if (emailValdiated === true) {
-//     return true;
-//   } else {
-//     return false;
-//   }
-// }
 
 function processCompleteOrder(order) {
   console.log("The complete order is: ", order);
