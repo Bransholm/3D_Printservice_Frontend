@@ -1,4 +1,3 @@
-// Eksempel på en klasse.
 export class catalogueItem {
   // Klassens constructor tager vores fetchede-data-objekt som argument og sætter Klassens Atrributter lig Objektets properties.
   constructor(catalogueObject) {
@@ -11,14 +10,31 @@ export class catalogueItem {
     this.category = catalogueObject.Category;
   }
 
+  calculateStandardPrice(tax, basePrice, stockPrice) {
+    const costPrGram = stockPrice / 1000;
+    const productPrice = (
+      (costPrGram * this.standardWeight + Number(basePrice)) *
+      Number(tax) *
+      tax
+    ).toFixed(2);
+
+    return productPrice;
+  }
+
   // I klassens render-metode bliver HTML'en til vores DOM lavet.
   // Catalog DOM
-  render() {
+  render(tax, basePrice, stockPrice) {
     const catalogueHTML =
       /*html*/
       `
     <article>
-    ${this.renderBasicInformation()}
+        <h3>${this.title}</h3>
+        <img
+          src="../images/${this.imageLink}"
+          alt="Produktbillede ${this.title}"
+        />
+        <p>${this.calculateStandardPrice(tax, basePrice, stockPrice)} DKK</p>
+        <p>Kategori: ${this.category}</p>
     <button class="btn-view-product" >Se Produkt</button>
     </article>
     `;
