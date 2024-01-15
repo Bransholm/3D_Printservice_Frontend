@@ -254,9 +254,9 @@ export class product {
       -this.calculateDifferenceConstant(sizeDifference);
     console.log("negative: ", negativeDifferance);
     return (
-      this.materialPrice /
-        1000 /
-        (this.catalogueInfo.standardWeight * (1 + negativeDifferance)) +
+      (this.materialPrice /
+        1000) *
+        (this.catalogueInfo.standardWeight / (1 + negativeDifferance)) +
       constant
     );
   }
