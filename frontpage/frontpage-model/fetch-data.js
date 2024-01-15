@@ -5,16 +5,14 @@ import {
 
 const endpoint = "https://3dprintservice.azurewebsites.net/";
 
-const localEndpoint = "http://localhost:4811/";
-
 async function fetchSystemVariables() {
-  const response = await fetch(`${localEndpoint}/variables`);
+  const response = await fetch(`${endpoint}/variables`);
   const variableData = await response.json();
   return variableData;
 }
 
 async function fetchCustomerByEmail(input) {
-  const response = await fetch(`${localEndpoint}/customer?email=${input}`);
+  const response = await fetch(`${endpoint}/customer?email=${input}`);
   const customerData = await response.json();
   return customerData;
 }
