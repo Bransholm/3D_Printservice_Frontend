@@ -226,6 +226,7 @@ export class product {
 
   calculateDifferenceConstant(sizeDifference) {
     const differenceConstant = 1 + sizeDifference / 10;
+    console.log("diffConstant: ", differenceConstant);
     return differenceConstant;
   }
 
