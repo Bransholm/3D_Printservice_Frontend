@@ -2,8 +2,6 @@
 
 // this function create classes for catalogue items
 export function createCatalogClasses(dataList, classType) {
-  console.log("No.1 createCatalogClasses");
-  // Opret en tom liste så hvert objekt vi fetcher kan komme ind som en instans af en klasse
   const instanceList = [];
 
   // Loop to fetch the data

@@ -10,7 +10,7 @@ export class stockMaterial {
   }
 
   showStockAvailability() {
-    if (this.active == 0) {
+    if (this.active == 1) {
       return "På Lager";
     } else {
       return "Udsolgt";
@@ -25,7 +25,7 @@ export class stockMaterial {
   <tr>
     <td>${this.material}</td>
     <td>${this.name}</td>
-    <td>${this.colour} cm</td>
+    <td>${this.colour}</td>
     <td>${this.gramInStock} gram</td>
     <td> ${availability} </td>
     <td>${this.salesPrice} dkk/kg</td>

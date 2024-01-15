@@ -17,10 +17,9 @@ import { callRenderMethod } from "./render-controller.js";
 
 import { filterContent, searchContent } from "./catalogue-filter-search.js";
 
-// test-function that runs the post-order-API
-import { testMakeOrder } from "../frontpage-model/rest-api/make-order.js";
 // test-function that creates a new order!
-import { testOrderSite } from "./order-site.js";
+import { launchOrderSite } from "./order-site.js";
+
 
 window.addEventListener("load", start);
 
@@ -37,7 +36,7 @@ function start() {
 function testStartNewOrder() {
   document
     .querySelector("#btn_place_order")
-    .addEventListener("click", testOrderSite);
+    .addEventListener("click", launchOrderSite);
 }
 
 // Dette er en test funktion der skal se om vi kan hente data:
