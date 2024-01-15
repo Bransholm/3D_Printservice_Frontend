@@ -147,7 +147,7 @@ export class product {
     <div id="selectProductSize">
     <p id="showSliderSize">Valgte størrelse 15 cm</p>
        <label for="productSizeSlider">Størrelse</label>
-                <input type="range" min="5" max="25" value="15" name="size" id="productSizeSlider">
+                <input type="range" min="5" max="30" value="15" name="size" id="productSizeSlider">
                
     </div>
 
@@ -254,8 +254,7 @@ export class product {
       -this.calculateDifferenceConstant(sizeDifference);
     console.log("negative: ", negativeDifferance);
     return (
-      (this.materialPrice /
-        1000) *
+      (this.materialPrice / 1000) *
         (this.catalogueInfo.standardWeight / (1 + negativeDifferance)) +
       constant
     );
