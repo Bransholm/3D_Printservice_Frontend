@@ -11,7 +11,6 @@ let stockInStorage;
 let customizedProduct;
 let selectedCatalougeItem;
 
-
 export async function viewButtonClicked(catalougeItem) {
   selectedCatalougeItem = catalougeItem;
   // Sets the id for the chosen catalogue item
@@ -28,6 +27,7 @@ export async function viewButtonClicked(catalougeItem) {
   customizedProduct = new product(selectedCatalougeItem.id);
   // calls the method that creates an instance of the catalouge-item-class inside the product-class
   await customizedProduct.initCatalogueItem();
+  await customizedProduct.initSystemVariables();
 
   // Sets the product DOM with information from the chosen catalogue item
   showCustomizeProductSite(customizedProduct);

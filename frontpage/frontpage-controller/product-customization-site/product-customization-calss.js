@@ -2,6 +2,7 @@
 import {
   getCatalougeItemById,
   getStockItemById,
+  fetchSystemVariables,
 } from "../../frontpage-model/fetch-data.js";
 
 // imports the existing classes for stock-materials and catalouge-items
@@ -33,6 +34,12 @@ export class product {
     this.colour;
     // "name" referes to the material description.
     this.name;
+  }
+
+  async initSystemVariables() {
+    const systemsData = await fetchSystemVariables();
+    this.systemTax = Number(systemsData[0].Tax);
+    this.systemBasePrice = Number(systemsData[0].PriceCalculationForm);
   }
 
   async initCatalogueItem() {
@@ -210,12 +217,9 @@ export class product {
   }
 
   setCompleteProductPrice() {
-    const tax = 1.25;
-    const constant = 30;
-
     document.querySelector("#productPrice").innerHTML = "";
 
-    this.setItemBasePrice(tax, constant);
+    this.setItemBasePrice();
   }
 
   calculateSizeDifference() {
@@ -230,50 +234,44 @@ export class product {
     return differenceConstant;
   }
 
-  setItemBasePrice(tax, constant) {
+  setItemBasePrice() {
     const sizeDifference = this.calculateSizeDifference();
     console.log("sizeDiff: ", sizeDifference);
     if (sizeDifference >= 0) {
       console.log("number is positive");
-      this.itemPriceWithoutTax = this.setItemPriceIfSizeDifferenceIsPositive(
-        constant,
-        sizeDifference
-      );
+      this.itemPriceWithoutTax =
+        this.setItemPriceIfSizeDifferenceIsPositive(sizeDifference);
     } else {
       console.log("number is negative");
-      this.itemPriceWithoutTax = this.setItemPriceIfSizeDifferenceIsNegative(
-        constant,
-        sizeDifference
-      );
+      this.itemPriceWithoutTax =
+        this.setItemPriceIfSizeDifferenceIsNegative(sizeDifference);
     }
-    this.setItemPrice(tax);
+    this.setItemPrice();
   }
 
-  setItemPriceIfSizeDifferenceIsNegative(constant, sizeDifference) {
+  setItemPriceIfSizeDifferenceIsNegative(sizeDifference) {
     const negativeDifferance =
       -this.calculateDifferenceConstant(sizeDifference);
     console.log("negative: ", negativeDifferance);
     return (
       (this.materialPrice / 1000) *
         (this.catalogueInfo.standardWeight / (1 + negativeDifferance)) +
-      constant
+      this.systemBasePrice
     );
   }
 
-  setItemPriceIfSizeDifferenceIsPositive(constant, sizeDifference) {
+  setItemPriceIfSizeDifferenceIsPositive(sizeDifference) {
     return (
       (this.materialPrice / 1000) *
         (this.catalogueInfo.standardWeight *
           (1 + this.calculateDifferenceConstant(sizeDifference))) +
-      constant
+      this.systemBasePrice
     );
   }
 
-  // (this.materialPrice / 1000) * (this.productSize * constant * this.catalogueInfo.standardWeight);
-
-  setItemPrice(tax) {
+  setItemPrice() {
     // calculates price pr. individual item
-    this.itemPrice = (this.itemPriceWithoutTax * tax).toFixed(2);
+    this.itemPrice = (this.itemPriceWithoutTax * this.systemTax).toFixed(2);
     this.setSingleProductTax();
   }
 
