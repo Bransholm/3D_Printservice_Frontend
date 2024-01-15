@@ -226,6 +226,7 @@ export class product {
 
   calculateDifferenceConstant(sizeDifference) {
     const differenceConstant = sizeDifference / 10;
+    console.log("diffConst ", differenceConstant);
     return differenceConstant;
   }
 
@@ -249,10 +250,13 @@ export class product {
   }
 
   setItemPriceIfSizeDifferenceIsNegative(constant, sizeDifference) {
+    const negativeDifferance =
+      -this.calculateDifferenceConstant(sizeDifference);
+    console.log("negative: ", negativeDifferance);
     return (
-      (this.materialPrice / 1000) *
-        (this.catalogueInfo.standardWeight /
-          (1 + this.calculateDifferenceConstant(sizeDifference))) +
+      this.materialPrice /
+        1000 /
+        (this.catalogueInfo.standardWeight * (1 + negativeDifferance)) +
       constant
     );
   }
