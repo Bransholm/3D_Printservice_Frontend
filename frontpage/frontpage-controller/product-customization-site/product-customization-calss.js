@@ -147,7 +147,7 @@ export class product {
     <div id="selectProductSize">
     <p id="showSliderSize">Valgte størrelse 15 cm</p>
        <label for="productSizeSlider">Størrelse</label>
-                <input type="range" min="1" max="30" value="15" name="size" id="productSizeSlider">
+                <input type="range" min="5" max="25" value="15" name="size" id="productSizeSlider">
                
     </div>
 
@@ -211,13 +211,16 @@ export class product {
 
   setCompleteProductPrice() {
     const tax = 1.25;
+    const constant = 1.8
+
     document.querySelector("#productPrice").innerHTML = "";
-    this.setItemBasePrice(tax);
+    
+    this.setItemBasePrice(tax, constant);
   }
 
-  setItemBasePrice(tax) {
+  setItemBasePrice(tax, constant) {
     this.itemPriceWithoutTax =
-      (this.materialPrice / 1000) * (this.productSize * 1.8);
+      (this.materialPrice / 1000) * (this.productSize * constant);
     this.setItemPrice(tax);
   }
 
