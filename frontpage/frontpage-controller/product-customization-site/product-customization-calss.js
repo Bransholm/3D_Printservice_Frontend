@@ -211,18 +211,62 @@ export class product {
 
   setCompleteProductPrice() {
     const tax = 1.25;
-    const constant = 1.8
+    const constant = 30;
 
     document.querySelector("#productPrice").innerHTML = "";
-    
+
     this.setItemBasePrice(tax, constant);
   }
 
+  calculateSizeDifference() {
+    const result =
+      Number(this.productSize) - Number(this.catalogueInfo.standardSize);
+    return result;
+  }
+
+  calculateDifferenceConstant(sizeDifference) {
+    const differenceConstant = 1 + sizeDifference / 10;
+    return differenceConstant;
+  }
+
   setItemBasePrice(tax, constant) {
-    this.itemPriceWithoutTax =
-      (this.materialPrice / 1000) * (this.productSize * constant);
+    const sizeDifference = this.calculateSizeDifference();
+    console.log("sizeDiff: ", sizeDifference);
+    if (sizeDifference >= 0) {
+      console.log("number is positive");
+      this.itemPriceWithoutTax = this.setItemPriceIfSizeDifferenceIsPositive(
+        constant,
+        sizeDifference
+      );
+    } else {
+      console.log("number is negative");
+      this.itemPriceWithoutTax = this.setItemPriceIfSizeDifferenceIsNegative(
+        constant,
+        sizeDifference
+      );
+    }
     this.setItemPrice(tax);
   }
+
+  setItemPriceIfSizeDifferenceIsNegative(constant, sizeDifference) {
+    return (
+      (this.materialPrice / 1000) *
+        (this.catalogueInfo.standardWeight /
+          (1 + this.calculateDifferenceConstant(sizeDifference))) +
+      constant
+    );
+  }
+
+  setItemPriceIfSizeDifferenceIsPositive(constant, sizeDifference) {
+    return (
+      (this.materialPrice / 1000) *
+        (this.catalogueInfo.standardWeight *
+          (1 + this.calculateDifferenceConstant(sizeDifference))) +
+      constant
+    );
+  }
+
+  // (this.materialPrice / 1000) * (this.productSize * constant * this.catalogueInfo.standardWeight);
 
   setItemPrice(tax) {
     // calculates price pr. individual item
