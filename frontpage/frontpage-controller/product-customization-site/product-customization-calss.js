@@ -236,6 +236,7 @@ export class product {
   setItemBasePrice() {
     const sizeDifference = this.calculateSizeDifference();
     console.log("sizeDiff: ", sizeDifference);
+
     if (sizeDifference >= 0) {
       console.log("number is positive");
       this.itemPriceWithoutTax =
@@ -296,18 +297,6 @@ export class product {
     ).innerHTML = `Pris: ${this.bundlePrice} DKK`;
   }
 
-  /* WILL THIS WORK.................................................................*/
-  // limitDecimals(numb) {
-  //   numb = numb.toFixed(2);
-  //   notString(numb);
-  // }
-
-  // notString(numb) {
-  //  numb = Number(numb);
-  // }
-
-  // first of we calculate the price without tax.
-  // then we calculate the price with the tax - then subtract to know what the tax is.
 
   // Alteres the size information showed to the customer
   setProductSizeInfo() {
