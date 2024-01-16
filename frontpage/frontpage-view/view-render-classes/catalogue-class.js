@@ -27,7 +27,7 @@ export class catalogueItem {
       /*html*/
       `
       <article>
-      <a href="#product_by_id" class="view-link">
+      <a href="#product_by_id" class="view-link catalogue-item-link-styleing">
       <h3>${this.title}</h3>
       <img
       src="../images/${this.imageLink}"
