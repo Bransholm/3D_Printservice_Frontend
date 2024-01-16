@@ -54,11 +54,11 @@ export class catalogueItem {
           src="../images/${this.imageLink}"
           alt="Produktbillede ${this.title}"
         />
-        <h3>Produkt Navn: ${this.title}</h3>
-        <p>Kategori: ${this.category}</p>
-        <p>Standard Størrelse: ${this.standardSize} cm</p>
-        <p>Standard Vægt: ${this.standardWeight} gram</p>
-        <p>Produkt Beskrivelse: ${this.itemDescription} </p>
+        <div class="catalouge-item-text">Produkt Navn: ${this.title}</div>
+        <div class="catalouge-item-text">Kategori: ${this.category}</div>
+        <div class="catalouge-item-text">Standard Størrelse: ${this.standardSize} cm</div>
+        <div class="catalouge-item-text">Standard Vægt: ${this.standardWeight} gram</div>
+        <div class="catalouge-item-text">Produkt Beskrivelse: ${this.itemDescription} </div>
       </div>`;
 
     return basicInformationHTML;

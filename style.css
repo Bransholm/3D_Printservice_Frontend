@@ -44,6 +44,11 @@ main {
   padding: 5px;
 }
 
+/* Single product site*/
+.catalouge-item-text {
+  padding: 2px;
+}
+
 /* View order */
 .view-order-form-label {
   display: inline-block;
@@ -107,6 +112,19 @@ footer {
 .hidden {
   display: none;
 }
+
+
+.customization-site-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.customization-site-grid-item {
+  padding: 20px;
+  border: solid
+  /* text-align: center; */
+} 
+
 
 /* informs the user that this button is selected */
 .btn-selected {
