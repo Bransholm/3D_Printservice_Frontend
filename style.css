@@ -23,7 +23,7 @@ header {
 /* Nav bar */
 nav {
   display: flex;
-  gap: 30px;
+  gap: 60px;
   background-color: black;
   padding-left: 20px;
   padding-right: 20px;
