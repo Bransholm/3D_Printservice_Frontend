@@ -46,7 +46,7 @@ async function launchOrderSite() {
   disableCustomerOrderInput();
 
   const systemVariableData = await fetchSystemVariables();
-  shippingCosts = systemVariableData[0].ShippingPrice;
+  shippingCosts = Number(systemVariableData[0].ShippingPrice);
 
   // fetches all customer emails
   customerEmialList = await fetchCustomerEmailData();
