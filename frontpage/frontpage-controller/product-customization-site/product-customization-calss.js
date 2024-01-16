@@ -153,9 +153,8 @@ export class product {
     </div>
     <div id="selectProductSize">
     <p id="showSliderSize">Valgte størrelse 15 cm</p>
-       <label for="productSizeSlider">Størrelse</label>
-                <input type="range" min="5" max="30" value="15" name="size" id="productSizeSlider">
-               
+      <label for="productSizeSlider">Størrelse - Ændrer den højde/bredde der er længst:</label><br>
+      <input type="range" min="5" max="30" value="15" name="size" id="productSizeSlider">
     </div>
 
     <p id="produktMaterialName"> Produktet bliver printet i: PLA</p>
