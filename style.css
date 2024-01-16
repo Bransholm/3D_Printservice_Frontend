@@ -119,11 +119,14 @@ footer {
   gap: 10px;
 }
 
-.grid-product-by-id {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 10px;
+.flex-container-product-by-id {
+  display: flex;
+  flex-wrap: wrap;
 }
+
+.flex-container-product-by-id-element {
+  padding-right: 70px;
+} 
 
 /* Change cursor to a pointer class */
 .change_cursor_to_a_pointer_on_hover:hover {

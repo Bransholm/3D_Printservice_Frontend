@@ -123,9 +123,9 @@ export class product {
       /*html*/
       `
 
-    <article class="grid-product-by-id">
+    <article class="flex-container-product-by-id">
     <!-- Here the HTML from the render method of the catalogue item class is inserted -->
-    <div>
+    <div class="flex-container-product-by-id-element">
     ${this.renderCatalougeHTML}
     </div>
 
