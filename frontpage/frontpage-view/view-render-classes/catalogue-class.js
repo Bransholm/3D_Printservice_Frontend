@@ -33,8 +33,13 @@ export class catalogueItem {
           src="../images/${this.imageLink}"
           alt="Produktbillede ${this.title}"
         />
-        <p>${this.calculateStandardPrice(tax, basePrice, stockPrice)} DKK</p>
-        <p>Kategori: ${this.category}</p>
+        <div class="catalogue-display-text">${this.calculateStandardPrice(
+          tax,
+          basePrice,
+          stockPrice
+        )} DKK
+        <br>        
+       Kategori: ${this.category}</div>
     <button class="btn-view-product" >Se Produkt</button>
     </article>
     `;

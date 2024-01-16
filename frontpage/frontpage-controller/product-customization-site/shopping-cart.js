@@ -7,8 +7,6 @@ const shoppingCart = [];
 
 // Cheks if an product instance has a doublicate in the system
 function checkForDoublets(newProduct) {
-  // console.log("This is your product: ", newProduct);
-  // console.log("number of cart items ", shoppingCart.length);
 
   // Cheks if the cart is empty
   if (shoppingCart.length > 0) {
@@ -36,7 +34,6 @@ function checkForDoublets(newProduct) {
 
 // checks if the material, catalogue item and size are matching
 function compareAttirbutes(cartProduct, newProduct) {
-  // console.log("This is  product in your mcart: ", product)
   return (
     cartProduct.catalogue_ID === newProduct.catalogue_ID &&
     cartProduct.stock_ID === newProduct.stock_ID &&
@@ -97,13 +94,11 @@ function showItemsInCart() {
 }
 
 function incrementProductAmountClicked(productInstance) {
-  // console.log("youre activating: ", productInstance);
   productInstance.incrementProductAmount();
   showItemsInCart();
 }
 
 function decrementProductAmountClicked(productInstance) {
-  // console.log("youre activating: ", productInstance);
   productInstance.decrementProductAmount();
   showItemsInCart();
 }

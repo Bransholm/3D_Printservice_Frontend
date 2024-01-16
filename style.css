@@ -39,6 +39,11 @@ main {
   padding: 20px;
 }
 
+/* Catalogue Site*/
+.catalogue-display-text {
+  padding: 5px;
+}
+
 /* View order */
 .view-order-form-label {
   display: inline-block;
