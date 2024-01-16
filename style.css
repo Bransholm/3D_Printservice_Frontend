@@ -87,12 +87,12 @@ footer {
   display: block;
 }
 
-.view-link {
+.view-link-menu {
   color: white;
   text-decoration: none;
 }
 
-.view-link:hover {
+.view-link-menu:hover {
   color: orange;
   text-decoration: none;
 }
