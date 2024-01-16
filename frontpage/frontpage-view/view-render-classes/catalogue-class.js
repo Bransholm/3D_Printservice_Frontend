@@ -28,7 +28,7 @@ export class catalogueItem {
       `
       <article>
       <a href="#product_by_id" class="view-link catalogue-item-link-styleing">
-      <h3>${this.title}</h3>
+      <h3 id="catalogue-item-headline">${this.title}</h3>
       <img
       src="../images/${this.imageLink}"
       alt="Produktbillede ${this.title}"
