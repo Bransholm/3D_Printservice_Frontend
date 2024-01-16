@@ -39,8 +39,8 @@ async function callRenderMethod(listOfInstances) {
     // what eventlisteners to add for a given instance needs to go here...
 
     document
-      .querySelector(`#product_catalogue article:last-child .btn-view-product`)
-      .addEventListener("click", () => viewButtonClicked(classInstance));
+      .querySelector(`#product_catalogue article:last-child`)
+      .addEventListener("click", () => viewButtonClicked(classInstance.id));
   }
 }
 
