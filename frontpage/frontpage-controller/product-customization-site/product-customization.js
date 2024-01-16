@@ -9,10 +9,11 @@ let stockInStorage;
 
 // the pro
 let customizedProduct;
-let selectedCatalougeItem;
+// let selectedCatalougeItem;
 
-export async function viewButtonClicked(catalougeItem) {
-  selectedCatalougeItem = catalougeItem;
+export async function viewButtonClicked(id) {
+  console.log("what did I clicked ", id);
+  // selectedCatalougeItem = catalougeItem;
   // Sets the id for the chosen catalogue item
   // const catalogueId = instance.id;
 
@@ -24,7 +25,7 @@ export async function viewButtonClicked(catalougeItem) {
   // console.log("The available stock", stockInStorage);
 
   // creates an instance of the product-class
-  customizedProduct = new product(selectedCatalougeItem.id);
+  customizedProduct = new product(id);
   // calls the method that creates an instance of the catalouge-item-class inside the product-class
   await customizedProduct.initCatalogueItem();
   await customizedProduct.initSystemVariables();
@@ -76,10 +77,24 @@ async function addProductToBasketBtnClicked() {
   // adds the product instance to the shopping cart
   await customizedProduct.initStockMaterial();
   addProductToBasket(customizedProduct);
+
+
+  // porductAddedToBasketMessageDialog();
   // -------------------------------------------------- set the stockInfo...
   // viewButtonClicked(selectedCatalougeItem);
   clearProductCustomizationSite();
 }
+
+
+  
+// function porductAddedToBasketMessageDialog(){
+// }
+
+// function closeProductAddedTobasketMessageDialog(){
+
+// }
+
+
 
 function clearProductCustomizationSite() {
   document.querySelector("#product_id").innerHTML = "";
