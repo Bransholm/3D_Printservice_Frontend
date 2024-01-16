@@ -111,7 +111,7 @@ export class product {
     const priceHTML =
       /*html*/
       `
-   <h3 id="productPrice"> Pris: ${this.bundlePrice} DKK</h3>
+   <h3 id="productPrice" class="product-by-id-h3"> Pris: ${this.bundlePrice} DKK</h3>
    `;
     return priceHTML;
   }
@@ -123,11 +123,14 @@ export class product {
       /*html*/
       `
 
-    <article>
+    <article class="grid-product-by-id">
     <!-- Here the HTML from the render method of the catalogue item class is inserted -->
+    <div>
     ${this.renderCatalougeHTML}
+    </div>
 
 
+    <div>
     ${this.renderPriceView()}
    
 
@@ -163,7 +166,7 @@ export class product {
         <button class="btn-add-basket" >Læg i kruv</button>
         <button class="btn-return-" >Forstæt shopping</button>
 
-    
+    </div>
 
 
 </article>

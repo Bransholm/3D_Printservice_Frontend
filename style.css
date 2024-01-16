@@ -55,6 +55,11 @@ main {
 }
 
 /* Single product site*/
+.product-by-id-h3 {
+  margin: 0px;
+  margin-bottom: 10px;
+}
+
 .catalouge-item-text {
   padding: 2px;
 }
@@ -108,6 +113,12 @@ footer {
 }
 
 .grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 10px;
+}
+
+.grid-product-by-id {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 10px;
