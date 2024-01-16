@@ -14,8 +14,7 @@ export class catalogueItem {
     const costPrGram = stockPrice / 1000;
     const productPrice = (
       (costPrGram * this.standardWeight + Number(basePrice)) *
-      Number(tax) *
-      tax
+      Number(tax)
     ).toFixed(2);
 
     return productPrice;
@@ -27,21 +26,25 @@ export class catalogueItem {
     const catalogueHTML =
       /*html*/
       `
-    <article>
-        <h3>${this.title}</h3>
-        <img
-          src="../images/${this.imageLink}"
-          alt="Produktbillede ${this.title}"
-        />
-        <div class="catalogue-display-text">${this.calculateStandardPrice(
-          tax,
-          basePrice,
-          stockPrice
-        )} DKK
+      <article>
+      <a href="#product_by_id" class="view-link">
+      <h3>${this.title}</h3>
+      <img
+      src="../images/${this.imageLink}"
+      alt="Produktbillede ${this.title}"
+      />
+      <div class="catalogue-display-text">${this.calculateStandardPrice(
+        tax,
+        basePrice,
+        stockPrice
+      )} DKK
         <br>        
-       Kategori: ${this.category}</div>
-    <button class="btn-view-product" >Se Produkt</button>
-    </article>
+        Kategori: ${this.category}</div>
+        
+        </a>
+        </article>
+   
+
     `;
     return catalogueHTML;
   }
