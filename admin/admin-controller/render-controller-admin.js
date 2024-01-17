@@ -1,5 +1,6 @@
 import { deleteCatalogueItem } from "../admin-model/backend-routes/catalouge-routes/catalogue-delete.js";
 import { getCatalogueItemsData } from "./admin-main.js";
+import { updateCatalogueDataAutofill } from "./create-update-forms/update-catalogue-item.js";
 
 // Calling render methode for catalogue items
 function callRenderMethodeForCatalogueItems(listOfInstances, htmlId) {
@@ -55,6 +56,8 @@ function callRenderMethodeForCatalogueItems(listOfInstances, htmlId) {
   // update the selected catalogue item
   function updateCatalogueItemButtonClicked(instance) {
     console.log("Update Item Clicked:", instance.id);
+    //... Her skal min auto-fill være for update-formen
+    updateCatalogueDataAutofill(instance);
   }
 }
 
