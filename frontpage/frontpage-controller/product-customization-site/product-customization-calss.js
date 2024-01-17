@@ -159,11 +159,14 @@ export class product {
 
     <p id="produktMaterialName"> Produktet bliver printet i: PLA</p>
     
-    
-        <button class="btn-add-basket" >Læg i kruv</button>
-        <button class="btn-return-" >Forstæt shopping</button>
+    <a href="#special_products" class="view-link view-link-menu">
+    <button class="btn-add-basket change_cursor_to_a_pointer_on_hover" >Læg i kruv</button>
+    </a>
 
-    
+    <a href="#products" class="view-link view-link-menu">
+        <button class="btn-continiue-shopping change_cursor_to_a_pointer_on_hover" >Forstæt shopping</button>
+        </a>
+
 
 
 </article>
@@ -296,7 +299,6 @@ export class product {
       "#productPrice"
     ).innerHTML = `Pris: ${this.bundlePrice} DKK`;
   }
-
 
   // Alteres the size information showed to the customer
   setProductSizeInfo() {
