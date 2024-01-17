@@ -1,5 +1,9 @@
 import { displayedTotalPrice } from "../frontpage-controller/order-site.js";
 import { fetchSystemVariables } from "../frontpage-model/fetch-data.js";
+import {
+  shoppingCart,
+  clearShoppingCartHTML,
+} from "../frontpage-controller/product-customization-site/shopping-cart.js";
 
 //import showFinishPaymentScreen
 async function showPaymentScreen() {
@@ -23,6 +27,8 @@ async function showPaymentScreen() {
   document
     .querySelector("#btn_finish_payment")
     .addEventListener("click", showFinishPaymentScreen);
+
+  resetSiteAfterSuccessfullOrder();
 }
 
 async function fecthMobilePaymenyNo() {
@@ -48,12 +54,25 @@ function showFinishPaymentScreen() {
   document
     .querySelector("#payment-information-message")
     .insertAdjacentHTML("beforeend", messageHTML);
-
-  resetSiteAfterSuccessfullPurchase();
 }
 
-function resetSiteAfterSuccessfullPurchase() {
+function resetSiteAfterSuccessfullOrder() {
+  uncheckTermsAndConditionsCheckBox();
+  clearAllShoppingCartItems();
   console.log("NOW RESET THE SHOPPING CART AND CLEAR ALL INPUTS");
+}
+
+function uncheckTermsAndConditionsCheckBox() {
+  document.querySelector("#accept_payment_details_checkbox").checked = false;
+}
+
+function clearAllShoppingCartItems() {
+  // clear all elements in the shopping cart
+  shoppingCart.splice(0, shoppingCart.length);
+  // clear the shopping cart html
+  clearShoppingCartHTML();
+  // removes the totalprice shown at checkout site
+ document.querySelector("#shopping_cart_price_iformation").innerHTML = "";
 }
 
 export { showPaymentScreen };
