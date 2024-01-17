@@ -98,10 +98,10 @@ export class product {
   //-------------------------------------------------------------
   renderAmountSelectionSection() {
     const amountSelectionHTML = /*html*/ `
-    <div id="selectAmount">
-    <button class="btn_increment_amount"> + </button>
-    <p id="selectProductAmount">Antal ${this.amount} stk</p>
+    <div id="selectAmount">Antal:
     <button class="btn_decrement_amount"> - </button>
+    <span id="selectProductAmount"> ${this.amount} stk</span>
+    <button class="btn_increment_amount"> + </button>
     </div>
     `;
     return amountSelectionHTML;
@@ -138,15 +138,15 @@ export class product {
 
     <div id="selectMaterial">
     
-    <label for="chosenMaterial">Materiale</label>
+    <label for="chosenMaterial">Materiale: </label>
                 <select name="material" id="chosenMaterial">
                 <option value="blød">Blød</option>
                 <option value="elastisk">Elastisk</option>
                 <option value="hård">Hård</option>
-                </select>
+                </select><br>
 
 
-      <label for="chosenColour">Farve</label>
+      <label for="chosenColour">Farve: </label>
                 <select name="colour" id="chosenColour">
                 </select>
 
@@ -156,8 +156,9 @@ export class product {
     </div>
     <div id="selectProductSize">
     <p id="showSliderSize">Valgte størrelse 15 cm</p>
-      <label for="productSizeSlider">Størrelse - Ændrer den højde/bredde der er længst:</label><br>
-      <input type="range" min="5" max="30" value="15" name="size" id="productSizeSlider">
+      <label for="productSizeSlider">Ændre størrelse: </label>
+      <input type="range" min="5" max="30" value="15" name="size" id="productSizeSlider"><br>
+      <span>(Størrelse ændrer den højde/bredde der er længst)</span>
     </div>
 
     <p id="produktMaterialName"> Produktet bliver printet i: PLA</p>
