@@ -163,7 +163,7 @@ export class product {
 
     <p id="produktMaterialName"> Produktet bliver printet i: PLA</p>
     
-    <a href="#special_products" class="view-link view-link-menu">
+    <a href="#shopping_cart" class="view-link view-link-menu">
     <button class="btn-add-basket change_cursor_to_a_pointer_on_hover" >Læg i kruv</button>
     </a>
 
