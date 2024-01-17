@@ -56,12 +56,13 @@ function showFinishPaymentScreen() {
     .insertAdjacentHTML("beforeend", messageHTML);
 }
 
+// resets the order site after an order is made
 function resetSiteAfterSuccessfullOrder() {
   uncheckTermsAndConditionsCheckBox();
   clearAllShoppingCartItems();
-  console.log("NOW RESET THE SHOPPING CART AND CLEAR ALL INPUTS");
 }
 
+// unticks the agree to terms and conditions checkbox
 function uncheckTermsAndConditionsCheckBox() {
   document.querySelector("#accept_payment_details_checkbox").checked = false;
 }
