@@ -1,4 +1,4 @@
-const endpoint = "https://3dprintservice.azurewebsites.net/";
+import { endpoint } from "../../../frontpage/frontpage-model/endpoint.js";
 
 async function stockUpdateRoute(stockData, id) {
   // console.log("PUTTING: ", data);

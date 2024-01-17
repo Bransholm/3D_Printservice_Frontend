@@ -51,11 +51,7 @@ async function launchOrderSite() {
   // fetches all customer emails
   customerEmialList = await fetchCustomerEmailData();
   console.log("all emails: ", customerEmialList);
-
-
 }
-
-
 
 function setOrderSiteEventListeners() {
   // activates the new-customer and existing-customer buttons
@@ -209,11 +205,15 @@ function submitOrderInformation(event) {
 }
 
 function processCompleteOrder(order) {
-  console.log("The complete order is: ", order);
-  if (customerIsNew === true) {
-    newCustomerOrder(order);
+  if (shoppingCart.length > 0) {
+    console.log("The complete order is: ", order);
+    if (customerIsNew === true) {
+      newCustomerOrder(order);
+    } else {
+      exsitingCustomerOrder(order);
+    }
   } else {
-    exsitingCustomerOrder(order);
+    console.log("ERROR: Shopping cart must contain items!");
   }
 }
 

@@ -188,11 +188,11 @@ export class product {
       /*html*/
       `
       <article>
-      ${this.renderCatalougeHTML}
-      <p> Ønskede størrelse: ${this.productSize} cm</p>
-      <p> Farve: ${this.colour}</p>
-      <p> Materale beskrivele: ${this.name}</p>
-      <p> Platsik type: ${this.material}</p>
+      <div> Produkt navn: ${this.catalogueInfo.title}</div>
+      <div> Ønskede størrelse: ${this.productSize} cm</div>
+      <div> Farve: ${this.colour}</div>
+      <div> Materale beskrivele: ${this.name}</div>
+      <div> Platsik type: ${this.material}</div>
       ${this.renderPriceView()}
       ${this.renderAmountSelectionSection()}
       <button class="btn_remove_cart_item">Fjern</button>

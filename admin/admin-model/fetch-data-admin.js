@@ -1,10 +1,9 @@
-const endpoint = "https://3dprintservice.azurewebsites.net/";
+import { endpoint } from "../../frontpage/frontpage-model/endpoint.js";
 
 // fetching catalogue data
 async function getCatalogueData() {
   console.log("get data to admin");
-  const response = await fetch(
-    `${endpoint}/catalogue`);
+  const response = await fetch(`${endpoint}/catalogue`);
   const catalogueData = await response.json();
   return catalogueData;
 }
