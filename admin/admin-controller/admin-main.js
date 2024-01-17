@@ -1,9 +1,6 @@
 "use strict";
 window.addEventListener("load", startAdmin);
 
-let catalogueId;
-const endpoint = "https://3dprintservice.azurewebsites.net/";
-
 // Imports the update route for strockMaterials
 import { createNewCatalogueItem } from "./create-update-forms/create-new-catelogue-item.js";
 import {
@@ -29,7 +26,19 @@ function startAdmin() {
 
   startEvendListernes();
 
-  getDataController();
+  // getDataController();
+  getStockMaterialData();
+  getCatalogueItemsData();
+}
+
+async function getCatalogueItemsData() {
+  const catalougeItemObjects = await getCatalogueData();
+  showCatalouge(catalougeItemObjects);
+}
+
+async function getStockMaterialData() {
+  const stockMaterialData = await getStockData();
+  showStockMaterials(stockMaterialData);
 }
 
 function startEvendListernes() {
@@ -48,14 +57,14 @@ function startEvendListernes() {
 }
 
 // fetching genereal data
-async function getDataController() {
-  const stockMaterialData = await getStockData();
-  console.log("material list: ", stockMaterialData);
+// async function getDataController() {
+//   const stockMaterialData = await getStockData();
+//   console.log("material list: ", stockMaterialData);
 
-  const catalougeItemObjects = await getCatalogueData();
-  showCatalouge(catalougeItemObjects);
-  showStockMaterials(stockMaterialData);
-}
+//   const catalougeItemObjects = await getCatalogueData();
+//   showCatalouge(catalougeItemObjects);
+//   showStockMaterials(stockMaterialData);
+// }
 
 // showing the catalogue to the admin site
 function showCatalouge(catalougeItemObjects) {
@@ -67,17 +76,5 @@ function showCatalouge(catalougeItemObjects) {
   callRenderMethodeForCatalogueItems(catalougueClassList, "productOverview");
 }
 
-// the function that is triggered after clicking the delete button on a catalogue item
-export function deleteCatalogueItemButtonClicked(instance) {
-  console.log("Delete Item Clicked:", instance.id);
-  catalogueId = instance.id;
-}
-
-// the function that is triggered after clicking the update button on a catalogue item
-export function updateCatalogueItemButtonClicked(instance) {
-  console.log("Update Item Clicked:", instance.id);
-  catalogueId = instance.id;
-}
-
-export { updateStockButtonClicked, getDataController };
+export { updateStockButtonClicked, getStockMaterialData, getCatalogueItemsData };
 // export { startAdmin as launchAdminFunctions };
