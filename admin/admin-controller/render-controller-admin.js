@@ -1,3 +1,6 @@
+import { deleteCatalogueItem } from "../admin-model/backend-routes/catalouge-routes/catalogue-delete.js";
+import { getCatalogueItemsData } from "./admin-main.js";
+
 // Calling render methode for catalogue items
 function callRenderMethodeForCatalogueItems(listOfInstances, htmlId) {
   console.log("AdminNo1. CallRenderMethodAdmin");
@@ -30,14 +33,34 @@ function callRenderMethodeForCatalogueItems(listOfInstances, htmlId) {
 
   // delete the selected catalogue item
   function deleteCatalogueItemButtonClicked(instance) {
-		console.log("Delete Item Clicked:", instance.id);
-	}
+    console.log("Delete Item Clicked:", instance.id);
+    document.querySelector("#dialog-delete-catalouge-item").showModal();
+    document
+      .querySelector("#btn-delete-catalouge-item-confirm")
+      .addEventListener("click", () =>
+        deleteCatalougeItemAccepted(instance.id)
+      );
+  }
+
+  function deleteCatalougeItemAccepted(id) {
+    console.log(id);
+    closeConfirmDeleteCatalogueItemDialog();
+    deleteCatalogueItemConfirmed(id);
+  }
+
+  function closeConfirmDeleteCatalogueItemDialog() {
+    document.querySelector("#dialog-delete-catalouge-item").close();
+  }
 
   // update the selected catalogue item
   function updateCatalogueItemButtonClicked(instance) {
     console.log("Update Item Clicked:", instance.id);
-    updateButtonClicked(instance)
   }
+}
+
+async function deleteCatalogueItemConfirmed(id) {
+  await deleteCatalogueItem(id);
+  getCatalogueItemsData();
 }
 
 export { callRenderMethodeForCatalogueItems };

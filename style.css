@@ -18,6 +18,9 @@ header {
   color: white;
   height: 40px;
   font-size: 40px;
+  padding-left: 20px;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 
 /* Nav bar */

@@ -1,80 +1,62 @@
+/* Body & HTML */
 body,
 html {
-    height: 100%;
-    padding: 0;
-    margin: 0;
+  height: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 /* Body */
 body {
-    background-color:white;
-    color: black;
-    font-size: 16px;
+  background-color: white;
+  font-size: 16px;
 }
 
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 50px;
-}
-
-#grid-layout {
-    display: grid;
-    grid-template-columns: auto auto; /* Two columns */
-    grid-template-rows: auto auto; /* Two rows */
-    grid-template-columns: 200px 1fr;
-    height: 100%;
-    padding: 20px;
-}
-
+/* Header */
 header {
-    grid-column: 1 / span 2; /* Span two columns */
-    grid-row: 1; /* First row */
-    border: 1px solid black;
-    padding: 10px;
-    text-align: center;
+  background-color: blue;
+  color: white;
+  height: 40px;
+  font-size: 40px;
+  padding-left: 20px;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 
+/* Nav bar */
 nav {
-    grid-column: 1; /* First column */
-    grid-row: 2; /* Second row */
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
-    padding: 10px;
+  display: flex;
+  gap: 60px;
+  background-color: black;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
+.view-link-admin-menu {
+  color: white;
+  text-decoration: none;
+}
+
+.view-link-admin-menu:hover {
+  color: orange;
+  text-decoration: none;
+}
+
+/* Main */
 main {
-    grid-column: 2; /* Second column */
-    grid-row: 2; /* Second row */
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
-    padding: 10px;
+  background-color: white;
+  color: black;
+  min-height: 76%;
+  padding: 20px;
 }
 
-/* Admin: Stock Overview Table*/
-
- table {
-    display: table;
-    border-collapse: separate;
-    box-sizing: border-box;
-    text-indent: initial;
-    border-spacing: 2px;
-    border-color: gray;
-}
-td {
-    display: table-cell;
-    vertical-align: inherit;
+/* Spa-rpoter */
+.view-content {
+  display: none;
 }
 
-
-
-th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-
-th {
-  background-color: #f2f2f2;
+.view-content.active {
+  display: block;
 }
