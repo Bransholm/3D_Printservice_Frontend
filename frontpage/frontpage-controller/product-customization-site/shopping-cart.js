@@ -1,5 +1,3 @@
-
-
 import { calculateTotalPrice } from "./price-calculation.js";
 import { showItemCartPriceSection } from "../../frontpage-view/display-calculated-total-price.js";
 // Contains all products added to the cart
@@ -7,7 +5,6 @@ const shoppingCart = [];
 
 // Cheks if an product instance has a doublicate in the system
 function checkForDoublets(newProduct) {
-
   // Cheks if the cart is empty
   if (shoppingCart.length > 0) {
     // Sets the unique status
@@ -62,8 +59,14 @@ function showItemsInCart() {
   clearShoppingCartHTML();
   for (let i = 0; i < shoppingCart.length; i++) {
     const product = shoppingCart[i];
+    const productNo = i + 1;
     console.log("shopping card index ", i, " is ", product);
-    const productOrderHTML = product.renderShoppingcartInfo();
+    const productOrderHTML =
+      /*html*/
+      `
+     <h4>Produkt ${productNo}</h4>
+     ${product.renderShoppingcartInfo()}
+     `;
 
     document
       .querySelector("#shopping_cart_view")
@@ -108,6 +111,5 @@ function removeProductFromCart(i) {
   shoppingCart.splice(i, 1);
   showItemsInCart();
 }
-
 
 export { shoppingCart, clearShoppingCartHTML };

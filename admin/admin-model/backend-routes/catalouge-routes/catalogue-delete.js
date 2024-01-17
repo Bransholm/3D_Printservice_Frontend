@@ -1,15 +1,9 @@
 import { endpoint } from "../../../../frontpage/frontpage-model/endpoint.js";
 
-async function postCatelogueItem(data) {
-  console.log("POSTING: ", data);
+async function deleteCatalogueItem(id) {
   try {
-    const response = await fetch(`${endpoint}catalogue`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        // Add any additional headers if needed
-      },
-      body: JSON.stringify(data),
+    const response = await fetch(`${endpoint}/catalogue/${id}`, {
+      method: "DELETE",
     });
 
     console.log(response);
@@ -27,4 +21,4 @@ async function postCatelogueItem(data) {
   }
 }
 
-export { postCatelogueItem };
+export { deleteCatalogueItem };
