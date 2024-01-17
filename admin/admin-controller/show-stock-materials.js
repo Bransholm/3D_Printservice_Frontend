@@ -36,4 +36,6 @@ function eventListenerForStockUpdateButton(classInstance) {
     .addEventListener("click", () => updateStockButtonClicked(classInstance));
 }
 
+
+
 export { showStockMaterials };

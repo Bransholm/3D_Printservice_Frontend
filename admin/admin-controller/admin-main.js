@@ -56,6 +56,7 @@ function startEvendListernes() {
   document
     .querySelector("#btn-close-update-dialog")
     .addEventListener("click", closeUpdateCompleteWindow);
+  
 }
 
 // fetching genereal data
