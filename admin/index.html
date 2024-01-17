@@ -133,8 +133,9 @@
         
         <article id="adminCatalogueOverview">
         </article>
-
+        <h3>Opret nyt produkt til kataloget</h3>
         <article>
+
         <form id="addToCatalogueForm">
 
          <label for="catalogueTitle">Produktnavn</label>
@@ -206,6 +207,80 @@
 
         </form>
        </article>
+
+       <article>
+        <h3>Opdater et produkt fra kataloget</h3>
+        <form id="UpdateCatalogueForm">
+
+         <label for="catalogueTitle">Produktnavn</label>
+                <input
+                  type="text"
+                  id="updateCatalogueTitle"
+                  name="title"
+                  placeholder="Produktnavn"
+                  required
+                />
+
+        <label for="stockCategory">Kategori</label>
+                <select name="category" id="updateStockCategory">
+                <option value= "Bygninger" >Bygninger</option>
+                <option value="Dyr">Dyr</option>
+                <option value="Eventyr">Fantasy</option>
+                <option value="Sci-fi">Science-Fiction</option>
+                </select>
+
+
+
+        <label for="standardWeight">Standard Vægt</label>
+                <input
+                  type="text"
+                  id="updateStandardWeight"
+                  name="weight"
+                  placeholder="000"
+                  pattern="[0-9]{1,4}"
+                  required
+                />                
+                
+        <label for="standardSize">Standard Højde</label>
+                <input
+                  type="text"
+                  id="updateStandardSize"
+                  name="size"
+                  placeholder="00"
+                  pattern="[0-9]{1,3}"
+                  required
+                />
+
+
+        <label for="itemDescription">Produktbeskrivelse</label>
+                <input
+                  type="text"
+                  id="updateItemDescription"
+                  name="description"
+                  placeholder="Indsæt en lille beskrivese"
+                  required
+                />                
+
+
+        <label for="imageLink">Billede-link</label>
+                <input
+                  type="text"
+                  id="updateImageLink"
+                  name="image"
+                  placeholder="Indsæt et link"
+                  required
+        
+                  />
+        <label for="active">Aktiv</label>
+                <select name="active" id="updateActive">
+                  <option value="1">Aktiv</option>
+                  <option value="0">Inaktiv</option>
+                </select>                
+        <button type="submit"  class="btn_update_catalogue">Opret</button>
+
+
+        </form>
+       </article>
       
        <container id="productOverview" class="grid-container"> Hele Kataloget </container>
 
@@ -214,7 +289,8 @@
         <div id="updateCatalougeForm">
           <dialog id="updateItemModal" class="dialog-window">
     <article>  
-    <h2>Update Catalogue Item</h2>
+    
+    // Admin catalogue update form
     <form id="updateCatalogueForm">
       <label for="title">Title:</label>
       <input
