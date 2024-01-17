@@ -2,7 +2,7 @@ import { endpoint } from "../../../../frontpage/frontpage-model/endpoint.js";
 
 async function deleteCatalogueItem(id) {
   try {
-    const response = await fetch(`${endpoint}/catalouge/${id}`, {
+    const response = await fetch(`${endpoint}/catalogue/${id}`, {
       method: "DELETE",
     });
 
