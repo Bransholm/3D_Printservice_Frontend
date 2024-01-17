@@ -1,21 +1,23 @@
-import { disableCustomerOrderInput } from "./toggle-customer-order-Input.js";
 import { displayedTotalPrice } from "../frontpage-controller/order-site.js";
+import { fetchSystemVariables } from "../frontpage-model/fetch-data.js";
 
 //import showFinishPaymentScreen
-function showPaymentScreen() {
-  disableCustomerOrderInput();
-  console.log("you have completed the order process and must now pay!");
-  document.querySelector("#payment_details_screen").innerHTML = "";
-  const number = fecthMobilePaymenyNo();
+async function showPaymentScreen() {
+  document.querySelector("#to-payment-info-link").click();
+
+  // disableCustomerOrderInput();
+
+  const number = await fecthMobilePaymenyNo();
+  document.querySelector("#payment-information-message").innerHTML = "";
   const messageHTML =
     /*html*/
     `
   <p> Din ordre er nu booket! For at færdiggøre din bestilling skal du overføre ${displayedTotalPrice} DKK, til 3dprintservice mobilepay på nummeret: ${number}</p>
-  <button id="btn_finish_payment">Til forsiden</button>
+  <button id="btn_finish_payment" class="change_cursor_to_a_pointer_on_hover">Bekræft</button>
   `;
 
   document
-    .querySelector("#payment_details_screen")
+    .querySelector("#payment-information-message")
     .insertAdjacentHTML("beforeend", messageHTML);
   // add eventlistener for the paymeny-completed screen!
   document
@@ -23,25 +25,35 @@ function showPaymentScreen() {
     .addEventListener("click", showFinishPaymentScreen);
 }
 
-function fecthMobilePaymenyNo() {
-  /* ----------------------------------------------------- INSERT FETCH-FUNCTION HERE! */
-  const testNo = "70121416";
-  return testNo;
+async function fecthMobilePaymenyNo() {
+  const variablesData = await fetchSystemVariables();
+  const paymentNumber = variablesData[0].MobilePayNumber;
+  return paymentNumber;
 }
 
 function showFinishPaymentScreen() {
-  console.log("Complete the payment process!");
-  document.querySelector("#payment_details_screen").innerHTML = "";
-
-  const html = /*html*/ `<p>
-      Tak for din bestilling. Pengene vil først blive overført når odren er
-      produceret og afsendt. Du modtager en mail når odren sendes. Tak fordi du
-      valgte at handle hos 3dPrinstServicce.
-    </p>`;
+  document.querySelector("#payment-information-message").innerHTML = "";
+  const messageHTML =
+    /*html*/
+    `
+     <p>  Tak for din bestilling. Pengene vil først blive overført når odren er
+       produceret og afsendt. Du modtager en mail når odren sendes. Tak fordi du
+       valgte at handle hos 3dPrinstServicce.</p>
+      
+       <a href="#products" class="view-link view-link-menu">
+      <button class="change_cursor_to_a_pointer_on_hover">til forsiden</button>
+      </a>
+     `;
 
   document
-    .querySelector("#payment_details_screen")
-    .insertAdjacentHTML("beforeend", html);
+    .querySelector("#payment-information-message")
+    .insertAdjacentHTML("beforeend", messageHTML);
+
+  resetSiteAfterSuccessfullPurchase();
+}
+
+function resetSiteAfterSuccessfullPurchase() {
+  console.log("NOW RESET THE SHOPPING CART AND CLEAR ALL INPUTS");
 }
 
 export { showPaymentScreen };
