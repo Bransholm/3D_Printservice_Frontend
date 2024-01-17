@@ -50,10 +50,6 @@
       
       <section id="product_by_id" class="view-content">
           <container id="product_id"> Det enkelte prodult </container>
-          <a href="#product_by_id" class="view-link">
-            Indhold
-          </a>
-
 
         <dialog id="dialog-data-policy">
         <p>Du har tilføjet en vare til kurven</p>
@@ -64,6 +60,15 @@
 
         </section>
         
+      
+      <!-- This section shows the payment informaion -->
+      <section id="payent_information_window" class="view-content">
+      
+          <div id="payment-information-message"> </div>
+    
+      <a id="to-payment-info-link" href="#payent_information_window"></a>
+      </section>
+
 
       
 
@@ -78,7 +83,6 @@
 
             </div>
             
-            <button id="btn_place_order">Til Kassen</button>
           </container>
       
             Specialprodukter
@@ -139,10 +143,9 @@
                     required
                   />
 
-  
-
-  <h3> Adresse </h3>
-  <label for="adress_input">Adresse</label>
+              <h3> Adresse </h3>
+             
+              <label for="adress_input">Adresse</label>
                 <input
                   type="text"
                   id="adress_input"
@@ -151,7 +154,7 @@
                   required
                   />
                   
-   <label for="zip_code_input">Postnummer</label>
+              <label for="zip_code_input">Postnummer</label>
                 <input
                   type="text"
                   id="zip_code_input"
@@ -161,7 +164,7 @@
                   required
                   />    
 
-   <label for="city_input">By</label>
+              <label for="city_input">By</label>
                 <input
                   type="text"
                   id="city_input"
@@ -170,18 +173,8 @@
                   required
                   />  
 
-  <h4> Leverings information</h4>
-  <!-- VI SKAL FINDE EN MÅDE AT TILSLUTTE EN KUNDE -->
-  <!-- 
-    <label for="customerIdInput">Kunde Nummer</label>
-                  <input
-                    type="text"
-                    id="customerIdInput"
-                    name="customer_id"
-                    placeholder="id"
-                    required
-                    />
-  -->
+              <h4> Leverings information</h4>
+
 
 
                <h3> Leverings Adresse </h3>
@@ -194,7 +187,7 @@
                       required
                     />
                   
-   <label for="delivery_zip_code_input">Postnummer</label>
+               <label for="delivery_zip_code_input">Postnummer</label>
                 <input
                   type="text"
                   id="delivery_zip_code_input"
@@ -204,7 +197,7 @@
                   required
                   />    
 
-   <label for="delivery_city_input">By </label>
+               <label for="delivery_city_input">By </label>
                 <input
                   type="text"
                   id="delivery_city_input"
@@ -220,19 +213,15 @@
                     required/>          
                   </div>
 
-            <button id="btn_submit_order_details" type="submit">Gå til betaling</button>          
+
+               <button id="btn_submit_order_details" type="submit">Gå til betaling</button>   
+                      
               </form>
 
             </div>
-            
-
-            <div id="payment_details_screen"></div>
-
-
-
-
-
+          
           </section>
+
         
         <!-- Section view order -->
         <section id="view_order" class="view-content">
@@ -254,6 +243,7 @@
     <button type="submit" id="view-order-button">Vis min ordre</button>
   </div>
 </form>
+
         </section>
         
         <!-- Section about us -->
