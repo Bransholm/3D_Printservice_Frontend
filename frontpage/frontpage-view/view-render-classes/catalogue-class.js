@@ -53,15 +53,15 @@ export class catalogueItem {
     const basicInformationHTML =
       /*html*/
       `<div>
+        <div class="catalouge-item-text"><h3 class="product-by-id-h3">${this.title}</h3></div>
         <img
           src="../images/${this.imageLink}"
           alt="Produktbillede ${this.title}"
         />
-        <div class="catalouge-item-text">Produkt Navn: ${this.title}</div>
         <div class="catalouge-item-text">Kategori: ${this.category}</div>
-        <div class="catalouge-item-text">Standard Størrelse: ${this.standardSize} cm</div>
-        <div class="catalouge-item-text">Standard Vægt: ${this.standardWeight} gram</div>
-        <div class="catalouge-item-text">Produkt Beskrivelse: ${this.itemDescription} </div>
+        <div class="catalouge-item-text">Standardstørrelse: ${this.standardSize} cm</div>
+        <div class="catalouge-item-text">Standardvægt: ${this.standardWeight} gram</div>
+        <div class="catalouge-item-text">Beskrivelse: ${this.itemDescription} </div>
       </div>`;
 
     return basicInformationHTML;

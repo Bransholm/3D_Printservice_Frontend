@@ -55,8 +55,14 @@ main {
 }
 
 /* Single product site*/
+.product-by-id-h3 {
+  margin: 0px;
+  margin-bottom: 10px;
+}
+
 .catalouge-item-text {
   padding: 2px;
+  width: 300px;
 }
 
 /* View order */
@@ -112,6 +118,15 @@ footer {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 10px;
 }
+
+.flex-container-product-by-id {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-container-product-by-id-element {
+  padding-right: 70px;
+} 
 
 /* Change cursor to a pointer class */
 .change_cursor_to_a_pointer_on_hover:hover {

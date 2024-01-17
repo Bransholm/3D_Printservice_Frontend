@@ -98,10 +98,10 @@ export class product {
   //-------------------------------------------------------------
   renderAmountSelectionSection() {
     const amountSelectionHTML = /*html*/ `
-    <div id="selectAmount">
-    <button class="btn_increment_amount"> + </button>
-    <p id="selectProductAmount">Antal ${this.amount} stk</p>
+    <div id="selectAmount">Antal:
     <button class="btn_decrement_amount"> - </button>
+    <span id="selectProductAmount"> ${this.amount} stk</span>
+    <button class="btn_increment_amount"> + </button>
     </div>
     `;
     return amountSelectionHTML;
@@ -111,7 +111,7 @@ export class product {
     const priceHTML =
       /*html*/
       `
-   <h3 id="productPrice"> Pris: ${this.bundlePrice} DKK</h3>
+   <h3 id="productPrice" class="product-by-id-h3"> Pris: ${this.bundlePrice} DKK</h3>
    `;
     return priceHTML;
   }
@@ -123,11 +123,14 @@ export class product {
       /*html*/
       `
 
-    <article>
+    <article class="flex-container-product-by-id">
     <!-- Here the HTML from the render method of the catalogue item class is inserted -->
+    <div class="flex-container-product-by-id-element">
     ${this.renderCatalougeHTML}
+    </div>
 
 
+    <div>
     ${this.renderPriceView()}
    
 
@@ -135,15 +138,15 @@ export class product {
 
     <div id="selectMaterial">
     
-    <label for="chosenMaterial">Materiale</label>
+    <label for="chosenMaterial">Materiale: </label>
                 <select name="material" id="chosenMaterial">
                 <option value="blød">Blød</option>
                 <option value="elastisk">Elastisk</option>
                 <option value="hård">Hård</option>
-                </select>
+                </select><br>
 
 
-      <label for="chosenColour">Farve</label>
+      <label for="chosenColour">Farve: </label>
                 <select name="colour" id="chosenColour">
                 </select>
 
@@ -153,8 +156,9 @@ export class product {
     </div>
     <div id="selectProductSize">
     <p id="showSliderSize">Valgte størrelse 15 cm</p>
-      <label for="productSizeSlider">Størrelse - Ændrer den højde/bredde der er længst:</label><br>
-      <input type="range" min="5" max="30" value="15" name="size" id="productSizeSlider">
+      <label for="productSizeSlider">Ændre størrelse: </label>
+      <input type="range" min="5" max="30" value="15" name="size" id="productSizeSlider"><br>
+      <span>(Størrelse ændrer den højde/bredde der er længst)</span>
     </div>
 
     <p id="produktMaterialName"> Produktet bliver printet i: PLA</p>
@@ -166,7 +170,7 @@ export class product {
     <a href="#products" class="view-link view-link-menu">
         <button class="btn-continiue-shopping change_cursor_to_a_pointer_on_hover" >Forstæt shopping</button>
         </a>
-
+</div>
 
 
 </article>
