@@ -22,9 +22,9 @@ function showSuccessfullUpdate(stockItem) {
 }
 
 function showStockActiveStatus(status) {
-  if (status === 1) {
+  if (status == 1) {
     return "På lager";
-  } else {
+  } else if (status == 0){
     return "Udsolgt";
   }
 }
