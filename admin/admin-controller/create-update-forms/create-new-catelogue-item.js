@@ -15,7 +15,7 @@ function createNewCatalogueItem(event) {
   const itemDescription = catelogueForm.description.value;
   const imageLink = catelogueForm.image.value;
   const category = catelogueForm.category.value;
-  const active = Number(catalogueItem.active.vlaue);
+  const active = Number(catelogueForm.active.value);
 
   event.preventDefault();
 
