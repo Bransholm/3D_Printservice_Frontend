@@ -1,88 +1,201 @@
+const endpoint = "https://3dprintservice.azurewebsites.net/";
+
 // the fetch route for cutsomer by email
-import { fetchCustomerByEmail } from "../frontpage-model/fetch-data.js";
+import { fetchCustomerEmailData } from "../frontpage-model/fetch-data.js";
 // the shopping cart!
 import { shoppingCart } from "./product-customization-site/shopping-cart.js";
-// ...
-import { postCompleteOrder } from "../frontpage-model/rest-api/make-order.js";
+import { clearShoppingCartHTML } from "./product-customization-site/shopping-cart.js";
+// imports the function that calculates total tax and price
+import { calculateTotalPrice } from "./product-customization-site/price-calculation.js";
+// import the rest-api from the model folder
+import {
+  postOrderCustomerIsExisting,
+  postOrderCustomerIsNew,
+} from "../frontpage-model/rest-api/make-order.js";
+import { putExistingCustomer } from "../frontpage-model/rest-api/customer.js";
+import { fetchSystemVariables } from "../frontpage-model/fetch-data.js";
+import { showPaymentScreen } from "../frontpage-view/display-checkout-site.js";
+// imports functions that makes it possible or impossible for the user to insert their input
+import {
+  disableCustomerOrderInput,
+  enableCustomerOrderInput,
+} from "../frontpage-view/toggle-customer-order-Input.js";
 
-function testOrderSite() {
+// list that stores all emails
+let customerEmialList;
+// stores the value for the shipping cost
+let shippingCosts;
+// stores the id fot the selected customer
+let customer_ID;
+// set if the customer confirms theat they are in the database already
+let customerIsNew = true;
+// stores the value for the calculated total price
+let displayedTotalPrice;
+// stores the customer email input
+let emailValue;
+
+// ----------- functions that controls the chek out flow -------------------------------------
+
+async function launchOrderSite() {
   console.log("testing-the-order-site!");
-  searchForExistingCustomerInfo();
-  orderInformation();
+
+  // activates the eventlisteners for the checkout-flow
+  setOrderSiteEventListeners();
+
+  // her skal vi deaktivere input
+  disableCustomerOrderInput();
+
+  const systemVariableData = await fetchSystemVariables();
+  shippingCosts = Number(systemVariableData[0].ShippingPrice);
+
+  // fetches all customer emails
+  customerEmialList = await fetchCustomerEmailData();
+  console.log("all emails: ", customerEmialList);
+
+
 }
 
-function searchForExistingCustomerInfo() {
+
+
+function setOrderSiteEventListeners() {
+  // activates the new-customer and existing-customer buttons
+
+  // adds the order information submit event
   document
-    .querySelector("#retriveCustomerByEmail")
+    .querySelector("#order_details_form")
+    .addEventListener("submit", submitOrderInformation);
+
+  // activates the find customer by email sbumit event
+  document
+    .querySelector("#retrive_customer_by_email")
     .addEventListener("submit", findCustomerByEmail);
 }
 
 async function findCustomerByEmail(event) {
   event.preventDefault();
-  const input = event.target.email.value;
-  console.log(input);
-  const customerData = await fetchCustomerByEmail(input);
-  console.log(customerData);
+  emailValue = event.target.existing_email.value;
+
+  console.log("input email is: ", emailValue);
+
+  let match = false;
+
+  for (const customer of customerEmialList) {
+    if (emailValue == customer.Email) {
+      match = true;
+      customerIsNew = false;
+      const customerData = await retrieveCustomerInformation(emailValue);
+      console.log("customer by email data: ", customerData);
+      autofillCustomerInformation(customerData);
+    }
+  }
+  if (match === false) {
+    customerIsNew = true;
+  }
+
+  // her skal vi så aktivere input feltet
+  console.log("customer is new = ", customerIsNew);
+  enableCustomerOrderInput();
 }
 
-function orderInformation() {
-  document
-    .querySelector("#order_details_form")
-    .addEventListener("submit", test);
+// search_existing_customer_by_email_error_message
+
+async function retrieveCustomerInformation(customerEmail) {
+  console.log("retrieveCustomerInformation");
+  const promise = await fetch(`${endpoint}/customers/${customerEmail}`);
+  const data = await promise.json();
+  return data;
 }
 
-function test(event) {
+// // set all the text inputs to blank
+// function clearOrderForm() {
+//   const form = document.querySelector("#order_details_form");
+
+//   form.firstName.value = " ";
+//   form.lastName.value = " ";
+//   form.adress.value = " ";
+//   form.zipCode.value = " ";
+//   form.city.value = " ";
+//   form.deliveryAdress.value = " ";
+//   form.deliveryZipCode.value = " ";
+//   form.deliveryCity.value = " ";
+// }
+
+function autofillCustomerInformation(retrievedCustomer) {
+  const customer = retrievedCustomer[0];
+  console.log("Here is the customer: ", customer);
+  // here we need to set the information in the customer automatically based on the retrived customer
+  const form = document.querySelector("#order_details_form");
+  customer_ID = customer.Id;
+  form.firstName.value = customer.FirstName;
+  form.lastName.value = customer.LastName;
+  form.adress.value = customer.Adress;
+  form.zipCode.value = customer.ZipCode;
+  form.city.value = customer.City;
+  form.deliveryAdress.value = customer.Adress;
+  form.deliveryZipCode.value = customer.ZipCode;
+  form.deliveryCity.value = customer.City;
+}
+
+function submitOrderInformation(event) {
   event.preventDefault();
-  console.log("test!");
+
+  // list for all products linked to the order
+  const Order_Lines = [];
 
   const form = event.target;
 
-  // new customer information
+  // customer information
+  const id = customer_ID;
   const firstName = form.firstName.value;
   const lastName = form.lastName.value;
+  const email = emailValue;
   const adress = form.adress.value;
   const zipCode = form.zipCode.value;
   const city = form.city.value;
-  // order information
-  // delivery adress
+  // delivery information
   const deliveryAdress = form.deliveryAdress.value;
   const deliveryZipCode = form.deliveryZipCode.value;
   const deliveryCity = form.deliveryCity.value;
 
+  console.log(shoppingCart);
+  for (const product of shoppingCart) {
+    const newOrderLine = {
+      catalogue_ID: product.catalogue_ID,
+      amount: product.amount,
+      productSize: product.productSize,
+      itemPrice: Number(product.itemPrice),
+      itemTax: Number(product.itemTax),
+      stock_ID: product.stock_ID,
+    };
+    Order_Lines.push(newOrderLine);
+
+    console.log("the order line is: ", newOrderLine);
+  }
+
   //--- the object is with a capital
   const CustomerInfo = {
+    id,
     firstName,
     lastName,
     adress,
     zipCode,
     city,
+    email,
   };
 
   // consitant typo all the way to the back-end
+
+  const totals = calculateTotalPrice();
+
   const OdrderInfo = {
-    stauts: "ordered",
+    status: "ordered",
     deliveryAdress,
     deliveryZipCode,
     deliveryCity,
-    totalTax: 10.0,
-    totalPrice: 80.0,
-    shippingPrice: 40.0,
+    totalPrice: Number(totals.totalPrice) + shippingCosts,
+    totalTax: Number(totals.totalTax),
+    shippingPrice: shippingCosts,
   };
-
-  const Order_Lines = [];
-  console.log(shoppingCart);
-  for (const product of shoppingCart) {
-    console.log(product);
-    const newOrderLine = {
-      catalogue_ID: product.catalogueId,
-      amount: product.productAmount,
-      productSize: product.productSize,
-      itemPrice: 400.0,
-      itemTax: 45.0,
-      stock_ID: product.stockId,
-    };
-    Order_Lines.push(newOrderLine);
-  }
 
   const order = {
     CustomerInfo,
@@ -90,102 +203,55 @@ function test(event) {
     Order_Lines,
   };
 
-  postCompleteOrder(order);
+  // sets the price to be payed
+  displayedTotalPrice = OdrderInfo.totalPrice + shippingCosts;
+  processCompleteOrder(order);
 }
 
-function createNewCustomter() {
-  //...
-}
-
-function insertHtmlDom() {
-  // Event listeners!
-}
-
-function toggleHiddenOnForms() {
-  // add class
-}
-
-// local host endpoint for testing...
-const endpoint = "http://localhost:4811/";
-
-const data = {
-  CustomerInfo: {
-    firstName: "Kasper",
-    lastName: "Bordal",
-    adress: "Kildebakken 23",
-    zipCode: 3390,
-    city: "Hundested",
-    email: "LL431@gmail.com",
-  },
-  OdrderInfo: {
-    status: "ordered",
-    deliveryAdress: "Kildebakken 23",
-    deliveryZipCode: 3390,
-    deliveryCity: "Hundested",
-    totalTax: 260.0,
-    totalPrice: 640.0,
-    shippingPrice: 40.0,
-  },
-  Order_Lines: [
-    {
-      catalogue_ID: 1,
-      amount: 3,
-      productSize: 2,
-      itemPrice: 400.0,
-      itemTax: 45.0,
-      stock_ID: 3,
-    },
-    {
-      catalogue_ID: 12,
-      amount: 1,
-      productSize: 10,
-      itemPrice: 100.0,
-      itemTax: 22.0,
-      stock_ID: 12,
-    },
-  ],
-};
-
-class orderInfo {
-  constructor() {
-    this.customer_ID;
-    this.status;
-    this.deliveryAdress;
-    this.deliveryZipCode;
-    this.deliveryCity;
-    this.totalTax;
-    this.totalPrice;
-    this.shippingPrice;
-    // SHOPPING CART
+function processCompleteOrder(order) {
+  console.log("The complete order is: ", order);
+  if (customerIsNew === true) {
+    newCustomerOrder(order);
+  } else {
+    exsitingCustomerOrder(order);
   }
 }
 
-class customerInfor {
-  constructor() {
-    this.firstName;
-    this.lastName;
-    this.adress;
-    this.city;
-    this.zipCode;
-    this.email;
+async function exsitingCustomerOrder(data) {
+  console.log(
+    "existing customer needs to be updated, then the order needs to be posted"
+  );
+
+  const customerId = data.CustomerInfo.id;
+  console.log("customer id is: ", customerId);
+  console.log(data);
+
+  const putResponse = await putExistingCustomer(data);
+  if (putResponse.ok) {
+    const postResponse = await postOrderCustomerIsExisting(data);
+    if (!postResponse.ok) {
+      console.log(
+        "ERROR - Could not post order. Response: ",
+        postResponse.status
+      );
+    } else {
+      showPaymentScreen();
+    }
+  } else {
+    console.log(
+      "ERROR - Could not update customer infromation. Response: ",
+      putResponse.status
+    );
   }
 }
 
-function getOrderInput(event) {
-  const orderForm = event.target.value;
-  /*
-    this.customer_ID;
-    this.status;
-    this.deliveryAdress;
-    this.deliveryZipCode;
-    this.deliveryCity;
-    this.totalTax;
-    this.totalPrice;
-    this.shippingPrice;
-  */
-  const deliveryAdress = orderForm.deliveryAdress.value;
-  const deliveryZipCode = orderForm.deliveryZipCode.value;
-  const deliveryCity = orderForm.deliveryCity.value;
+async function newCustomerOrder(newCustomerData) {
+  console.log("new order will now be posed");
+
+  const postOrderResponse = await postOrderCustomerIsNew(newCustomerData);
+  if (postOrderResponse.ok) {
+    showPaymentScreen();
+  }
 }
 
-export { testOrderSite };
+export { launchOrderSite, disableCustomerOrderInput, displayedTotalPrice };

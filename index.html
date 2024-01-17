@@ -13,10 +13,10 @@
     
     <!-- Nav bar -->
     <nav>
-      <a href="#products" class="view-link">PRODUKTER</a>
-      <a href="#special_products" class="view-link">SPECIALPRODUKTER</a>
-      <a href="#view_order" class="view-link">SE ORDRE</a>
-      <a href="#about_us" class="view-link">OM OS</a>
+      <a href="#products" class="view-link view-link-menu">PRODUKTER</a>
+      <a href="#view_order" class="view-link view-link-menu">SE ORDRE</a>
+      <a href="#about_us" class="view-link view-link-menu">OM OS</a>
+      <a href="#shopping_cart" class="view-link view-link-menu">INDKØBSKURV</a>
     </nav>
 
     <!-- Main - The screen: The content in sections -->
@@ -43,150 +43,199 @@
         <button id="search-button">Søg</button>
         </container>
    
-        <container id="product_id"> Det enkelte prodult </container>
-
+        
         <!-- Here shows the product catalogue -->
         <container id="product_catalogue" class="grid-container"> Hele Kataloget </container>
+      </section>
+      
+      <section id="product_by_id" class="view-content">
+          <container id="product_id"> Det enkelte prodult </container>
+
+        <dialog id="dialog-data-policy">
+        <p>Du har tilføjet en vare til kurven</p>
+        <form method="dialog">
+          <button class="change_cursor_to_a_pointer_on_hover">Luk vindue</button>
+        </form>
+      </dialog>
+
         </section>
         
-        <!-- Section special products -->
-        <section id="special_products" class="view-content">
-          <div id="shopping_cart_view"></div>
-          <button id="btn_place_order">Til Kassen</button>
-            Specialprodukter
+      
+      <!-- This section shows the payment informaion -->
+      <section id="payent_information_window" class="view-content">
+      
+          <div id="payment-information-message"> </div>
+    
+      <a id="to-payment-info-link" href="#payent_information_window"></a>
+      </section>
+
+
+      
+
+        <!-- Section shopping cart -->
+        <section id="shopping_cart" class="view-content">
+          
+          <container id="shopping_cart_site">
+            <div><h3 id="indkøbskurv-h3-title">Indkøbskurv</h3><a href="#products" class="view-link view-link-menu"><button>Shop videre</button></a></div>
+            
+            <div id="shopping_cart_view"><h4>Indkøbskurven er tom.<br>Vælg de produkter du ønsker at købe...</h4></div>
+
+
+            <div id="shopping_cart_price_iformation">
+
+            </div>
+            
+          </container>
 
             <!-- cutsomer -->
-            <div id="exsiting_search">
-              <form id="retriveCustomerByEmail">
-                <label for="retriveCustomerByEmailInput">Email</label>
+            <div id="search_existing_customer_by_email">
+              
+              <h3>Indtast email</h3> 
+
+              <div id="search_existing_customer_by_email_error_message"></div>          
+              
+              <form id="retrive_customer_by_email">
+                <label for="retrive_customer_by_email_input">Email</label>
                    <input
                      type="email"
-                     id="retriveCustomerByEmailInput"
-                     name="email"
+                     id="retrive_customer_by_email_input"
+                     name="existing_email"
                      placeholder="eksempel@mail.dk"
                      required
                   />
                      
-    <button id="btn_retrieve_customer_by_email" type="submit">Bekræft</button>
-  </form>
+                <button id="btn_retrieve_customer_by_email" type="submit">Bekræft</button>
+                </form>
             </div>
+
+
+
             <div id="insert_orderinfo">
            
-    <form id="order_details_form">
- <h3> Oprettelses formen </h3>
- <h4> Kunden </h4>               
-<!-- kunden -->
-  <label for="firstNameInput">Fornavn</label>
-                <input
-                  type="text"
-                  id="firstNameInput"
-                  name="firstName"
-                  placeholder="Fornavn"
-                  required
+              <form id="order_details_form">
+                <h3> Oprettelses formen </h3>
+                <h4> Kunden </h4>     
+
+                <!-- kunden -->
+                <label for="first_name_input">Fornavn</label>
+                   <input
+                     type="text"
+                     id="first_name_input"
+                     name="firstName"
+                     placeholder="Fornavn"
+                     required
+                    />
+
+                <label for="last_name_input">Efternavn</label>
+                  <input
+                    type="text"
+                    id="last_name_input"
+                    name="lastName"
+                    placeholder="Efternavn"
+                    required
                   />
 
-  <label for="lastNameInput">Efternavn</label>
+              <h3> Adresse </h3>
+             
+              <label for="adress_input">Adresse</label>
                 <input
                   type="text"
-                  id="lastNameNameInput"
-                  name="lastName"
-                  placeholder="Efternavn"
-                  required
-                  />                  
-
-
-  <label for="emailInput">Email</label>
-                <input
-                  type="email"
-                  id="emailInput"
-                  name="email"
-                  placeholder="eksempel@mail.dk"
-                  required
-                  />     
-
-  <h3> Adresse </h3>
-  <label for="adressInput">Adresse</label>
-                <input
-                  type="text"
-                  id="adressInput"
+                  id="adress_input"
                   name="adress"
                   placeholder="Adresse"
                   required
                   />
                   
-   <label for="zipCodeInput">Postnummer</label>
+              <label for="zip_code_input">Postnummer</label>
                 <input
                   type="text"
-                  id="zipCodeInput"
+                  id="zip_code_input"
                   name="zipCode"
                   placeholder="0000"
                   pattern="[0-9]{4}"
                   required
                   />    
 
-   <label for="cityInput">By</label>
+              <label for="city_input">By</label>
                 <input
                   type="text"
-                  id="cityInput"
+                  id="city_input"
                   name="city"
                   placeholder="Bynavn"
                   required
                   />  
 
-  <h4> Leverings information</h4>
-  <!-- VI SKAL FINDE EN MÅDE AT TILSLUTTE EN KUNDE -->
-  <!-- 
-    <label for="customerIdInput">Kunde Nummer</label>
-                  <input
-                    type="text"
-                    id="customerIdInput"
-                    name="customer_id"
-                    placeholder="id"
-                    required
+              <h4> Leverings information</h4>
+
+
+
+               <h3> Leverings Adresse </h3>
+                  <label for="delivery_adress_input">Adresse</label>
+                    <input
+                     type="text"
+                      id="delivery_adress_input"
+                      name="deliveryAdress"
+                      placeholder="Adresse"
+                      required
                     />
-  -->
-
-
-  <h3> Leverings Adresse </h3>
-  <label for="deliveryAdressInput">Adresse</label>
-                <input
-                  type="text"
-                  id="deliveryAdressInput"
-                  name="deliveryAdress"
-                  placeholder="Adresse"
-                  required
-                  />
                   
-   <label for="deliveryZipCodeInput">Postnummer</label>
+               <label for="delivery_zip_code_input">Postnummer</label>
                 <input
                   type="text"
-                  id="deliveryZipCodeInput"
+                  id="delivery_zip_code_input"
                   name="deliveryZipCode"
                   placeholder="0000"
                   pattern="[0-9]{4}"
                   required
                   />    
 
-   <label for="deliveryCityInput">By/label>
+               <label for="delivery_city_input">By </label>
                 <input
                   type="text"
-                  id="deliveryCityInput"
+                  id="delivery_city_input"
                   name="deliveryCity"
                   placeholder="Bynavn"
                   required
                   />    
 
+                  <div id="accept_terms_and_conditions">                    
+                    <label for="accept_payment_details_checkbox">Bekræft at du er underforstået med Handelsbetingelserne</label>
+                    <input type="checkbox"
+                    id="accept_payment_details_checkbox"
+                    required/>          
+                  </div>
 
-        <button id="btn_submit_order_details" type="submit">Gå til betaling</button>          
-  </form>
+
+               <button id="btn_submit_order_details" type="submit">Gå til betaling</button>   
+                      
+              </form>
 
             </div>
-            
+          
           </section>
+
         
         <!-- Section view order -->
         <section id="view_order" class="view-content">
-            Se ordre
+            <article>
+              <p>Her kan du se din ordre.<br>
+              Blot indtast dit ordrenummer og tilknyttede e-mailadresse og tryk på "Vis min ordre".
+              </p>
+            </article>
+            <form id="view-order-form">
+  <div class="form-group">
+    <label for="ordrenummer" class="view-order-form-label">Ordrenummer:</label>
+    <input type="number" id="ordernumber" name="ordernumber" placeholder="F.eks. &quot;1905&quot;" required class="view-order-form-input">
+  </div>
+  <div class="form-group">
+    <label for="email" class="view-order-form-label">E-mailadresse:</label>
+    <input type="email" id="email" name="email" placeholder="F.eks. &quot;min@email.dk&quot;" required class="view-order-form-input">
+  </div>
+  <div class="form-group">
+    <button type="submit" id="view-order-button">Vis min ordre</button>
+  </div>
+</form>
+
         </section>
         
         <!-- Section about us -->

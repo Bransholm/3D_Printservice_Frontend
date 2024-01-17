@@ -5,12 +5,22 @@ import {
 
 const endpoint = "https://3dprintservice.azurewebsites.net/";
 
-const localEndpoint = "http://localhost:4811/";
+async function fetchSystemVariables() {
+  const response = await fetch(`${endpoint}/variables`);
+  const variableData = await response.json();
+  return variableData;
+}
 
 async function fetchCustomerByEmail(input) {
-  const response = await fetch(`${localEndpoint}/customer?email=${input}`);
+  const response = await fetch(`${endpoint}/customer?email=${input}`);
   const customerData = await response.json();
   return customerData;
+}
+
+async function fetchCustomerEmailData() {
+  const response = await fetch(`${endpoint}/customers`);
+  const emailData = await response.json();
+  return emailData;
 }
 
 // fetching catalogue data
@@ -51,10 +61,12 @@ async function getStockItemById(id) {
 }
 
 export {
+  fetchSystemVariables,
   getCatalogueData,
   getStockData,
   getAvailableStockData,
   getCatalougeItemById,
   getStockItemById,
-  fetchCustomerByEmail
+  fetchCustomerByEmail,
+  fetchCustomerEmailData,
 };

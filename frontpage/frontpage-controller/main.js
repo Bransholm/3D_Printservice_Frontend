@@ -17,27 +17,27 @@ import { callRenderMethod } from "./render-controller.js";
 
 import { filterContent, searchContent } from "./catalogue-filter-search.js";
 
-// test-function that runs the post-order-API
-import { testMakeOrder } from "../frontpage-model/rest-api/make-order.js";
 // test-function that creates a new order!
-import { testOrderSite } from "./order-site.js";
+import { launchOrderSite } from "./order-site.js";
+
 
 window.addEventListener("load", start);
 
 function start() {
   startViews();
-  activateCustomerEventListeners();
+  activateEventListeners();
   console.log("Hello Team10");
   // Tester om man kan hente data - Lukas
   getAllData();
   // testMakeOrder();
-  testStartNewOrder();
+  // testStartNewOrder();
+    launchOrderSite();
 }
 
 function testStartNewOrder() {
   document
     .querySelector("#btn_place_order")
-    .addEventListener("click", testOrderSite);
+    .addEventListener("click", launchOrderSite);
 }
 
 // Dette er en test funktion der skal se om vi kan hente data:
@@ -57,7 +57,7 @@ function showCatalougeToCustomers(catalougeItemObjects) {
   callRenderMethod(classList, "product_catalogue");
 }
 
-function activateCustomerEventListeners() {
+function activateEventListeners() {
   document.querySelector("#faq-link").addEventListener("click", showDialogFaq);
   document
     .querySelector("#tradeing-terms-link")
@@ -71,6 +71,9 @@ function activateCustomerEventListeners() {
   document
     .querySelector("#search-button")
     .addEventListener("click", searchContent);
+  // document
+  //   .querySelector("#view-order-form")
+  //   .addEventListener("submit", myClass.viewOrderParameters);
 }
 
 function showDialogFaq() {
@@ -84,5 +87,43 @@ function showDialogTradeingTerms() {
 function showDialogDataPolicyLink() {
   document.querySelector("#dialog-data-policy").showModal();
 }
+
+// function viewOrderData(event) {
+//   event.preventDefault();
+//   const form = document.querySelector("#view-order-form");
+//   const orderNumberValue = form.ordernumber.value;
+//   const emailValue = form.email.value;
+//   console.log(orderNumberValue, emailValue)
+// }
+
+// class viewOrder {
+//   constructor() {
+//     this.orderNumberValue = "No data yet";
+//     this.emailValue = "No data yet";
+
+//     this.name;
+//     this.email
+//   }
+//   async viewOrderParameters(event) {
+//     event.preventDefault();
+//     const form = document.querySelector("#view-order-form");
+//     this.orderNumberValue = form.ordernumber.value;
+//     this.emailValue = form.email.value;
+//     console.log(this.orderNumberValue, this.emailValue);
+//     this.ordreData = await this.viewOrderFetch();
+//   }
+//   async viewOrderFetch() {
+
+//     endpoint / view - ordre ? this.orderNumberValue = this.orderNumberValue;
+
+//     return Data;
+
+//   }
+
+
+// }
+
+// const myClass = new viewOrder();
+
 
 export { showCatalougeToCustomers };

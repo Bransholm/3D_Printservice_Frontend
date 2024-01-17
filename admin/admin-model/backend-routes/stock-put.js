@@ -1,15 +1,17 @@
 const endpoint = "https://3dprintservice.azurewebsites.net/";
 
-async function stockUpdateRoute(data) {
+async function stockUpdateRoute(stockData, id) {
   // console.log("PUTTING: ", data);
+
   try {
-    const response = await fetch(`${endpoint}stock/${data.id}`, {
+    console.log("the data id: ", id);
+    const response = await fetch(`${endpoint}stock/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
         // Add any additional headers if needed
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(stockData),
     });
 
     console.log(response);
@@ -20,10 +22,11 @@ async function stockUpdateRoute(data) {
       console.log("update successful! ", result);
     }
 
-    return;
+    return response;
   } catch (error) {
     // Handle errors here
     console.error("Error:", error);
+    throw error;
   }
 }
 
