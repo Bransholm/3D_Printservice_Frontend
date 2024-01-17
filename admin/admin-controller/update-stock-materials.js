@@ -6,7 +6,7 @@ import {
 } from "./create-update-forms/update-stock-item.js";
 import { stockUpdateRoute } from "../admin-model/backend-routes/stock-put.js";
 import { showSuccessfullUpdate } from "../admin-view/stock-update-dialog.js";
-import { getDataController } from "./admin-main.js";
+import { getStockMaterialData } from "./admin-main.js";
 
 // The function that update the selected stock material while pussing the update button
 function updateStockButtonClicked(instance) {
@@ -35,7 +35,7 @@ async function submitStockUpdate(event) {
     /* You chanced x from z to y */
     // hent dataen og hvis det hele en gang til!
     showSuccessfullUpdate(updateInputData);
-    getDataController();
+    getStockMaterialData();
   }
 }
 
