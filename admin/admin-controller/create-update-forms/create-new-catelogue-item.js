@@ -7,13 +7,15 @@ function createNewCatalogueItem(event) {
   // Er det nu .target.value?
   const catelogueForm = event.target;
 
-  // WHERE IS THE ID in all of this???
+  // WHERE IS THE ID in all of this??? The id is made through the route, which gives the newly created catalogue item
+  // a unique id
   const title = catelogueForm.title.value;
   const standardSize = Number(catelogueForm.size.value);
   const standardWeight = Number(catelogueForm.weight.value);
   const itemDescription = catelogueForm.description.value;
   const imageLink = catelogueForm.image.value;
   const category = catelogueForm.category.value;
+  const active = Number(catalogueItem.active.vlaue);
 
   event.preventDefault();
 
@@ -23,7 +25,8 @@ function createNewCatalogueItem(event) {
     standardWeight,
     itemDescription,
     imageLink,
-    category
+    category,
+    active
   );
   event.preventDefault();
 
@@ -36,7 +39,8 @@ function createCatelogueItemProduct(
   standardWeight,
   itemDescription,
   imageLink,
-  category
+  category,
+  active
 ) {
   return {
     title,
@@ -45,6 +49,7 @@ function createCatelogueItemProduct(
     itemDescription,
     imageLink,
     category,
+    active,
   };
 }
 

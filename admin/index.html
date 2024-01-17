@@ -195,7 +195,12 @@
                   placeholder="Indsæt et link"
                   required
         
-                  />                
+                  />
+        <label for="active">Aktiv</label>
+                <select name="active" id="active">
+                  <option value="1">Aktiv</option>
+                  <option value="0">Inaktiv</option>
+                </select>                
         <button type="submit"  class="btn_submit">Opret</button>
 
 
@@ -206,7 +211,59 @@
 
 
 
-        <div id="updateCatalougeForm"></div>
+        <div id="updateCatalougeForm">
+          <dialog id="updateItemModal" class="dialog-window">
+    <article>  
+    <h2>Update Catalogue Item</h2>
+    <form id="updateCatalogueForm">
+      <label for="title">Title:</label>
+      <input
+        type="text" 
+        id="titleUpdate" 
+        name="title" required>
+
+      <label for="standardSize">Standard Size:</label>
+      <input 
+        type="text" 
+        id="standardSizeUpdate" 
+        name="standardSize" required/>
+
+      <label for="standardWeight">Standard Weight:</label>
+      <input 
+        type="text" 
+        id="standardWeightUpdate" 
+        name="standardWeight" required/>
+
+      <label for="itemDescription">Item Description:</label>
+      <textarea 
+        id="itemDescriptionUpdate" 
+        name="itemDescription" 
+        required>
+      </textarea>
+
+      <label for="image">Image Link:</label>
+      <input 
+        type="text" 
+        id="imageUpdate" 
+        name="image" 
+        required/>
+
+      <label for="category">Category:</label>
+      <input 
+        type="text" 
+        id="categoryUpdate" 
+        name="category" 
+        required/>
+
+      <!-- Id er et gemt input -->
+      <input type="hidden" id="itemIdUpdate" name="itemId">
+
+      <button type="submit" class="other-btn">Update Item</button>
+      <button type="button" id="btn-cancel-update" class="other-btn">Cancel</button>
+    </form>
+  </article>
+</dialog>
+        </div>
 
 
           <dialog id="dialog-delete-catalouge-item">
