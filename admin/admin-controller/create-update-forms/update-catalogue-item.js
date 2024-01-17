@@ -1,7 +1,8 @@
 // Skridt 1 indsæt den eksisterende data ind
 
 function extractCatalogueDataForUpdate(catalogueItem) {
-  const updateForm = document.querySelector("#INSERT-ID");
+  console.log(catalogueItem);
+  const updateForm = document.querySelector("#UpdateCatalogueForm");
   // const x = event.target
 
   // Doublecheck if attirbute needs to be with capital sarting letter...
@@ -11,38 +12,22 @@ function extractCatalogueDataForUpdate(catalogueItem) {
   updateForm.description.value = catalogueItem.itemDescription;
   updateForm.image.value = catalogueItem.imageLink;
   updateForm.category.value = catalogueItem.category;
+  updateForm.active.value = catalogueItem.active
 }
 
 // Skridt 2 gør indholdet fra forms den opdaterede
-function updateCatalogueData(event) {
-  event.preventDefault();
-  const form = document.querySelector("#INSERT-ID").element;
-
+function updateCatalogueInputData(event) {
+  // event.preventDefault();
+  const form = document.querySelector("#UpdateCatalogueForm");
   const title = form.title.value;
-  const standardSize = form.standardSize.value;
-  const standardWeight = form.standardWeight.value;
+  const standardSize = Number(form.standardSize.value);
+  const standardWeight = Number(form.standardWeight.value);
   const itemDescription = from.description.value;
   const imageLink = form.image.value;
   const category = form.category.value;
+  const active = Number(form.active.value);
 
-  const updatedCatalogObject = createUpdatedCatalogObject(
-    title,
-    standardSize,
-    standardWeight,
-    itemDescription,
-    imageLink,
-    category
-  );
-}
-
-function createUpdatedCatalogObject(
-  title,
-  standardSize,
-  standardWeight,
-  itemDescription,
-  imageLink,
-  category
-) {
+  
   return {
     title,
     standardSize,
@@ -50,5 +35,9 @@ function createUpdatedCatalogObject(
     itemDescription,
     imageLink,
     category,
+    active
   };
+
 }
+
+export { extractCatalogueDataForUpdate, updateCatalogueInputData };
