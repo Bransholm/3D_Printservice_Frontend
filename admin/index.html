@@ -30,105 +30,9 @@
         <section id="orders" class="view-content">Ordre</section>
 
         <!-- Section products -->
-        <section id="products" class="view-content">Produkter</section>
-
-        <!-- Section stock -->
-        <section id="stock" class="view-content">Lager</section>
-
-        <!-- Section customer -->
-        <section id="customer" class="view-content">Kunder</section>
-
-        <!-- Section customer -->
-        <section id="finance" class="view-content">Finans</section>
-
-        <!-- Section customer -->
-        <section id="settings" class="view-content">Indstillinger</section>
-
-      </main>
-      
-      <!-- Footer -->
-      <footer></footer>
-    </div>
-
-
-    
-    // ADMIN
-    <container> Alt andet
-    </br>
-    
-    // Admin Stock Overview
-    <section id="stockMaterialOveriew" >
-      <h2>Lager Status</h2> 
-      
-      <table id="stockOverviewTable">
-        <thead>
-          <tr>
-            <th>Materiale</th>
-            <th>Egenskab</th>
-            <th>Farve</th>
-            <th>Mængde Tilgængelig</th>
-            <th>Status</th>
-            <th>Salgspris</th>
-            <th>Opdater</th>
-          </tr>
-        </thead>
-        <tbody id="adminStockTableBody">
-        </tbody>
-      </table> 
-      
-  // Admin Update Stock Form
-        <form id="updateMaterialForm">
-
-            <label for="StockName">Materiale kendetegn</label>
-            <input type="text" id="catalogueName" name="name" placeholder="Fks. blød" required/>
-
-            <label for="stockMaterial">Materiale</label>
-                <select name="material" id="minAmountStock">
-                <option value= "PLA" >PLA</option>
-                <option value="ABS">ABS</option>
-                <option value="TPU">TPU<ption>
-                </select>
-
-            <label for="stockColour">Farve</label>
-                <input type="text" id="stockColour" name="colour"
-                  placeholder=" fks ... Rød"
-                  required
-                />                
-                
-            <label for="amountInStock">Lagerbeholdning</label>
-                <input
-                  type="text"
-                  id="amountInStock"
-                  name="gramInStock"
-                  placeholder="mængde i gram"
-                  required
-                />
-
-            <label for="salesPrice">salgspris</label>
-                <input
-                  type="text"
-                  id="salesPrice"
-                  name="salesPrice"
-                  placeholder="pris i DKK"
-                  required
-                />
-
-            <label for="minAmountStock">Salgs Status</label>
-                <select name="active" id="active">
-                <option value= 0 > Udsolgt </option>
-                <option value= 1 > På Lager </option>
-                </select>
-
-            <button type="submit" class="btn_update_stock">Opdater</button>
-        </form>
-    </section>
-
-
-
-
-
-    // Admin catalogue Section
-    <section id="catalougeOveriew">
+        <section id="products" class="view-content">
+    <!-- Admin catalogue Section -->
+    <div id="catalougeOveriew">
         <h2>Katalog Oversigt</h2>
         
         <article id="adminCatalogueOverview">
@@ -350,19 +254,100 @@
         </form>
       </dialog>
 
-    </section>
-</container>
+    </div>
+        </section>
 
+        <!-- Section stock -->
+        <section id="stock" class="view-content">
+            
+    <div id="stockMaterialOveriew" >
+      <h2>Lager Status</h2> 
+      
+      <table id="stockOverviewTable">
+        <thead>
+          <tr>
+            <th>Materiale</th>
+            <th>Egenskab</th>
+            <th>Farve</th>
+            <th>Mængde Tilgængelig</th>
+            <th>Status</th>
+            <th>Salgspris</th>
+            <th>Opdater</th>
+          </tr>
+        </thead>
+        <tbody id="adminStockTableBody">
+        </tbody>
+      </table> 
+      
+  <!-- Admin Update Stock Form -->
+        <form id="updateMaterialForm">
 
-    <!-- stock material succesfully updated dialog window -->
+            <label for="StockName">Materiale kendetegn</label>
+            <input type="text" id="catalogueName" name="name" placeholder="Fks. blød" required/>
+
+            <label for="stockMaterial">Materiale</label>
+                <select name="material" id="minAmountStock">
+                <option value= "PLA" >PLA</option>
+                <option value="ABS">ABS</option>
+                <option value="TPU">TPU<ption>
+                </select>
+
+            <label for="stockColour">Farve</label>
+                <input type="text" id="stockColour" name="colour"
+                  placeholder=" fks ... Rød"
+                  required
+                />                
+                
+            <label for="amountInStock">Lagerbeholdning</label>
+                <input
+                  type="text"
+                  id="amountInStock"
+                  name="gramInStock"
+                  placeholder="mængde i gram"
+                  required
+                />
+
+            <label for="salesPrice">salgspris</label>
+                <input
+                  type="text"
+                  id="salesPrice"
+                  name="salesPrice"
+                  placeholder="pris i DKK"
+                  required
+                />
+
+            <label for="minAmountStock">Salgs Status</label>
+                <select name="active" id="active">
+                <option value= 0 > Udsolgt </option>
+                <option value= 1 > På Lager </option>
+                </select>
+
+            <button type="submit" class="btn_update_stock">Opdater</button>
+        </form>
+      </div>
+
+      <!-- stock material succesfully updated dialog window -->
     <dialog id="successfull-stock-update-dialog" class="dialoge-window">
       <div id="successfull-stock-update-div">Du har opdateret et materiale i lagerbeholdningen</div>
       <button id="btn-close-update-dialog" class="other-btn">Luk</button>
     </dialog>
 
-       
+        </section>
 
+        <!-- Section customer -->
+        <section id="customer" class="view-content">Kunder</section>
 
+        <!-- Section customer -->
+        <section id="finance" class="view-content">Finans</section>
+
+        <!-- Section customer -->
+        <section id="settings" class="view-content">Indstillinger</section>
+
+      </main>
+      
+      <!-- Footer -->
+      <footer></footer>
+    </div>
 
 <script src="./admin-controller/admin-main.js" type="module"></script>
 </body>
