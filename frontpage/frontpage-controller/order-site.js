@@ -51,15 +51,11 @@ async function launchOrderSite() {
   // fetches all customer emails
   customerEmialList = await fetchCustomerEmailData();
   console.log("all emails: ", customerEmialList);
-  // removes the displayed shopping cart
-  hideShoppingCartSite();
+
+
 }
 
-function hideShoppingCartSite() {
-  clearShoppingCartHTML();
-  // hides the shopping cart container including the to-chek-out-butten
-  document.querySelector("#shopping_cart_site").classList.add("hidden");
-}
+
 
 function setOrderSiteEventListeners() {
   // activates the new-customer and existing-customer buttons
