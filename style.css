@@ -85,6 +85,12 @@ main {
   margin-top: 0px;
 }
 
+/* Shopping cart */
+#indkøbskurv-h3-title {
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+
 /* Fotter */
 footer {
   display: flex;
