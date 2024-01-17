@@ -31,6 +31,8 @@ async function showPaymentScreen() {
   resetSiteAfterSuccessfullOrder();
 }
 
+
+// ULOVLIGHEDER!!!! 
 async function fecthMobilePaymenyNo() {
   const variablesData = await fetchSystemVariables();
   const paymentNumber = variablesData[0].MobilePayNumber;
