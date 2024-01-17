@@ -217,7 +217,7 @@ export class product {
     document.querySelector("#selectProductAmount").innerHTML = "";
     document.querySelector(
       "#selectProductAmount"
-    ).innerHTML = `Antal ${this.amount} stk`;
+    ).innerHTML = `${this.amount} stk`;
 
     this.setCompleteProductPrice();
   }
