@@ -254,10 +254,4 @@ async function newCustomerOrder(newCustomerData) {
   }
 }
 
-
-
-
-
-
-
 export { launchOrderSite, disableCustomerOrderInput, displayedTotalPrice };
