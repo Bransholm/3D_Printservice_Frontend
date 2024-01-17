@@ -30,7 +30,8 @@ function start() {
   // Tester om man kan hente data - Lukas
   getAllData();
   // testMakeOrder();
-  testStartNewOrder();
+  // testStartNewOrder();
+    launchOrderSite();
 }
 
 function testStartNewOrder() {
