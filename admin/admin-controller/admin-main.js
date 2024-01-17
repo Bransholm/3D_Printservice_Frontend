@@ -4,6 +4,8 @@ window.addEventListener("load", startAdmin);
 let catalogueId;
 const endpoint = "https://3dprintservice.azurewebsites.net/";
 
+import { startViews } from "../admin-view/spa-router.js";
+
 // Imports the update route for strockMaterials
 import { createNewCatalogueItem } from "./create-update-forms/create-new-catelogue-item.js";
 import {
@@ -25,10 +27,9 @@ import {
 import { closeUpdateCompleteWindow } from "../admin-view/stock-update-dialog.js";
 
 function startAdmin() {
-  console.log("Admin site is working");
-
+  console.log("Admin site is live");
+  startViews();
   startEvendListernes();
-
   getDataController();
 }
 
