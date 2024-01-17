@@ -1,2 +1,0 @@
-const endpoint = "https://3dprintservice.azurewebsites.net/";
-

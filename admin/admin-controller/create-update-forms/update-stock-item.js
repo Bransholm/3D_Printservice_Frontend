@@ -25,7 +25,7 @@ function stockUpdateInputData() {
   const material = form.material.value;
   const colour = form.colour.value;
   const gramInStock = Number(form.gramInStock.value);
-  const active = Number(form.active.value);
+  const active = form.active.value;
   const salesPrice = Number(form.salesPrice.value);
 
   return {
