@@ -1,5 +1,4 @@
-const endpoint = "https://3dprintservice.azurewebsites.net/";
-
+import { endpoint } from "../../../../frontpage/frontpage-model/endpoint.js";
 
 async function postCatelogueItem(data) {
   console.log("POSTING: ", data);
