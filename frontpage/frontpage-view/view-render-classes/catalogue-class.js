@@ -30,7 +30,7 @@ export class catalogueItem {
       <a href="#product_by_id" class="view-link catalogue-item-link-styleing">
       <h3 id="catalogue-item-headline">${this.title}</h3>
       <img
-      src="../../images/${this.imageLink}"
+      src="images/${this.imageLink}"
       alt="Produktbillede ${this.title}"
       />
       <div class="catalogue-display-text">${this.calculateStandardPrice(
@@ -55,7 +55,7 @@ export class catalogueItem {
       `<div>
         <div class="catalouge-item-text"><h3 class="product-by-id-h3">${this.title}</h3></div>
         <img
-          src="../../images/${this.imageLink}"
+          src="images/${this.imageLink}"
           alt="Produktbillede ${this.title}"
         />
         <div class="catalouge-item-text">Kategori: ${this.category}</div>
