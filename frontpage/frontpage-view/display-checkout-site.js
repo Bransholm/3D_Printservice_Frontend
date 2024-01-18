@@ -46,7 +46,7 @@ function showFinishPaymentScreen() {
     `
      <p>  Tak for din bestilling. Pengene vil først blive overført når odren er
        produceret og afsendt. Du modtager en mail når odren sendes. Tak fordi du
-       valgte at handle hos 3dPrinstServicce.</p>
+       valgte at handle hos 3dPrinstService.</p>
       
        <a href="#products" class="view-link view-link-menu">
       <button class="change_cursor_to_a_pointer_on_hover">til forsiden</button>

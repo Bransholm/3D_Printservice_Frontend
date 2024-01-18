@@ -38,16 +38,16 @@ function displayOrderInformation(orderData) {
 }
 
 function displayOrderLines(productsList) {
-  console.log(productsList);
+  console.log("productlist is this long", productsList.length);
   document.querySelector("#oder_lines_overview").innerHTML = "";
-  // for (let i = 0; productsList.lenght > i; i++) {
-    // const product = productsList[i];
-    for(const product of productsList){
+  for (let i = 0; productsList.length > i; i++) {
+    const product = productsList[i];
     console.log(product);
     const orderLineHTML =
       /*html*/
       `
     <div>
+    <div>Produkt - ${i+1}</div>
     <div>Produktnavn: ${product.title}</div>
     <div>Størrelse: ${product.size}</div>
     <div>Farve: ${product.colour}</div>
