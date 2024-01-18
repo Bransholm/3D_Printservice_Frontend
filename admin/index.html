@@ -186,7 +186,7 @@
         </form>
        </article>
       
-       <container id="productOverview" class="grid-container"> Hele Kataloget </container>
+       <container id="productOverview" class="product-catalog-grid"> Hele Kataloget </container>
 
 
 
@@ -338,7 +338,28 @@
         <section id="customer" class="view-content">Kunder</section>
 
         <!-- Section customer -->
-        <section id="finance" class="view-content">Finans</section>
+        <section id="finance" class="view-content"> 
+          <!-- Route example: http://127.0.0.1:4811/finance?startDate=2024-01-01&endDate=2024-01-30 -->
+                      <article>
+              <h3>Finans</h3>
+              <p>Her kan du tjekke omsætningen<br>
+              Vælg start dag og slut dag:
+              </p>
+              </article>
+            <form id="finance-form">
+            <div class="form-group">
+              <label for="startDate" class="finance-form-label">Start dag:</label>
+              <input type="date" id="startDate" name="startDate" required class="finance-form-input">
+            </div>
+            <div class="form-group">
+              <label for="endDate" class="finance-form-label">Slut dag:</label>
+              <input type="date" id="endDate" name="endDate" required class="finance-form-input">
+            </div>
+            <div class="form-group">
+              <button type="submit" id="finance-button">Vis omsætning</button>
+            </div>
+            </form>
+        </section>
 
         <!-- Section customer -->
         <section id="settings" class="view-content">Indstillinger</section>
