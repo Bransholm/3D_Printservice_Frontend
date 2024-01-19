@@ -19,7 +19,8 @@ We are TEAM10, a trio composed of the following members;
 - **[Lukas Aleksander Maibom](https://github.com/luma0001)** 
 - **[Thomas Gorm Neermark](https://github.com/Gorm-git)**
 
-We ended up getting into contact with a startup buisness "3D-Printservice. With an entrepreneur minded PO dreaming about starting his own company based around selling 3D-printed products on their own web-shop. Lacking experience and knowledge of how to make said web-shop, but full of idea's about different funktionalites they figured would make a stable fundament for a web-shop. After discussing what we would or wouldn't be able to make, we ended up agreeing to try our best to create a fullstack solution, where we would try our best to make a 3D-webshop from the ground up. 
+We ended up getting into contact with a startup buisness "3D-Printservice. With an entrepreneur minded PO dreaming about starting his own company based around selling 3D-printed products on their own web-shop.
+Lacking experience and knowledge of how to make said web-shop, but full of idea's about different funktionalites they figured would make a stable fundament for a web-shop. After discussing what we would or wouldn't be able to make, we ended up agreeing to try our best to create a fullstack solution, where we would try our best to make a 3D-webshop from the ground up. 
 
 **Lets dive in.**
 
@@ -211,6 +212,10 @@ http://127.0.0.1:5500/admin/index.html
 
 ### 1. Conclusion 
 We aimed to create a our datastructure based off of the principles of the MVC software design patterm. While some functionalites might have been placed incorrect, we've been able to make a somewhat coherent program logic. 
+
+**This project was made by created in collaboration by Kenneth Brandsholm Schou, Lukas Aleksander Maibom & Thomas Gorm Neermark**
+
+**KEA Dat23V1**
 
 ### 2. Contribution
 
