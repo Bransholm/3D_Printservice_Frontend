@@ -1,8 +1,8 @@
 // Skridt 1 indsæt den eksisterende data ind
 
-function extractCatalogueDataForUpdate(catalogueItem) {
+function updateCatalogueDataAutofill(catalogueItem) {
   console.log(catalogueItem);
-  const updateForm = document.querySelector("#UpdateCatalogueForm");
+  const updateForm = document.querySelector("#updateCatalogueForm");
   // const x = event.target
 
   // Doublecheck if attirbute needs to be with capital sarting letter...
@@ -18,7 +18,7 @@ function extractCatalogueDataForUpdate(catalogueItem) {
 // Skridt 2 gør indholdet fra forms den opdaterede
 function updateCatalogueInputData(event) {
   // event.preventDefault();
-  const form = document.querySelector("#UpdateCatalogueForm");
+  const form = document.querySelector("#updateCatalogueForm");
   const title = form.title.value;
   const standardSize = Number(form.standardSize.value);
   const standardWeight = Number(form.standardWeight.value);
@@ -40,4 +40,4 @@ function updateCatalogueInputData(event) {
 
 }
 
-export { extractCatalogueDataForUpdate, updateCatalogueInputData };
+export { updateCatalogueDataAutofill, updateCatalogueInputData };
