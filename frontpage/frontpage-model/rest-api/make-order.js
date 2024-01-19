@@ -6,7 +6,6 @@ async function postOrderCustomerIsExisting(existingCustomerData) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // Add any additional headers if needed
       },
       body: JSON.stringify(existingCustomerData),
     });
@@ -27,14 +26,13 @@ async function postOrderCustomerIsExisting(existingCustomerData) {
   }
 }
 
-// rest api - adds a new customer, order and orderlines to the database.
+// rest api - adds a new customer, order and orderlines to the database
 async function postOrderCustomerIsNew(newCustomerData) {
   try {
     const response = await fetch(`${endpoint}makeOrder`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // Add any additional headers if needed
       },
       body: JSON.stringify(newCustomerData),
     });
