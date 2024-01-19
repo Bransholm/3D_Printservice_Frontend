@@ -17,7 +17,7 @@ async function showPaymentScreen() {
     /*html*/
     `
   <p> Din ordre er nu booket! For at færdiggøre din bestilling skal du overføre ${displayedTotalPrice} DKK, til 3dprintservice mobilepay på nummeret: ${number}</p>
-  <button id="btn_finish_payment" class="change_cursor_to_a_pointer_on_hover">Bekræft</button>
+  <button id="btn_finish_payment" class="change_cursor_to_a_pointer_on_hover">Bekræft din betaling</button>
   `;
 
   document
@@ -44,8 +44,8 @@ function showFinishPaymentScreen() {
   const messageHTML =
     /*html*/
     `
-     <p>  Tak for din bestilling. Pengene vil først blive overført når odren er
-       produceret og afsendt. Du modtager en mail når odren sendes. Tak fordi du
+     <p>  Tak for din bestilling.<br>Pengene vil først blive trukket når odren er
+       produceret og afsendt.<br>Du modtager en mail når odren sendes.<br>Tak fordi du
        valgte at handle hos 3dPrinstService.</p>
       
        <a href="#products" class="view-link view-link-menu">
