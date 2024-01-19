@@ -105,3 +105,21 @@ td {
   margin-left: 84px;
   margin-top: 5px;
 }
+
+/* Buttons */
+button {
+  background-color: black;
+  border: 2px solid blue;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s, transform 0.1s;
+}
+
+button:hover {
+  background-color: blue;
+}
+
+button:active {
+  transform: scale(0.98);
+}
