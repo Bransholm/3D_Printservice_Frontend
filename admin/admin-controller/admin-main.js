@@ -12,9 +12,7 @@ import {
 import { catalogueItem } from "../admin-view/admin-view-render-classes/catalogue-class.js";
 import { createCatalogClasses } from "./instance-creator-admin.js";
 import { callRenderMethodeForCatalogueItems } from "./render-controller-admin.js";
-
-// update-button clicked: Send data to stock-update-form
-
+import { submitFianceDates } from "./finance-site.js";
 import { showStockMaterials } from "./show-stock-materials.js";
 import {
   updateStockButtonClicked,
@@ -56,7 +54,10 @@ function startEvendListernes() {
   document
     .querySelector("#btn-close-update-dialog")
     .addEventListener("click", closeUpdateCompleteWindow);
-  
+
+  document
+    .querySelector("#finance-form")
+    .addEventListener("submit", submitFianceDates);
 }
 
 // fetching genereal data
@@ -79,5 +80,9 @@ function showCatalouge(catalougeItemObjects) {
   callRenderMethodeForCatalogueItems(catalougueClassList, "productOverview");
 }
 
-export { updateStockButtonClicked, getStockMaterialData, getCatalogueItemsData };
+export {
+  updateStockButtonClicked,
+  getStockMaterialData,
+  getCatalogueItemsData,
+};
 // export { startAdmin as launchAdminFunctions };
