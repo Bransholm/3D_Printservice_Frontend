@@ -7,8 +7,7 @@ function showItemCartPriceSection(displayPrices) {
   const shoppingCartPriceSectionHTML =
     /*html*/
     `
-   <h3>Total Pris: ${totalPrice}</h3>
-   <h4>Her af moms: ${totalTax}</h4>
+   <h3>Total Pris: ${totalPrice} </br> Her af moms: ${totalTax}</h3>
    `;
 
   document
