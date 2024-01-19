@@ -179,10 +179,6 @@ export class product {
     return productCustomizationSiteHTML;
   }
 
-  // this.colour = this.stockInfo.colour;
-  // this.porperty = this.catalogueInfo.name;
-  // this.matieral = this.catalogueInfo.material;
-
   renderShoppingcartInfo() {
     const shoppingcartHTML =
       /*html*/
