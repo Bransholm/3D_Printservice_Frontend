@@ -29,7 +29,7 @@ export class stockMaterial {
     <td>${this.gramInStock} gram</td>
     <td> ${availability} </td>
     <td>${this.salesPrice} dkk/kg</td>
-    <td>  <button  class="btn_update_stock">Opdater!</button> </td>
+    <td>  <button  class="btn_update_stock">Opdater</button> </td>
 
   </tr>
     `;
