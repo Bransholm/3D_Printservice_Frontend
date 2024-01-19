@@ -159,3 +159,28 @@ footer {
   border: solid
   /* text-align: center; */
 } 
+
+/* Buttons */
+button {
+  background-color: black;
+  border: 2px solid blue;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s, transform 0.1s;
+}
+
+button:hover {
+  background-color: blue;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+dropdown {
+  display: none;
+  position: absolute;
+  background-color: #333;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
