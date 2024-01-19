@@ -30,7 +30,7 @@ async function getAvailableStockData() {
 
 async function getfinanceData() {
   const response = await fetch(
-    `${endpoint}finance?startDate=${startDateValue}&endDate=${endDateValue}`
+    `http://127.0.0.1:4811/finance?startDate=${startDateValue}&endDate=${endDateValue}`
   );
   console.log(
     `${endpoint}/finance?startDate=${startDateValue}&endDate=${endDateValue}`
