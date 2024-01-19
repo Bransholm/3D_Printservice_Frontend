@@ -3,7 +3,18 @@ import {
   searchValue,
 } from "../frontpage-controller/catalogue-filter-search.js";
 
+import {
+  emailValue,
+  nameValue,
+} from "../frontpage-controller/find-order-site.js";
+
 const endpoint = "https://3dprintservice.azurewebsites.net/";
+
+async function fetchOrdersData() {
+  const response = await fetch(`${endpoint}/viewOrdrer?ordrer=${nameValue}&email=${emailValue}`);
+  const viewOrderData = await response.json();
+  return viewOrderData;
+}
 
 async function fetchSystemVariables() {
   const response = await fetch(`${endpoint}/variables`);
@@ -61,6 +72,7 @@ async function getStockItemById(id) {
 }
 
 export {
+  fetchOrdersData,
   fetchSystemVariables,
   getCatalogueData,
   getStockData,
