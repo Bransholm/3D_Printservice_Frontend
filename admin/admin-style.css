@@ -70,12 +70,12 @@ main {
 
 /* Stock */
 table {
-    display: table;
-    border-collapse: separate;
-    box-sizing: border-box;
-    text-indent: initial;
-    border-spacing: 2px;
-    border-color: gray;
+  display: table;
+  border-collapse: separate;
+  box-sizing: border-box;
+  text-indent: initial;
+  border-spacing: 2px;
+  border-color: gray;
 }
 
 th {
@@ -86,8 +86,38 @@ th {
 }
 
 td {
-    display: table-cell;
-    vertical-align: inherit;
+  display: table-cell;
+  vertical-align: inherit;
+}
+
+/* catalouge */
+
+form {
+  max-width: 600px;
+}
+
+label {
+  display: inline-block;
+  width: 150px;
+  text-align: left;
+  margin-right: 15px;
+}
+
+input,
+select {
+  width: 300px;
+  padding: 2px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.btn_submit {
+  display: block;
+  width: 50%;
+  margin: 0 170px;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-top: 10px;
 }
 
 /* View order */
@@ -102,7 +132,7 @@ td {
 }
 
 #finance-button {
-  margin-left: 84px;
+  margin-left: 100px;
   margin-top: 5px;
 }
 

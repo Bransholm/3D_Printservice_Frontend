@@ -1,4 +1,4 @@
-const endpoint = "https://3dprintservice.azurewebsites.net/";
+// const endpoint = "https://3dprintservice.azurewebsites.net/";
 
 // the fetch route for cutsomer by email
 import { fetchCustomerEmailData } from "../frontpage-model/fetch-data.js";
@@ -20,6 +20,7 @@ import {
   disableCustomerOrderInput,
   enableCustomerOrderInput,
 } from "../frontpage-view/toggle-customer-order-Input.js";
+import { retrieveCustomerInformation } from "../frontpage-model/fetch-data.js";
 
 // list that stores all emails
 let customerEmialList;
@@ -94,13 +95,6 @@ async function findCustomerByEmail(event) {
 }
 
 // search_existing_customer_by_email_error_message
-
-async function retrieveCustomerInformation(customerEmail) {
-  console.log("retrieveCustomerInformation");
-  const promise = await fetch(`${endpoint}/customers/${customerEmail}`);
-  const data = await promise.json();
-  return data;
-}
 
 // // set all the text inputs to blank
 // function clearOrderForm() {
