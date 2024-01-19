@@ -41,8 +41,8 @@ export class catalogueItem {
     <p>Standard Størrelse: ${this.standardSize} cm</p>
     <p>Standard Vægt: ${this.standardWeight} gram</p>
     <p>Produkt Beskrivelse: ${this.itemDescription} </p>
-    <button class="btn_update_product" >Update</button>
-    <button class="btn_delete_product" >Delete</button>
+    <button class="btn_update_product" >Opdater produkt</button>
+    <button class="btn_delete_product" >Slet produkt</button>
 
     </article>
     `;
