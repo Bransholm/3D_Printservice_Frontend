@@ -1,4 +1,8 @@
 import { endpoint } from "../../frontpage/frontpage-model/endpoint.js";
+import {
+  startDateValue,
+  endDateValue,
+} from "../admin-controller/finance-site.js";
 
 // fetching catalogue data
 async function getCatalogueData() {
@@ -24,4 +28,20 @@ async function getAvailableStockData() {
   return stockData;
 }
 
-export { getCatalogueData, getStockData, getAvailableStockData };
+async function getfinanceData() {
+  const response = await fetch(
+    `${endpoint}/finance?startDate=${startDateValue}&endDate=${endDateValue}`
+  );
+  console.log(
+    `${endpoint}/finance?startDate=${startDateValue}&endDate=${endDateValue}`
+  );
+  const data = response.json();
+  return data;
+}
+
+export {
+  getCatalogueData,
+  getStockData,
+  getAvailableStockData,
+  getfinanceData,
+};

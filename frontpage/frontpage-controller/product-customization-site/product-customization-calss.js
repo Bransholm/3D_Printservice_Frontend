@@ -8,7 +8,6 @@ import {
 // imports the existing classes for stock-materials and catalouge-items
 import { stockMaterial } from "../../frontpage-view/view-render-classes/stock-class.js";
 import { catalogueItem } from "../../frontpage-view/view-render-classes/catalogue-class.js";
-
 import { stockInStorage } from "./product-customization.js";
 
 export class product {
@@ -16,11 +15,8 @@ export class product {
   constructor(catalogueId) {
     this.catalogue_ID = catalogueId;
     this.stock_ID;
-    // html from the catalouge item;
-    // this.renderCatalougeHTML = "test";
     this.catalogueInfo = null;
     this.stockInfo = null;
-    // this.initCatalogueItem();
     this.productSize;
     this.amount = 1;
     this.bundlePrice;
@@ -178,10 +174,6 @@ export class product {
 
     return productCustomizationSiteHTML;
   }
-
-  // this.colour = this.stockInfo.colour;
-  // this.porperty = this.catalogueInfo.name;
-  // this.matieral = this.catalogueInfo.material;
 
   renderShoppingcartInfo() {
     const shoppingcartHTML =

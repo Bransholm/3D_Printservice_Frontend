@@ -30,13 +30,9 @@ async function callRenderMethod(listOfInstances) {
 
       eventListenerAdder(instance);
     }
-
-    // for (const instance of listOfInstances) {
-    //   const classHTML = instance.render();
   }
 
   function eventListenerAdder(classInstance) {
-    // what eventlisteners to add for a given instance needs to go here...
 
     document
       .querySelector(`#product_catalogue article:last-child`)

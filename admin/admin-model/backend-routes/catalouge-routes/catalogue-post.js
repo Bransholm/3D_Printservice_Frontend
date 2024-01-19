@@ -20,7 +20,7 @@ async function postCatelogueItem(data) {
       console.log(result);
     }
 
-    return;
+    return response;
   } catch (error) {
     // Handle errors here
     console.error("Error:", error);

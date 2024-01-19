@@ -1,9 +1,10 @@
 // import { stringify } from "querystring";
 const endpoint = "http://localhost:4811/";
 import { postCatelogueItem } from "../../admin-model/backend-routes/catalouge-routes/catalogue-post.js";
+import { getCatalogueItemsData } from "../admin-main.js";
 
 // This function creates a new catalogue item - is only accessible for the admin.
-function createNewCatalogueItem(event) {
+async function createNewCatalogueItem(event) {
   // Er det nu .target.value?
   const catelogueForm = event.target;
 
@@ -30,7 +31,10 @@ function createNewCatalogueItem(event) {
   );
   event.preventDefault();
 
-  postCatelogueItem(catalogueItem);
+  const response = await postCatelogueItem(catalogueItem);
+  if (response.ok) {
+    getCatalogueItemsData();
+  }
 }
 
 function createCatelogueItemProduct(
