@@ -10,9 +10,9 @@ We're glad to have you here, feel free to dive in and discover what our frontend
 
 ---
 
-# Introduktion
+# Introduction
 
-This is our frontend repository for our 2.semester examsproject. The exam project requires the students to contact a buisness and create web-based application as a functional solution which would either fill a gap where they needed a web based solution, or help make an existing solution better.
+This is our frontend repository for our 2nd semester exam project. The exam project requires the students to contact a business and create web-based application as a functional solution which would either fill a gap where they needed a web based solution, or help make an existing solution better.
 
 We are TEAM10, a trio composed of the following members;
 
@@ -21,9 +21,9 @@ We are TEAM10, a trio composed of the following members;
 - **[Thomas Gorm Neermark](https://github.com/Gorm-git)**
 
 We ended up getting into contact with a startup buisness "3D-Printservice. With an entrepreneur minded PO dreaming about starting his own company based around selling 3D-printed products on their own web-shop.
-Lacking experience and knowledge of how to make said web-shop, but full of idea's about different funktionalites they figured would make a stable fundament for a web-shop. After discussing what we would or wouldn't be able to make, we ended up agreeing to try our best to create a fullstack solution, where we would try our best to make a 3D-webshop from the ground up.
+Lacking experience and knowledge of how to make said web-shop, but full of ideas about different functionalities they figured would make a stable fundament for a web-shop. After discussing what we would or wouldn't be able to make, we ended up agreeing to try our best to create a fullstack solution, where we would try our best to make a 3D-webshop from the ground up.
 
-**Lets dive in.**
+**Let's dive in.**
 
 ---
 
@@ -87,11 +87,11 @@ You have to install [GitHub Desktop](https://desktop.github.com/), or else this 
 
 1. Follow the link to the [Frontend Repository](https://github.com/Bransholm/3D_Printservice_Frontend)
 
-2. Now you'll have to clone the repository. Click the big green buttom: **<>Code**
+2. Now you'll have to clone the repository. Click the big green button: **<>Code**
 
 3. Clone the repository. and choose the option; **Open with GitHub Desktop**
 
-4. Decide a prefered location for the file or modify the name, which ever suits you, then you are ready to go
+4. Decide a preferred location for the file or modify the name, which ever suits you, then you are ready to go
 
 **Using The Terminal**
 
@@ -108,7 +108,7 @@ You have to install [Git](https://git-scm.com/downloads) in order to make this w
 git clone https://github.com/Bransholm/3D_Printservice_Frontend.git
 ```
 
-**After succesfully cloning the repository, you'll be able to run the app locally**
+**After successfully cloning the repository, you'll be able to run the app locally**
 
 Assuming you're using [Visual Studio Code](https://code.visualstudio.com/)
 
@@ -162,11 +162,11 @@ http://127.0.0.1:5500/admin/index.html
 
 - **The price will change dynamicly as you choose between different materials, the desired size as well as how many copies you want**.
 
-- **Add it to your shoppingcart**, maybe you arent done shopping, well feel free to go back and browse the catalogue.
+- **Add it to your shopping cart**, maybe you arent done shopping, well feel free to go back and browse the catalogue.
 
-- **Return to shoppingkart whenever you want** The items you've decided to buy is still in there waiting for you.
+- **Return to shopping cart whenever you want** The items you've decided to buy is still in there waiting for you.
 
-- **Time to make your purchase** After you've added all your desired products to the shoppingcart, then go to your shoppingcart.
+- **Time to make your purchase** After you've added all your desired products to the shopping cart, then go to your shopping cart.
 
 - **Start by entering your email**, the information you put into the fields specifying delivery and etc, will now be bound.
 
@@ -176,15 +176,15 @@ http://127.0.0.1:5500/admin/index.html
 
 - **Contact us**, go to the info page if you want to know us better.
 
-- **Viewing the products you ordered**. Just remember that you have to contact us manually to optain your order.ID .
+- **Viewing the products you ordered**. Just remember that you have to contact us manually to obtain your order.ID .
 
 ---
 
 ## Using The Admin View
 
-- **View all orders and their state in the order view**(missing)
+<!-- - **View all orders and their state in the order view**(missing) -->
 
-- **Update the state of specific orders**, did the customer pay for their products? Is the product in transit to its destination? Or maybe it already arrived?(missing)
+<!-- - **Update the state of specific orders**, did the customer pay for their products? Is the product in transit to its destination? Or maybe it already arrived?(missing) -->
 
 - **Create new products for the catalogue in the products view**, remember to upload the image file to the image folder!
 
@@ -196,7 +196,7 @@ http://127.0.0.1:5500/admin/index.html
 
 - **View the current stock of materials**
 
-- **Update the state of a material on the stocklist to inactive or active**. Enjoy the modal confirming the current changes you just made
+- **Update the state of stock materiale on the stocklist,making it either "Instock" or "Sold out"**. Enjoy the modal confirming the current changes you just made
 
 - **Clicking on the Opdater button from the stock table will autofill the update form**
 
@@ -220,7 +220,7 @@ http://127.0.0.1:5500/admin/index.html
 
 ### 1. Conclusion
 
-We aimed to create a our datastructure based off of the principles of the MVC software design patterm. While some functionalites might have been placed incorrect, we've been able to make a somewhat coherent program logic.
+We aimed to create a our data structure based off of the principles of the MVC software design pattern. While some functionalities might have been placed incorrect, we've been able to make a somewhat coherent program logic.
 
 **This project was made by created in collaboration by Kenneth Brandsholm Schou, Lukas Aleksander Maibom & Thomas Gorm Neermark**
 
@@ -228,7 +228,7 @@ We aimed to create a our datastructure based off of the principles of the MVC so
 
 ### 2. Contribution
 
-Did you stumble across some bugs, or do you have some insights on how we could exspand the funktionality of our web-shop? Then feel free to let us know! Fork the project and start making changes!
+Did you stumble across some bugs, or do you have some insights on how we could expand the funktionality of our web-shop? Then feel free to let us know! Fork the project and start making changes!
 
 This is an open source product, and we appreciate any contributions to further develop the "3D-Printshop" web-shop.
 
