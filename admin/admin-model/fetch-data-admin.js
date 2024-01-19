@@ -30,7 +30,7 @@ async function getAvailableStockData() {
 
 async function getfinanceData() {
   const response = await fetch(
-    `${endpoint}/finance?startDate=${startDateValue}&endDate=${endDateValue}`
+    `${endpoint}finance?startDate=${startDateValue}&endDate=${endDateValue}`
   );
   console.log(
     `${endpoint}/finance?startDate=${startDateValue}&endDate=${endDateValue}`
