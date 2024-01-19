@@ -16,6 +16,13 @@ async function fetchOrdersData() {
   return viewOrderData;
 }
 
+async function retrieveCustomerInformation(customerEmail) {
+  console.log("retrieveCustomerInformation");
+  const promise = await fetch(`${endpoint}/customers/${customerEmail}`);
+  const data = await promise.json();
+  return data;
+}
+
 async function fetchSystemVariables() {
   const response = await fetch(`${endpoint}/variables`);
   const variableData = await response.json();
@@ -81,4 +88,5 @@ export {
   getStockItemById,
   fetchCustomerByEmail,
   fetchCustomerEmailData,
+  retrieveCustomerInformation,
 };
