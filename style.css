@@ -84,6 +84,17 @@ main {
   margin-top: 5px;
 }
 
+.view-order-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+#view-order-information-overivew {
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
 /* About us */
 #about_us_h2 {
   margin-top: 0px;

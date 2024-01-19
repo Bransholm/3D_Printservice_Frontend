@@ -11,12 +11,12 @@ function displayOrderInformation(orderData) {
     /*html*/
     `
   <div>
-  <div>Kunder information</div>
-  <div>Kunde Nummer: ${customer.customerNo}</div>
+  <div>Kundeinformation</div>
+  <div>Kundenummer: ${customer.customerNo}</div>
   <div>Fornavn: ${customer.firstName}</div>
   <div>Efternavn: ${customer.lastName}</div>
   <div>Adresse: ${customer.adress}</div>
-  <div>Post Nummer: ${customer.zipCode}</div>
+  <div>Postnummer: ${customer.zipCode}</div>
   <div>By: ${customer.city}</div>
 
   <div>Ordre Information</div>
@@ -47,7 +47,7 @@ function displayOrderLines(productsList) {
       /*html*/
       `
     <div>
-    <div>Produkt - ${i+1}</div>
+    <div>Produkt ${i + 1}</div>
     <div>Produktnavn: ${product.title}</div>
     <div>Størrelse: ${product.size}</div>
     <div>Farve: ${product.colour}</div>
